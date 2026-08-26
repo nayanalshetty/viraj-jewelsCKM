@@ -1,0 +1,262 @@
+.wishlist-page {
+  min-height: 70vh;
+  padding: 70px 6%;
+  background: #fdfbf7;
+  color: #171512;
+}
+
+/* HEADER */
+
+.wishlist-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.wishlist-eyebrow {
+  margin: 0 0 10px;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #a47732;
+  font-weight: 600;
+}
+
+.wishlist-header h1 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 46px;
+  font-weight: 500;
+}
+
+.wishlist-header p:last-child {
+  color: #77736c;
+  margin-top: 12px;
+}
+
+/* EMPTY */
+
+.wishlist-empty {
+  max-width: 650px;
+  margin: 50px auto;
+  padding: 70px 30px;
+  text-align: center;
+  background: #fff;
+  border: 1px solid #e8e1d7;
+}
+
+.wishlist-empty-icon {
+  font-size: 55px;
+  margin-bottom: 15px;
+  color: #a47732;
+}
+
+.wishlist-empty h1 {
+  margin: 0 0 15px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 34px;
+  font-weight: 500;
+}
+
+.wishlist-empty > p:not(.wishlist-eyebrow) {
+  color: #77736c;
+  line-height: 1.7;
+  margin-bottom: 30px;
+}
+
+.wishlist-shop-button {
+  display: inline-flex;
+  padding: 14px 30px;
+  background: #171512;
+  color: #fff;
+  text-decoration: none;
+}
+
+/* GRID */
+
+.wishlist-grid {
+  max-width: 1250px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+  gap: 25px;
+}
+
+/* CARD */
+
+.wishlist-card {
+  background: #fff;
+  border: 1px solid #e8e1d7;
+}
+
+.wishlist-image {
+  position: relative;
+  display: block;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #f4f0e9;
+}
+
+.wishlist-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.wishlist-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #f4f0e9;
+  color: #a47732;
+}
+
+.wishlist-placeholder span {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 23px;
+  letter-spacing: 4px;
+}
+
+.wishlist-placeholder small {
+  margin-top: 5px;
+  color: #77736c;
+}
+
+/* CONTENT */
+
+.wishlist-card-content {
+  padding: 20px;
+}
+
+.wishlist-card-content > p {
+  margin: 0 0 7px;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #a47732;
+}
+
+.wishlist-product-name {
+  display: block;
+  min-height: 52px;
+  color: #171512;
+  text-decoration: none;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 20px;
+  line-height: 1.35;
+}
+
+.wishlist-product-name:hover {
+  color: #a47732;
+}
+
+.wishlist-card-content > strong {
+  display: block;
+  margin-top: 12px;
+  font-size: 16px;
+}
+
+/* ACTIONS */
+
+.wishlist-card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 18px;
+  padding-top: 15px;
+  border-top: 1px solid #eee8df;
+}
+
+.wishlist-view {
+  color: #171512;
+  font-size: 12px;
+  text-decoration: underline;
+}
+
+.wishlist-card-actions button {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: #77736c;
+  cursor: pointer;
+  font-size: 12px;
+  text-decoration: underline;
+}
+
+.wishlist-card-actions button:hover {
+  color: #a47732;
+}
+
+/* CLEAR */
+
+.wishlist-clear-wrapper {
+  max-width: 1250px;
+  margin: 30px auto 0;
+  text-align: right;
+}
+
+.wishlist-clear {
+  border: 0;
+  background: transparent;
+  color: #77736c;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* MOBILE */
+
+@media (max-width: 1000px) {
+  .wishlist-grid {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .wishlist-page {
+    padding: 45px 18px;
+  }
+
+  .wishlist-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+    gap: 15px;
+  }
+
+  .wishlist-header h1 {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .wishlist-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   VIRAJ CREAM / GOLD PAGE FINISH
+========================================================= */
+.category-page,
+.product-page,
+.cart-page,
+.checkout-page,
+.wishlist-page,
+.search-page,
+.contact-page,
+.order-success-page {
+  background: #f7f0e6;
+  color: #2d2117;
+}
+
+button,
+input,
+select,
+textarea {
+  accent-color: #a8792e;
+}
+

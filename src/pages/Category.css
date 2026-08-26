@@ -1,0 +1,564 @@
+/* =========================================================
+   VIRAJ JEWELLERS
+   CATEGORY PAGE
+   ========================================================= */
+
+.category-page {
+  min-height: 80vh;
+  background: #faf8f4;
+  color: #171614;
+}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.category-hero {
+  padding: 70px 20px 60px;
+  text-align: center;
+
+  background:
+    linear-gradient(
+      180deg,
+      #f4efe7 0%,
+      #faf8f4 100%
+    );
+
+  border-bottom: 1px solid #e6dfd5;
+}
+
+.category-eyebrow {
+  margin: 0 0 12px;
+
+  color: #a06b2c;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+}
+
+.category-hero h1 {
+  margin: 0;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: clamp(38px, 5vw, 58px);
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.category-description {
+  max-width: 650px;
+  margin: 16px auto 0;
+
+  color: #77736c;
+
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.category-content {
+  max-width: 1450px;
+
+  margin: 0 auto;
+
+  padding:
+    45px 5%
+    100px;
+}
+
+/* =========================================================
+   TOOLBAR
+   ========================================================= */
+
+.category-toolbar {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding-bottom: 20px;
+
+  border-bottom: 1px solid #e2dcd3;
+}
+
+.category-result-info {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+}
+
+.category-result-label {
+  color: #a06b2c;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 2px;
+}
+
+.category-result-info strong {
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.category-toolbar-right {
+  display: flex;
+
+  align-items: center;
+
+  gap: 20px;
+}
+
+.clear-filters {
+  border: 0;
+
+  background: transparent;
+
+  color: #a06b2c;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 1px;
+
+  text-transform: uppercase;
+
+  cursor: pointer;
+}
+
+.clear-filters:hover {
+  color: #171614;
+}
+
+.category-sort {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+}
+
+.category-sort span {
+  color: #77736c;
+
+  font-size: 11px;
+}
+
+.category-sort select {
+  min-width: 180px;
+  height: 40px;
+
+  padding: 0 12px;
+
+  border: 1px solid #d9d2c8;
+
+  outline: none;
+
+  background: #ffffff;
+
+  color: #171614;
+
+  font-size: 11px;
+
+  cursor: pointer;
+}
+
+.category-sort select:focus {
+  border-color: #b78335;
+}
+
+/* =========================================================
+   QUICK FILTERS
+   ========================================================= */
+
+.category-quick-filters {
+  display: flex;
+
+  align-items: center;
+
+  flex-wrap: wrap;
+
+  gap: 9px;
+
+  margin-top: 25px;
+}
+
+.category-quick-filters button {
+  min-height: 38px;
+
+  padding: 0 17px;
+
+  border: 1px solid #d9d1c6;
+
+  background: #ffffff;
+
+  color: #55504a;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  letter-spacing: 0.8px;
+
+  text-transform: uppercase;
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.category-quick-filters button:hover {
+  border-color: #b78335;
+
+  color: #a06b2c;
+}
+
+.category-quick-filters button.active {
+  background: #181715;
+
+  border-color: #181715;
+
+  color: #ffffff;
+}
+
+/* =========================================================
+   ACTIVE FILTERS
+   ========================================================= */
+
+.active-filters {
+  display: flex;
+
+  align-items: center;
+
+  flex-wrap: wrap;
+
+  gap: 8px;
+
+  margin: 20px 0 0;
+}
+
+.active-filters > span {
+  color: #77736c;
+
+  font-size: 11px;
+}
+
+.active-filters button {
+  padding: 7px 11px;
+
+  border: 1px solid #d9d1c6;
+
+  background: #ffffff;
+
+  color: #171614;
+
+  font-size: 10px;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.active-filters button:hover {
+  border-color: #b78335;
+
+  color: #a06b2c;
+}
+
+/* =========================================================
+   PRODUCT GRID
+   ========================================================= */
+
+.category-product-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 24px;
+
+  margin-top: 30px;
+}
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.category-empty {
+  max-width: 650px;
+
+  margin: 60px auto 0;
+
+  padding: 70px 30px;
+
+  text-align: center;
+
+  background: #ffffff;
+
+  border: 1px solid #e3dcd2;
+}
+
+.category-empty-mark {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 70px;
+  height: 70px;
+
+  margin: 0 auto 20px;
+
+  border-radius: 50%;
+
+  background: #f3eee7;
+
+  color: #b78335;
+
+  font-size: 26px;
+}
+
+.category-empty p {
+  margin: 0 0 8px;
+
+  color: #a06b2c;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 2px;
+}
+
+.category-empty h2 {
+  margin: 0;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 29px;
+  font-weight: 500;
+}
+
+.category-empty span {
+  display: block;
+
+  margin: 12px auto 25px;
+
+  color: #77736c;
+
+  font-size: 13px;
+}
+
+.category-empty button {
+  min-height: 45px;
+
+  padding: 0 24px;
+
+  border: 1px solid #181715;
+
+  background: #181715;
+
+  color: #ffffff;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 1.3px;
+
+  text-transform: uppercase;
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.category-empty button:hover {
+  background: #b78335;
+
+  border-color: #b78335;
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1100px) {
+  .category-product-grid {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 800px) {
+  .category-content {
+    padding:
+      35px 20px
+      70px;
+  }
+
+  .category-toolbar {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .category-toolbar-right {
+    width: 100%;
+
+    justify-content: space-between;
+  }
+
+  .category-product-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 15px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 550px) {
+  .category-hero {
+    padding:
+      45px 18px
+      40px;
+  }
+
+  .category-hero h1 {
+    font-size: 36px;
+  }
+
+  .category-description {
+    font-size: 13px;
+  }
+
+  .category-content {
+    padding:
+      30px 14px
+      60px;
+  }
+
+  .category-toolbar-right {
+    align-items: stretch;
+
+    flex-direction: column;
+
+    gap: 12px;
+  }
+
+  .category-sort {
+    justify-content: space-between;
+  }
+
+  .category-sort select {
+    flex: 1;
+
+    min-width: 0;
+  }
+
+  .category-quick-filters {
+    overflow-x: auto;
+
+    flex-wrap: nowrap;
+
+    padding-bottom: 5px;
+
+    scrollbar-width: thin;
+  }
+
+  .category-quick-filters button {
+    flex: 0 0 auto;
+  }
+
+  .category-product-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+  }
+
+  .category-empty {
+    padding:
+      50px 20px;
+  }
+
+  .category-empty h2 {
+    font-size: 25px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 380px) {
+  .category-content {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .category-product-grid {
+    gap: 8px;
+  }
+
+  .category-quick-filters button {
+    padding: 0 13px;
+  }
+}
+
+/* =========================================================
+   VIRAJ CREAM / GOLD PAGE FINISH
+========================================================= */
+.category-page,
+.product-page,
+.cart-page,
+.checkout-page,
+.wishlist-page,
+.search-page,
+.contact-page,
+.order-success-page {
+  background: #f7f0e6;
+  color: #2d2117;
+}
+
+button,
+input,
+select,
+textarea {
+  accent-color: #a8792e;
+}
+

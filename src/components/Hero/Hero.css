@@ -1,0 +1,190 @@
+/* =========================================================
+   VIRAJ JEWELLERS — HERO SLIDESHOW
+   ========================================================= */
+
+.hero {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #f8eee1;
+  line-height: 0;
+}
+
+/* =========================================================
+   HERO IMAGE
+   ========================================================= */
+
+.hero-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  object-fit: contain;
+  object-position: center;
+}
+
+
+/* =========================================================
+   INVISIBLE EXPLORE COLLECTION CLICK AREA
+
+   Your Explore Collection button is already inside
+   the JPG image.
+
+   This invisible link sits exactly over it.
+   ========================================================= */
+
+.hero-explore-link {
+  position: absolute;
+
+  /*
+     Position of the Explore Collection button
+     inside your generated desktop hero images.
+  */
+
+  left: 21.5%;
+  top: 68%;
+  width: 19%;
+  height: 10%;
+
+  display: block;
+
+  background: transparent;
+  border: none;
+  outline: none;
+
+  cursor: pointer;
+
+  z-index: 10;
+}
+
+
+/* =========================================================
+   SLIDE DOTS
+   ========================================================= */
+
+.hero-dots {
+  position: absolute;
+
+  left: 50%;
+  bottom: 3.5%;
+
+  transform: translateX(-50%);
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  z-index: 20;
+}
+
+.hero-dot {
+  width: 9px;
+  height: 9px;
+
+  padding: 0;
+  margin: 0;
+
+  border-radius: 50%;
+  border: 1px solid #b9852f;
+
+  background: rgba(255, 255, 255, 0.8);
+
+  cursor: pointer;
+
+  transition:
+    width 0.3s ease,
+    border-radius 0.3s ease,
+    background 0.3s ease;
+}
+
+.hero-dot.active {
+  width: 30px;
+  border-radius: 10px;
+  background: #b9852f;
+}
+
+
+/* =========================================================
+   DESKTOP
+   ========================================================= */
+
+@media (min-width: 1200px) {
+
+  .hero-explore-link {
+    left: 21.5%;
+    top: 68%;
+    width: 19%;
+    height: 10%;
+  }
+
+}
+
+
+/* =========================================================
+   LAPTOP
+   ========================================================= */
+
+@media (max-width: 1199px) and (min-width: 851px) {
+
+  .hero-explore-link {
+    left: 21%;
+    top: 67%;
+    width: 20%;
+    height: 11%;
+  }
+
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 850px) {
+
+  .hero-explore-link {
+    left: 20%;
+    top: 66%;
+    width: 22%;
+    height: 12%;
+  }
+
+  .hero-dots {
+    bottom: 4%;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .hero-explore-link {
+    left: 18%;
+    top: 65%;
+    width: 27%;
+    height: 13%;
+  }
+
+  .hero-dots {
+    bottom: 4%;
+    gap: 7px;
+  }
+
+  .hero-dot {
+    width: 7px;
+    height: 7px;
+  }
+
+  .hero-dot.active {
+    width: 22px;
+  }
+
+}

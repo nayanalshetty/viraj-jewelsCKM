@@ -1,0 +1,648 @@
+/* =========================================================
+   VIRAJ JEWELLERS
+   JEWELLERY MADE FOR EVERY MOMENT
+========================================================= */
+
+.collection-banner {
+  position: relative;
+
+  width: 100%;
+  min-height: 650px;
+
+  overflow: hidden;
+
+  display: grid;
+  grid-template-columns: 52% 48%;
+  align-items: stretch;
+
+  background:
+    radial-gradient(
+      circle at 35% 45%,
+      rgba(255, 255, 255, 0.65) 0,
+      rgba(255, 255, 255, 0) 42%
+    ),
+    linear-gradient(
+      135deg,
+      #f8f0e3 0%,
+      #f1e2cc 52%,
+      #ead8bd 100%
+    );
+
+  border-top: 1px solid #ddc39b;
+  border-bottom: 1px solid #ddc39b;
+}
+
+
+/* =========================================================
+   SUBTLE BACKGROUND
+========================================================= */
+
+.collection-banner-background {
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle at 12% 18%,
+      rgba(206, 174, 116, 0.08),
+      transparent 26%
+    ),
+    radial-gradient(
+      circle at 82% 78%,
+      rgba(206, 174, 116, 0.12),
+      transparent 28%
+    );
+
+  z-index: 0;
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.collection-banner-content {
+  position: relative;
+
+  z-index: 3;
+
+  align-self: center;
+
+  padding:
+    80px
+    5vw
+    80px
+    7vw;
+}
+
+
+/* =========================================================
+   EYEBROW
+========================================================= */
+
+.collection-eyebrow {
+  margin: 0 0 22px;
+
+  color: #a96f22;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  letter-spacing: 5px;
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.collection-banner-content h2 {
+  margin: 0;
+
+  max-width: 650px;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: clamp(48px, 5vw, 78px);
+
+  line-height: 0.98;
+
+  font-weight: 400;
+
+  color: #281c15;
+}
+
+
+/* =========================================================
+   DIVIDER
+========================================================= */
+
+.collection-divider {
+  width: 360px;
+  max-width: 85%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  margin: 28px 0 24px;
+}
+
+.collection-divider span {
+  height: 1px;
+  flex: 1;
+
+  background: #caa66a;
+}
+
+.collection-divider i {
+  font-style: normal;
+
+  color: #b98532;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.collection-description {
+  max-width: 530px;
+
+  margin: 0;
+
+  color: #6f5d4e;
+
+  font-size: 17px;
+
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   FEATURE POINTS
+========================================================= */
+
+.collection-points {
+  display: flex;
+  align-items: stretch;
+
+  gap: 0;
+
+  margin-top: 30px;
+
+  max-width: 620px;
+}
+
+.collection-point {
+  flex: 1;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 0 22px;
+
+  border-right: 1px solid rgba(179, 142, 84, 0.35);
+}
+
+.collection-point:first-child {
+  padding-left: 0;
+}
+
+.collection-point:last-child {
+  border-right: 0;
+}
+
+.collection-point-icon {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #c69b55;
+  border-radius: 50%;
+
+  color: #b17a2c;
+
+  font-size: 16px;
+}
+
+.collection-point strong {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #946322;
+
+  font-size: 11px;
+
+  letter-spacing: 1.5px;
+}
+
+.collection-point small {
+  display: block;
+
+  color: #796a5d;
+
+  font-size: 10px;
+
+  line-height: 1.3;
+}
+
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.collection-button {
+  width: 290px;
+
+  margin-top: 34px;
+
+  padding:
+    17px
+    24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border: 1px solid #b78331;
+
+  background: transparent;
+
+  color: #93621f;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+
+  text-decoration: none;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.collection-button:hover {
+  background: #b78331;
+  color: #fff;
+
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   STORY
+========================================================= */
+
+.collection-story {
+  margin-top: 30px;
+
+  display: flex;
+  align-items: flex-start;
+
+  gap: 14px;
+}
+
+.story-line {
+  width: 22px;
+  height: 22px;
+
+  margin-top: 4px;
+
+  position: relative;
+}
+
+.story-line::before,
+.story-line::after {
+  content: "";
+
+  position: absolute;
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  border: 1px solid #a97b32;
+}
+
+.story-line::before {
+  width: 10px;
+  height: 10px;
+
+  top: 0;
+
+  transform:
+    translateX(-50%)
+    rotate(45deg);
+}
+
+.story-line::after {
+  width: 2px;
+  height: 8px;
+
+  bottom: 0;
+
+  border-left: 0;
+  border-right: 0;
+  border-top: 0;
+}
+
+.collection-story p {
+  margin: 0;
+
+  color: #6e5b4c;
+
+  font-size: 13px;
+
+  line-height: 1.65;
+}
+
+
+/* =========================================================
+   MODEL SIDE
+========================================================= */
+
+.collection-model {
+  position: relative;
+
+  min-height: 650px;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  overflow: hidden;
+
+  z-index: 2;
+}
+
+
+/* =========================================================
+   DECORATIVE ARCH
+========================================================= */
+
+.collection-arch {
+  position: absolute;
+
+  right: 6%;
+  bottom: -8%;
+
+  width: 80%;
+  height: 92%;
+
+  border:
+    2px solid rgba(190, 148, 79, 0.65);
+
+  border-bottom: 0;
+
+  border-radius:
+    50%
+    50%
+    0
+    0;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,0.18),
+      rgba(255,255,255,0)
+    );
+
+  z-index: 0;
+}
+
+
+/* =========================================================
+   MODEL IMAGE
+========================================================= */
+
+.collection-model img {
+  position: relative;
+
+  z-index: 2;
+
+  width: 100%;
+  height: 100%;
+
+  max-width: none;
+
+  object-fit: cover;
+
+  object-position: center top;
+
+  display: block;
+}
+
+
+/* =========================================================
+   FLOWER DECORATIONS
+========================================================= */
+
+.collection-flower {
+  position: absolute;
+
+  pointer-events: none;
+
+  z-index: 4;
+
+  opacity: 0.9;
+}
+
+.collection-flower::before,
+.collection-flower::after {
+  content: "";
+  position: absolute;
+}
+
+
+/* Top left */
+.flower-top-left {
+  top: 20px;
+  left: 18px;
+
+  width: 130px;
+  height: 130px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(255,255,255,0.75) 0 12%,
+      transparent 13%
+    ),
+    radial-gradient(
+      ellipse at center,
+      rgba(204,164,103,0.55) 0 18%,
+      transparent 20%
+    );
+}
+
+
+/* Bottom left */
+.flower-bottom-left {
+  bottom: -45px;
+  left: -25px;
+
+  width: 180px;
+  height: 180px;
+
+  border-radius: 50%;
+
+  box-shadow:
+    30px -15px 0 -55px #d7ba89;
+}
+
+
+/* Bottom center */
+.flower-bottom-center {
+  bottom: -60px;
+  left: 47%;
+
+  width: 180px;
+  height: 180px;
+
+  background:
+    radial-gradient(
+      circle at 30% 40%,
+      rgba(255,255,255,0.85) 0 10%,
+      transparent 11%
+    );
+
+  opacity: 0.65;
+}
+
+
+/* Right */
+.flower-right {
+  top: 14%;
+  right: 3%;
+
+  width: 100px;
+  height: 100px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,255,255,0.55) 0 16%,
+      transparent 17%
+    );
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+
+  .collection-banner {
+    grid-template-columns: 1fr;
+  }
+
+  .collection-banner-content {
+    padding:
+      65px
+      7vw
+      30px;
+  }
+
+  .collection-model {
+    min-height: 550px;
+  }
+
+  .collection-arch {
+    right: 8%;
+    width: 78%;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .collection-banner {
+    min-height: auto;
+
+    display: block;
+  }
+
+  .collection-banner-content {
+    padding:
+      55px
+      22px
+      30px;
+  }
+
+  .collection-eyebrow {
+    font-size: 10px;
+    letter-spacing: 4px;
+  }
+
+  .collection-banner-content h2 {
+    font-size: 46px;
+    line-height: 1;
+  }
+
+  .collection-divider {
+    margin: 22px 0 20px;
+  }
+
+  .collection-description {
+    font-size: 14px;
+  }
+
+  .collection-points {
+    flex-direction: column;
+
+    gap: 18px;
+
+    margin-top: 25px;
+  }
+
+  .collection-point {
+    padding:
+      0 0 15px;
+
+    border-right: 0;
+
+    border-bottom:
+      1px solid
+      rgba(179, 142, 84, 0.25);
+  }
+
+  .collection-point:last-child {
+    border-bottom: 0;
+  }
+
+  .collection-button {
+    width: 100%;
+  }
+
+  .collection-model {
+    min-height: 480px;
+
+    margin-top: 10px;
+  }
+
+  .collection-arch {
+    width: 92%;
+    right: 4%;
+  }
+
+  .collection-model img {
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .collection-story {
+    margin-bottom: 15px;
+  }
+
+}

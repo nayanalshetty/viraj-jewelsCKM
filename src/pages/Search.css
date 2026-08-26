@@ -1,0 +1,626 @@
+/* =========================================================
+   VIRAJ JEWELLERY
+   SEARCH PAGE
+   ========================================================= */
+
+.search-page {
+  min-height: 80vh;
+
+  padding: 60px 5% 100px;
+
+  background: #faf8f4;
+
+  color: #171614;
+}
+
+
+/* =========================================================
+   SEARCH HEADER
+   ========================================================= */
+
+.search-header {
+  max-width: 1000px;
+
+  margin: 0 auto;
+
+  text-align: center;
+}
+
+.search-eyebrow {
+  margin: 0 0 10px;
+
+  color: #a06b2c;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 2.5px;
+
+  text-transform: uppercase;
+}
+
+.search-header h1 {
+  margin: 0;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: clamp(38px, 5vw, 58px);
+
+  font-weight: 500;
+
+  line-height: 1.1;
+}
+
+.search-subtitle {
+  margin: 14px auto 30px;
+
+  color: #77736c;
+
+  font-size: 14px;
+
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   SEARCH FORM
+   ========================================================= */
+
+.search-form {
+  display: flex;
+
+  align-items: stretch;
+
+  max-width: 780px;
+
+  margin: 0 auto;
+}
+
+.search-input-wrapper {
+  position: relative;
+
+  flex: 1;
+}
+
+.search-input-icon {
+  position: absolute;
+
+  top: 50%;
+  left: 18px;
+
+  width: 20px;
+  height: 20px;
+
+  transform: translateY(-50%);
+
+  color: #77736c;
+
+  pointer-events: none;
+}
+
+.search-input-wrapper input {
+  width: 100%;
+
+  height: 56px;
+
+  padding:
+    0 48px
+    0 52px;
+
+  border: 1px solid #dcd5ca;
+
+  border-right: 0;
+
+  outline: none;
+
+  background: #ffffff;
+
+  color: #171614;
+
+  font-size: 14px;
+}
+
+.search-input-wrapper input::placeholder {
+  color: #aaa39a;
+}
+
+.search-input-wrapper input:focus {
+  border-color: #b78335;
+}
+
+.search-input-wrapper input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.search-clear {
+  position: absolute;
+
+  top: 50%;
+  right: 15px;
+
+  width: 25px;
+  height: 25px;
+
+  transform: translateY(-50%);
+
+  border: 0;
+
+  border-radius: 50%;
+
+  background: #eee9e1;
+
+  color: #55504a;
+
+  font-size: 17px;
+
+  line-height: 20px;
+
+  cursor: pointer;
+}
+
+.search-submit {
+  width: 140px;
+
+  border: 1px solid #181715;
+
+  background: #181715;
+
+  color: #ffffff;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+
+  text-transform: uppercase;
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.search-submit:hover {
+  background: #b78335;
+
+  border-color: #b78335;
+}
+
+
+/* =========================================================
+   RESULTS
+   ========================================================= */
+
+.search-results {
+  max-width: 1400px;
+
+  margin: 65px auto 0;
+}
+
+.search-results-heading {
+  display: flex;
+
+  align-items: flex-end;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 28px;
+
+  padding-bottom: 20px;
+
+  border-bottom: 1px solid #e3ddd4;
+}
+
+.search-results-heading p {
+  margin: 0 0 7px;
+
+  color: #a06b2c;
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  letter-spacing: 2px;
+}
+
+.search-results-heading h2 {
+  margin: 0;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 28px;
+
+  font-weight: 500;
+}
+
+.search-results-heading > span {
+  color: #77736c;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   PRODUCT GRID
+   ========================================================= */
+
+.search-product-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 24px;
+}
+
+
+/* =========================================================
+   NO RESULTS
+   ========================================================= */
+
+.search-no-results {
+  max-width: 650px;
+
+  margin: 30px auto 0;
+
+  padding: 70px 30px;
+
+  text-align: center;
+
+  background: #ffffff;
+
+  border: 1px solid #e5ded4;
+}
+
+.search-no-results-icon {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 70px;
+  height: 70px;
+
+  margin: 0 auto 22px;
+
+  border-radius: 50%;
+
+  background: #f3eee7;
+
+  color: #b78335;
+
+  font-size: 32px;
+}
+
+.search-no-results-label {
+  margin: 0 0 8px;
+
+  color: #a06b2c;
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  letter-spacing: 2px;
+}
+
+.search-no-results h2 {
+  margin: 0;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 30px;
+
+  font-weight: 500;
+}
+
+.search-no-results p:not(.search-no-results-label) {
+  max-width: 450px;
+
+  margin: 14px auto 25px;
+
+  color: #77736c;
+
+  font-size: 13px;
+
+  line-height: 1.7;
+}
+
+.search-browse-button {
+  min-height: 46px;
+
+  padding: 0 25px;
+
+  border: 1px solid #181715;
+
+  background: #181715;
+
+  color: #ffffff;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.3px;
+
+  text-transform: uppercase;
+
+  cursor: pointer;
+}
+
+.search-browse-button:hover {
+  background: #b78335;
+
+  border-color: #b78335;
+}
+
+
+/* =========================================================
+   DISCOVERY
+   ========================================================= */
+
+.search-discovery {
+  max-width: 1100px;
+
+  margin: 65px auto 0;
+}
+
+.search-discovery-heading {
+  margin-bottom: 25px;
+
+  text-align: center;
+}
+
+.search-discovery-heading p {
+  margin: 0 0 8px;
+
+  color: #a06b2c;
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  letter-spacing: 2px;
+}
+
+.search-discovery-heading h2 {
+  margin: 0;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 32px;
+
+  font-weight: 500;
+}
+
+
+/* =========================================================
+   CATEGORY LINKS
+   ========================================================= */
+
+.search-category-links {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 1px;
+
+  background: #ded7cd;
+
+  border: 1px solid #ded7cd;
+}
+
+.search-category-links a {
+  position: relative;
+
+  display: flex;
+
+  flex-direction: column;
+
+  min-height: 150px;
+
+  padding: 25px;
+
+  background: #ffffff;
+
+  color: #171614;
+
+  text-decoration: none;
+
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+.search-category-links a:hover {
+  background: #f5f0e9;
+
+  z-index: 2;
+}
+
+.search-category-links span {
+  margin-bottom: auto;
+
+  color: #b78335;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 13px;
+}
+
+.search-category-links strong {
+  margin-top: 20px;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 19px;
+
+  font-weight: 500;
+}
+
+.search-category-links small {
+  margin-top: 6px;
+
+  color: #88827a;
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1100px) {
+  .search-product-grid {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+  }
+}
+
+
+/* =========================================================
+   TABLET / MOBILE
+   ========================================================= */
+
+@media (max-width: 800px) {
+  .search-page {
+    padding:
+      45px 20px
+      70px;
+  }
+
+  .search-product-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 15px;
+  }
+
+  .search-category-links {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+  .search-results-heading {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 550px) {
+  .search-page {
+    padding:
+      35px 14px
+      60px;
+  }
+
+  .search-header h1 {
+    font-size: 36px;
+  }
+
+  .search-subtitle {
+    font-size: 13px;
+  }
+
+  .search-form {
+    flex-direction: column;
+
+    gap: 10px;
+  }
+
+  .search-input-wrapper input {
+    border-right: 1px solid #dcd5ca;
+  }
+
+  .search-submit {
+    width: 100%;
+
+    height: 50px;
+  }
+
+  .search-results {
+    margin-top: 45px;
+  }
+
+  .search-results-heading h2 {
+    font-size: 23px;
+  }
+
+  .search-product-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+  }
+
+  .search-category-links {
+    grid-template-columns: 1fr;
+  }
+
+  .search-discovery-heading h2 {
+    font-size: 27px;
+  }
+
+  .search-no-results {
+    padding: 50px 20px;
+  }
+
+  .search-no-results h2 {
+    font-size: 26px;
+  }
+}
+
+/* =========================================================
+   VIRAJ CREAM / GOLD PAGE FINISH
+========================================================= */
+.category-page,
+.product-page,
+.cart-page,
+.checkout-page,
+.wishlist-page,
+.search-page,
+.contact-page,
+.order-success-page {
+  background: #f7f0e6;
+  color: #2d2117;
+}
+
+button,
+input,
+select,
+textarea {
+  accent-color: #a8792e;
+}
+

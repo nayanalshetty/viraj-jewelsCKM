@@ -1,0 +1,789 @@
+/* =========================================================
+   VIRAJ JEWELLERY
+   CONTACT PAGE
+   ========================================================= */
+
+.contact-page {
+  min-height: 100vh;
+  background: #fffdfa;
+  color: #161513;
+}
+
+
+/* =========================================================
+   CONTACT HERO
+   ========================================================= */
+
+.contact-hero {
+  padding: 75px 24px 65px;
+
+  text-align: center;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f7f2e9 0%,
+      #fffdfa 55%,
+      #f5eee3 100%
+    );
+
+  border-bottom: 1px solid #e7e1d8;
+}
+
+.contact-eyebrow {
+  margin: 0 0 14px;
+
+  color: #a06b2c;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.contact-hero h1 {
+  margin: 0;
+
+  color: #161513;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: clamp(42px, 5vw, 64px);
+
+  font-weight: 400;
+
+  line-height: 1.08;
+}
+
+.contact-hero p {
+  max-width: 650px;
+
+  margin: 20px auto 0;
+
+  color: #77736c;
+
+  font-size: 14px;
+
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   CONTACT CONTENT
+   ========================================================= */
+
+.contact-content {
+  max-width: 1250px;
+
+  margin: 0 auto;
+
+  padding: 70px 24px 100px;
+
+  display: grid;
+
+  grid-template-columns:
+    0.9fr
+    1.1fr;
+
+  gap: 70px;
+}
+
+
+/* =========================================================
+   CONTACT INFORMATION
+   ========================================================= */
+
+.contact-information {
+  padding-top: 8px;
+}
+
+.contact-information-label {
+  margin: 0 0 12px;
+
+  color: #a06b2c;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 2.5px;
+
+  text-transform: uppercase;
+}
+
+.contact-information h2 {
+  margin: 0 0 18px;
+
+  color: #161513;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 38px;
+
+  font-weight: 400;
+
+  line-height: 1.15;
+}
+
+.contact-information-intro {
+  margin: 0 0 35px;
+
+  color: #77736c;
+
+  font-size: 14px;
+
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   CONTACT DETAILS
+   ========================================================= */
+
+.contact-details {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 24px;
+}
+
+.contact-detail {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 17px;
+}
+
+.contact-detail-icon {
+  flex: 0 0 42px;
+
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #ddd4c7;
+
+  background: #f8f4ed;
+
+  color: #a06b2c;
+
+  font-size: 17px;
+}
+
+.contact-detail-content {
+  min-width: 0;
+}
+
+.contact-detail-content span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #a06b2c;
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.8px;
+
+  text-transform: uppercase;
+}
+
+.contact-detail-content strong {
+  display: block;
+
+  color: #161513;
+
+  font-size: 14px;
+
+  font-weight: 500;
+
+  line-height: 1.6;
+}
+
+.contact-detail-content a {
+  color: #161513;
+
+  font-size: 14px;
+
+  text-decoration: none;
+
+  line-height: 1.6;
+
+  transition: color 0.25s ease;
+}
+
+.contact-detail-content a:hover {
+  color: #a06b2c;
+}
+
+
+/* =========================================================
+   SOCIAL LINKS
+   ========================================================= */
+
+.contact-social {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin-top: 35px;
+
+  padding-top: 28px;
+
+  border-top: 1px solid #e7e1d8;
+}
+
+.contact-social span {
+  margin-right: 8px;
+
+  color: #77736c;
+
+  font-size: 10px;
+
+  font-weight: 600;
+
+  letter-spacing: 1.5px;
+
+  text-transform: uppercase;
+}
+
+.contact-social a {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #ddd5ca;
+
+  color: #161513;
+
+  background: #ffffff;
+
+  font-size: 13px;
+
+  text-decoration: none;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.contact-social a:hover {
+  background: #181715;
+
+  border-color: #181715;
+
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   CONTACT FORM
+   ========================================================= */
+
+.contact-form-wrapper {
+  padding: 38px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5ded4;
+
+  box-shadow:
+    0 18px 50px rgba(22, 21, 19, 0.06);
+}
+
+.contact-form-wrapper h2 {
+  margin: 0 0 8px;
+
+  color: #161513;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 30px;
+
+  font-weight: 400;
+}
+
+.contact-form-wrapper > p {
+  margin: 0 0 28px;
+
+  color: #77736c;
+
+  font-size: 13px;
+
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   FORM ROW
+   ========================================================= */
+
+.contact-form-row {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+
+/* =========================================================
+   FORM GROUP
+   ========================================================= */
+
+.contact-form-group {
+  margin-bottom: 20px;
+}
+
+.contact-form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.contact-form-group label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #4f4a44;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.3px;
+
+  text-transform: uppercase;
+}
+
+.contact-form-group input,
+.contact-form-group textarea,
+.contact-form-group select {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 13px 14px;
+
+  border: 1px solid #dcd5cb;
+
+  outline: none;
+
+  background: #fffdfa;
+
+  color: #161513;
+
+  font-family: inherit;
+
+  font-size: 13px;
+
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.contact-form-group input {
+  height: 46px;
+}
+
+.contact-form-group textarea {
+  min-height: 130px;
+
+  resize: vertical;
+
+  line-height: 1.6;
+}
+
+.contact-form-group select {
+  height: 46px;
+
+  cursor: pointer;
+}
+
+.contact-form-group input::placeholder,
+.contact-form-group textarea::placeholder {
+  color: #aaa39a;
+}
+
+.contact-form-group input:focus,
+.contact-form-group textarea:focus,
+.contact-form-group select:focus {
+  border-color: #b78335;
+
+  box-shadow:
+    0 0 0 3px rgba(183, 131, 53, 0.08);
+}
+
+
+/* =========================================================
+   SUBMIT BUTTON
+   ========================================================= */
+
+.contact-submit-button {
+  width: 100%;
+
+  min-height: 50px;
+
+  border: 1px solid #181715;
+
+  background: #181715;
+
+  color: #ffffff;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.8px;
+
+  text-transform: uppercase;
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.contact-submit-button:hover {
+  background: #b78335;
+
+  border-color: #b78335;
+
+  transform: translateY(-1px);
+}
+
+.contact-submit-button:active {
+  transform: translateY(0);
+}
+
+
+/* =========================================================
+   STORE SECTION
+   ========================================================= */
+
+.contact-store-section {
+  max-width: 1250px;
+
+  margin: 0 auto;
+
+  padding: 0 24px 100px;
+}
+
+.contact-store-card {
+  display: grid;
+
+  grid-template-columns:
+    1fr
+    1fr;
+
+  border: 1px solid #e5ded4;
+
+  background: #f7f3ec;
+}
+
+.contact-store-info {
+  padding: 45px;
+}
+
+.contact-store-label {
+  margin: 0 0 10px;
+
+  color: #a06b2c;
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+}
+
+.contact-store-info h2 {
+  margin: 0 0 16px;
+
+  color: #161513;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 34px;
+
+  font-weight: 400;
+}
+
+.contact-store-info p {
+  max-width: 500px;
+
+  margin: 0;
+
+  color: #77736c;
+
+  font-size: 13px;
+
+  line-height: 1.8;
+}
+
+.contact-store-hours {
+  margin-top: 25px;
+
+  padding-top: 20px;
+
+  border-top: 1px solid #ded5c9;
+}
+
+.contact-store-hours strong {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #161513;
+
+  font-size: 11px;
+
+  letter-spacing: 1px;
+
+  text-transform: uppercase;
+}
+
+.contact-store-hours span {
+  color: #77736c;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   MAP / STORE VISUAL
+   ========================================================= */
+
+.contact-map {
+  min-height: 320px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background:
+    linear-gradient(
+      135deg,
+      #e9e1d5,
+      #f6f1e8
+    );
+
+  color: #a06b2c;
+}
+
+.contact-map-inner {
+  text-align: center;
+}
+
+.contact-map-inner strong {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #161513;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 27px;
+
+  font-weight: 400;
+}
+
+.contact-map-inner span {
+  color: #77736c;
+
+  font-size: 11px;
+
+  letter-spacing: 1.5px;
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .contact-content {
+    grid-template-columns: 1fr;
+
+    gap: 50px;
+
+    padding-top: 55px;
+  }
+
+  .contact-information h2 {
+    font-size: 34px;
+  }
+
+  .contact-store-card {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+/* =========================================================
+   TABLET / MOBILE
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+  .contact-hero {
+    padding: 50px 18px 45px;
+  }
+
+  .contact-hero h1 {
+    font-size: 42px;
+  }
+
+  .contact-hero p {
+    font-size: 13px;
+  }
+
+  .contact-content {
+    padding:
+      45px 16px
+      65px;
+  }
+
+  .contact-information h2 {
+    font-size: 31px;
+  }
+
+  .contact-form-wrapper {
+    padding: 25px 20px;
+  }
+
+  .contact-form-row {
+    grid-template-columns: 1fr;
+
+    gap: 0;
+  }
+
+  .contact-form-group.full-width {
+    grid-column: auto;
+  }
+
+  .contact-store-section {
+    padding:
+      0 16px
+      65px;
+  }
+
+  .contact-store-info {
+    padding: 30px 25px;
+  }
+
+  .contact-map {
+    min-height: 250px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 420px) {
+
+  .contact-hero {
+    padding: 40px 15px;
+  }
+
+  .contact-hero h1 {
+    font-size: 36px;
+  }
+
+  .contact-content {
+    padding:
+      40px 14px
+      55px;
+  }
+
+  .contact-form-wrapper {
+    padding: 22px 16px;
+  }
+
+  .contact-detail {
+    gap: 12px;
+  }
+
+  .contact-detail-icon {
+    flex-basis: 38px;
+
+    width: 38px;
+    height: 38px;
+  }
+
+  .contact-social {
+    flex-wrap: wrap;
+  }
+
+  .contact-store-info {
+    padding: 25px 20px;
+  }
+
+}
+
+/* =========================================================
+   VIRAJ CREAM / GOLD PAGE FINISH
+========================================================= */
+.category-page,
+.product-page,
+.cart-page,
+.checkout-page,
+.wishlist-page,
+.search-page,
+.contact-page,
+.order-success-page {
+  background: #f7f0e6;
+  color: #2d2117;
+}
+
+button,
+input,
+select,
+textarea {
+  accent-color: #a8792e;
+}
+

@@ -1,0 +1,392 @@
+/* =========================================================
+   VIRAJ JEWELLERY
+   SHOP BY CATEGORY
+   ========================================================= */
+
+.shop-category {
+  width: 100%;
+  padding: 55px 24px 70px;
+  background: #f8f1e7;
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   HEADING
+   ========================================================= */
+
+.shop-category-heading {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto 38px;
+  text-align: center;
+}
+
+.shop-category-eyebrow {
+  margin: 0 0 8px;
+  font-size: 11px;
+  letter-spacing: 4px;
+  font-weight: 600;
+  color: #a8792b;
+}
+
+.shop-category-heading h2 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(36px, 4vw, 54px);
+  line-height: 1.05;
+  font-weight: 400;
+  color: #241b15;
+}
+
+.shop-category-heading h2 span {
+  color: #b17a28;
+}
+
+.shop-category-heading > p:last-child {
+  max-width: 700px;
+  margin: 16px auto 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #765f4d;
+}
+
+/* =========================================================
+   GRID
+   ========================================================= */
+
+.shop-category-grid {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 14px;
+
+  align-items: start;
+}
+
+/* =========================================================
+   CARD
+   ========================================================= */
+
+.shop-category-card {
+  width: 100%;
+  min-width: 0;
+
+  display: block;
+
+  background: #fffaf4;
+
+  border: 1px solid #dec8a7;
+
+  text-decoration: none;
+  color: inherit;
+
+  overflow: hidden;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.shop-category-card:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 12px 30px rgba(90, 60, 25, 0.1);
+}
+
+/* =========================================================
+   IMAGE
+   ========================================================= */
+
+.shop-category-image {
+  position: relative;
+
+  width: 100%;
+  height: 300px;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at center,
+      #fffdf9 0%,
+      #f4eadb 65%,
+      #eadbc6 100%
+    );
+}
+
+.shop-category-image img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+  object-position: center;
+
+  transition:
+    transform 0.45s ease;
+}
+
+.shop-category-card:hover
+.shop-category-image img {
+  transform: scale(1.035);
+}
+
+/* =========================================================
+   FALLBACK
+   ========================================================= */
+
+.shop-category-placeholder {
+  position: absolute;
+
+  inset: 0;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-direction: column;
+
+  color: #b17a28;
+
+  background:
+    radial-gradient(
+      circle at center,
+      #fffdf9 0%,
+      #f4eadb 65%,
+      #eadbc6 100%
+    );
+}
+
+.shop-category-placeholder strong {
+  font-family: Georgia, serif;
+
+  font-size: 25px;
+
+  letter-spacing: 6px;
+
+  font-weight: 400;
+}
+
+.shop-category-placeholder span {
+  margin-top: 4px;
+
+  font-size: 7px;
+
+  letter-spacing: 4px;
+}
+
+/* =========================================================
+   BADGE
+   ========================================================= */
+
+.shop-category-badge {
+  position: absolute;
+
+  top: 13px;
+  left: 13px;
+
+  padding: 9px 13px;
+
+  background: rgba(
+    255,
+    252,
+    247,
+    0.95
+  );
+
+  border: 1px solid #d9b57c;
+
+  color: #9b681e;
+
+  font-size: 10px;
+
+  letter-spacing: 2px;
+
+  font-weight: 600;
+}
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.shop-category-content {
+  min-height: 90px;
+
+  padding: 20px 18px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  background: #fffaf5;
+
+  box-sizing: border-box;
+}
+
+.shop-category-content h3 {
+  margin: 0;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 23px;
+
+  line-height: 1.1;
+
+  font-weight: 400;
+
+  color: #241b15;
+}
+
+.shop-category-content p {
+  margin: 7px 0 0;
+
+  font-size: 12px;
+
+  line-height: 1.4;
+
+  color: #856f5c;
+}
+
+/* =========================================================
+   ARROW
+   ========================================================= */
+
+.shop-category-arrow {
+  flex: 0 0 auto;
+
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #d8b887;
+
+  color: #a87324;
+
+  font-size: 18px;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.shop-category-card:hover
+.shop-category-arrow {
+  background: #b17a28;
+  color: white;
+}
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.shop-category-loading {
+  width: 100%;
+  max-width: 1180px;
+
+  margin: 0 auto;
+
+  min-height: 120px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  color: #8a735e;
+
+  font-size: 14px;
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  .shop-category {
+    padding: 42px 14px 50px;
+  }
+
+  .shop-category-heading {
+    margin-bottom: 26px;
+  }
+
+  .shop-category-heading h2 {
+    font-size: 36px;
+  }
+
+  .shop-category-heading > p:last-child {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .shop-category-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+  }
+
+  .shop-category-image {
+    height: 205px;
+  }
+
+  .shop-category-content {
+    min-height: 76px;
+
+    padding: 13px 11px;
+
+    gap: 7px;
+  }
+
+  .shop-category-content h3 {
+    font-size: 18px;
+  }
+
+  .shop-category-content p {
+    font-size: 10px;
+    line-height: 1.35;
+  }
+
+  .shop-category-arrow {
+    width: 30px;
+    height: 30px;
+    font-size: 15px;
+  }
+
+  .shop-category-badge {
+    top: 9px;
+    left: 9px;
+
+    padding: 7px 9px;
+
+    font-size: 8px;
+    letter-spacing: 1.5px;
+  }
+}
+
+@media (max-width: 430px) {
+
+  .shop-category-image {
+    height: 185px;
+  }
+
+  .shop-category-content h3 {
+    font-size: 16px;
+  }
+
+  .shop-category-content p {
+    font-size: 9px;
+  }
+}

@@ -1,0 +1,585 @@
+/* =========================================================
+   VIRAJ JEWELLERS — PREMIUM PRODUCT CARD
+========================================================= */
+
+.product-card {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+
+  overflow: hidden;
+
+  background: #fffdf9;
+
+  border: 1px solid #e7ddcf;
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+
+  border-color: #d4b06a;
+
+  box-shadow:
+    0 18px 42px rgba(63, 43, 24, 0.11);
+}
+
+
+/* =========================================================
+   IMAGE AREA
+========================================================= */
+
+.product-card-image {
+  position: relative;
+
+  width: 100%;
+
+  aspect-ratio: 1 / 1.08;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at center,
+      #fffdf9 0%,
+      #f5eee4 65%,
+      #eee2d2 100%
+    );
+}
+
+.product-card-image > a {
+  position: absolute;
+  inset: 0;
+
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  text-decoration: none;
+}
+
+.product-card-image img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+  object-position: center;
+
+  transition:
+    transform 0.7s cubic-bezier(0.2, 0.65, 0.25, 1),
+    filter 0.4s ease;
+}
+
+.product-card:hover .product-card-image img {
+  transform: scale(1.045);
+}
+
+
+/* =========================================================
+   SUBTLE IMAGE OVERLAY
+========================================================= */
+
+.product-card-image::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0) 65%,
+      rgba(67, 43, 23, 0.045) 100%
+    );
+
+  z-index: 1;
+}
+
+
+/* =========================================================
+   PLACEHOLDER
+========================================================= */
+
+.product-card-placeholder {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  background:
+    radial-gradient(
+      circle at center,
+      #fffdf9 0%,
+      #f1e7d8 100%
+    );
+
+  color: #b78335;
+
+  pointer-events: none;
+
+  z-index: 1;
+}
+
+.product-card-placeholder span {
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 28px;
+  font-weight: 500;
+
+  letter-spacing: 5px;
+}
+
+.product-card-placeholder small {
+  margin-top: 6px;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 10px;
+
+  letter-spacing: 3px;
+
+  text-transform: uppercase;
+
+  color: #817468;
+}
+
+
+/* =========================================================
+   BADGE
+========================================================= */
+
+.product-card-badge {
+  position: absolute;
+
+  top: 14px;
+  left: 14px;
+
+  z-index: 5;
+
+  padding: 7px 12px;
+
+  background: #a8792e;
+
+  color: #fffaf2;
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 1.4px;
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   WISHLIST
+========================================================= */
+
+.product-card-wishlist {
+  position: absolute;
+
+  top: 12px;
+  right: 12px;
+
+  z-index: 6;
+
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border:
+    1px solid rgba(78, 58, 39, 0.13);
+
+  border-radius: 50%;
+
+  background:
+    rgba(255, 253, 249, 0.94);
+
+  color: #3c3025;
+
+  font-size: 21px;
+
+  line-height: 1;
+
+  cursor: pointer;
+
+  backdrop-filter: blur(5px);
+
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.product-card-wishlist:hover {
+  transform: scale(1.08);
+
+  background: #fff;
+
+  border-color: #c8a366;
+
+  color: #a8792e;
+}
+
+.product-card-wishlist.active {
+  background: #fff;
+
+  color: #b78335;
+
+  border-color: #d4b06a;
+}
+
+
+/* =========================================================
+   PRODUCT CONTENT
+========================================================= */
+
+.product-card-content {
+  display: flex;
+
+  flex-direction: column;
+
+  flex: 1;
+
+  min-height: 190px;
+
+  padding:
+    19px
+    18px
+    18px;
+
+  background: #fffdf9;
+}
+
+
+/* =========================================================
+   CATEGORY
+========================================================= */
+
+.product-card-category {
+  margin: 0 0 8px;
+
+  color: #a8792e;
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  letter-spacing: 2px;
+
+  line-height: 1.4;
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   NAME
+========================================================= */
+
+.product-card-name {
+  display: block;
+
+  min-height: 48px;
+
+  color: #2d2117;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 19px;
+
+  font-weight: 400;
+
+  line-height: 1.3;
+
+  text-decoration: none;
+
+  transition: color 0.25s ease;
+}
+
+.product-card-name:hover {
+  color: #a8792e;
+}
+
+
+/* =========================================================
+   META
+========================================================= */
+
+.product-card-meta {
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  margin-top: 10px;
+
+  color: #807266;
+
+  font-size: 11px;
+}
+
+.product-card-meta span {
+  display: inline-flex;
+
+  align-items: center;
+}
+
+.product-card-meta span + span::before {
+  content: "•";
+
+  margin-right: 9px;
+
+  color: #c6a66b;
+}
+
+
+/* =========================================================
+   BOTTOM
+========================================================= */
+
+.product-card-bottom {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 12px;
+
+  width: 100%;
+
+  margin-top: auto;
+
+  padding-top: 17px;
+
+  border-top:
+    1px solid #eee5d9;
+}
+
+
+/* =========================================================
+   PRICE
+========================================================= */
+
+.product-card-bottom strong {
+  display: block;
+
+  color: #2d2117;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 18px;
+
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   VIEW PRODUCT
+========================================================= */
+
+.product-card-view {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 40px;
+
+  padding: 0 16px;
+
+  border:
+    1px solid #b78335;
+
+  background: #b78335;
+
+  color: #fffaf2;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.1px;
+
+  text-decoration: none;
+
+  white-space: nowrap;
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.product-card-view:hover {
+  background: #2d2117;
+
+  border-color: #2d2117;
+
+  color: #fffaf2;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .product-card-content {
+    padding:
+      17px
+      15px
+      15px;
+  }
+
+  .product-card-name {
+    font-size: 17px;
+
+    min-height: 44px;
+  }
+
+  .product-card-bottom strong {
+    font-size: 16px;
+  }
+
+  .product-card-view {
+    min-height: 38px;
+
+    padding: 0 12px;
+
+    font-size: 9px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .product-card-image {
+    aspect-ratio: 1 / 1;
+  }
+
+  .product-card-content {
+    min-height: 175px;
+
+    padding:
+      15px
+      13px
+      14px;
+  }
+
+  .product-card-category {
+    font-size: 8px;
+
+    letter-spacing: 1.6px;
+  }
+
+  .product-card-name {
+    font-size: 15px;
+
+    min-height: 41px;
+  }
+
+  .product-card-meta {
+    font-size: 10px;
+  }
+
+  .product-card-bottom {
+    gap: 7px;
+
+    padding-top: 14px;
+  }
+
+  .product-card-bottom strong {
+    font-size: 14px;
+  }
+
+  .product-card-view {
+    min-height: 36px;
+
+    padding: 0 10px;
+
+    font-size: 8px;
+
+    letter-spacing: 0.6px;
+  }
+
+  .product-card-wishlist {
+    width: 36px;
+    height: 36px;
+
+    font-size: 19px;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 380px) {
+
+  .product-card-bottom {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .product-card-bottom strong {
+    text-align: left;
+  }
+
+  .product-card-view {
+    width: 100%;
+  }
+}

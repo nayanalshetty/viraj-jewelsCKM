@@ -1,0 +1,432 @@
+/* =========================================================
+   VIRAJ JEWELLERY
+   HOMEPAGE PRODUCT SECTIONS
+   ========================================================= */
+
+.product-section {
+  width: 100%;
+  max-width: 1425px;
+  margin: 0 auto;
+  padding: 80px 4.5%;
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.product-section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 30px;
+  margin-bottom: 45px;
+}
+
+.product-section-heading {
+  min-width: 0;
+}
+
+.product-section-eyebrow {
+  margin: 0 0 14px;
+
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 3px;
+
+  color: #b77b24;
+}
+
+.product-section-heading h2 {
+  margin: 0;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: clamp(38px, 4vw, 54px);
+  line-height: 1.05;
+  font-weight: 400;
+
+  color: #151515;
+}
+
+.product-section-description {
+  margin: 14px 0 0;
+
+  font-size: 16px;
+  line-height: 1.6;
+
+  color: #70675f;
+}
+
+
+/* =========================================================
+   VIEW ALL
+   ========================================================= */
+
+.product-section-view-all {
+  flex-shrink: 0;
+
+  display: inline-flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding-bottom: 10px;
+
+  border-bottom: 1px solid #b77b24;
+
+  color: #5f421e;
+
+  text-decoration: none;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  transition:
+    color 0.2s ease,
+    gap 0.2s ease;
+}
+
+.product-section-view-all span {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.product-section-view-all:hover {
+  color: #b77b24;
+  gap: 16px;
+}
+
+
+/* =========================================================
+   PRODUCT GRID
+   ========================================================= */
+
+.product-section-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+
+/* =========================================================
+   PRODUCT CARD
+   ========================================================= */
+
+.homepage-product-card {
+  display: block;
+
+  background: #fffdfa;
+
+  border: 1px solid #e4dbce;
+
+  color: inherit;
+
+  text-decoration: none;
+
+  overflow: hidden;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.homepage-product-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 14px 35px rgba(70, 45, 20, 0.10);
+}
+
+
+/* =========================================================
+   IMAGE
+   ========================================================= */
+
+.homepage-product-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+
+  background: #f5efe6;
+
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.homepage-product-image img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  transition:
+    transform 0.45s ease;
+}
+
+.homepage-product-card:hover
+.homepage-product-image img {
+  transform: scale(1.035);
+}
+
+
+/* =========================================================
+   PLACEHOLDER
+   ========================================================= */
+
+.homepage-product-placeholder {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  color: #b77b24;
+}
+
+.homepage-product-placeholder strong {
+  font-family: Georgia, serif;
+
+  font-size: 34px;
+
+  letter-spacing: 6px;
+}
+
+.homepage-product-placeholder span {
+  margin-top: 6px;
+
+  font-size: 10px;
+
+  letter-spacing: 4px;
+}
+
+
+/* =========================================================
+   INFORMATION
+   ========================================================= */
+
+.homepage-product-info {
+  padding: 22px 20px 20px;
+}
+
+.homepage-product-category {
+  margin: 0 0 9px;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+
+  color: #a06c27;
+}
+
+.homepage-product-info h3 {
+  margin: 0;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 22px;
+
+  line-height: 1.2;
+
+  font-weight: 400;
+
+  color: #181818;
+}
+
+
+/* =========================================================
+   META
+   ========================================================= */
+
+.homepage-product-meta {
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  margin-top: 18px;
+
+  min-height: 18px;
+
+  font-size: 13px;
+
+  color: #777067;
+}
+
+.homepage-product-meta .meta-dot {
+  color: #b77b24;
+}
+
+
+/* =========================================================
+   BOTTOM
+   ========================================================= */
+
+.homepage-product-bottom {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  margin-top: 18px;
+
+  padding-top: 16px;
+
+  border-top: 1px solid #e6ddd2;
+}
+
+.homepage-product-bottom strong {
+  font-size: 17px;
+
+  font-weight: 700;
+
+  color: #171717;
+}
+
+.homepage-product-button {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 42px;
+
+  padding: 0 17px;
+
+  background: #b77b24;
+
+  color: white;
+
+  font-size: 12px;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   LOADING / EMPTY
+   ========================================================= */
+
+.product-section-loading,
+.product-section-empty {
+  min-height: 220px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #e5ddd2;
+
+  color: #70675f;
+
+  font-size: 16px;
+
+  background: #fffdfa;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+  .product-section {
+    padding:
+      65px 30px;
+  }
+
+  .product-section-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 16px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+  .product-section {
+    padding:
+      55px 20px;
+  }
+
+  .product-section-header {
+    display: block;
+
+    margin-bottom: 30px;
+  }
+
+  .product-section-heading h2 {
+    font-size: 38px;
+  }
+
+  .product-section-description {
+    font-size: 14px;
+  }
+
+  .product-section-view-all {
+    margin-top: 24px;
+  }
+
+  .product-section-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+  }
+
+  .homepage-product-info {
+    padding:
+      15px 12px 14px;
+  }
+
+  .homepage-product-info h3 {
+    font-size: 17px;
+  }
+
+  .homepage-product-meta {
+    font-size: 11px;
+    margin-top: 12px;
+  }
+
+  .homepage-product-bottom {
+    display: block;
+
+    margin-top: 12px;
+    padding-top: 12px;
+  }
+
+  .homepage-product-button {
+    width: 100%;
+
+    margin-top: 10px;
+
+    box-sizing: border-box;
+  }
+
+}
