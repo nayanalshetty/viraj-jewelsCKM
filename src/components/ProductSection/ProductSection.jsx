@@ -6,6 +6,7 @@ import {
 
 import { Link } from "react-router-dom";
 import { supabase } from "../../lib/supabase.js";
+import { useWishlist } from "../../context/WishlistContext.jsx";
 
 import "./ProductSection.css";
 
@@ -19,14 +20,15 @@ export default function ProductSection({
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  /*
-   * =========================================================
-   * LOAD PRODUCTS FROM SUPABASE
-   * =========================================================
-   */
+  const {
+    toggleWishlist,
+    isInWishlist,
+  } = useWishlist();
 
   const loadProducts = useCallback(async () => {
     try {
+      setLoading(true);
+
       const { data, error } = await supabase
         .from("products")
         .select(`
@@ -49,21 +51,8 @@ export default function ProductSection({
         );
 
         setProducts([]);
-        setLoading(false);
-
         return;
       }
-
-      /*
-       * =====================================================
-       * LOAD PRODUCT IMAGES SEPARATELY
-       *
-       * This is intentional.
-       *
-       * It avoids depending on Supabase's nested
-       * product_images relationship.
-       * =====================================================
-       */
 
       const productIds = (data || []).map(
         (product) => product.id
@@ -83,10 +72,7 @@ export default function ProductSection({
             image_url,
             "order"
           `)
-          .in(
-            "product_id",
-            productIds
-          )
+          .in("product_id", productIds)
           .order("order", {
             ascending: true,
           });
@@ -100,12 +86,6 @@ export default function ProductSection({
           imageData = images || [];
         }
       }
-
-      /*
-       * =====================================================
-       * CREATE IMAGE MAP
-       * =====================================================
-       */
 
       const imageMap = {};
 
@@ -123,168 +103,91 @@ export default function ProductSection({
         }
       });
 
-      /*
-       * =====================================================
-       * FORMAT PRODUCTS
-       * =====================================================
-       */
-
-      const formattedProducts = (
-        data || []
-      )
+      const formattedProducts = (data || [])
         .map((product) => {
-          /*
-           * First priority:
-           * product_images table
-           */
-
           let mainImage =
             imageMap[product.id] || "";
-
-          /*
-           * Second priority:
-           * old products.image column
-           */
 
           if (
             !mainImage &&
             product.image
           ) {
-            mainImage =
-              product.image;
+            mainImage = product.image;
           }
 
           return {
             ...product,
-
             mainImage,
 
             product_images:
               imageData.filter(
                 (image) =>
-                  String(
-                    image.product_id
-                  ) ===
-                  String(
-                    product.id
-                  )
+                  String(image.product_id) ===
+                  String(product.id)
               ),
           };
         })
         .filter(Boolean);
 
-      /*
-       * =====================================================
-       * SORT
-       * =====================================================
-       */
-
       let finalProducts = [
         ...formattedProducts,
       ];
 
-      /*
-       * NEW ARRIVALS
-       *
-       * Newest products first.
-       */
-
       if (type === "new") {
-        finalProducts =
-          finalProducts
-            .sort(
-              (a, b) =>
-                new Date(
-                  b.created_at || 0
-                ).getTime() -
-                new Date(
-                  a.created_at || 0
-                ).getTime()
-            )
-            .slice(0, limit);
+        finalProducts = finalProducts
+          .sort(
+            (a, b) =>
+              new Date(
+                b.created_at || 0
+              ).getTime() -
+              new Date(
+                a.created_at || 0
+              ).getTime()
+          )
+          .slice(0, limit);
+      } else if (type === "bestseller") {
+        finalProducts = finalProducts
+          .sort(
+            (a, b) =>
+              new Date(
+                b.created_at || 0
+              ).getTime() -
+              new Date(
+                a.created_at || 0
+              ).getTime()
+          )
+          .slice(0, limit);
+      } else if (type === "featured") {
+        finalProducts = finalProducts
+          .filter(
+            (product) =>
+              product.is_featured === true
+          )
+          .sort(
+            (a, b) =>
+              new Date(
+                b.created_at || 0
+              ).getTime() -
+              new Date(
+                a.created_at || 0
+              ).getTime()
+          )
+          .slice(0, limit);
+      } else {
+        finalProducts = finalProducts
+          .sort(
+            (a, b) =>
+              new Date(
+                b.created_at || 0
+              ).getTime() -
+              new Date(
+                a.created_at || 0
+              ).getTime()
+          )
+          .slice(0, limit);
       }
 
-      /*
-       * BESTSELLERS
-       *
-       * Until a bestseller field is being
-       * maintained in the database, use the
-       * newest active products.
-       */
-
-      else if (
-        type === "bestseller"
-      ) {
-        finalProducts =
-          finalProducts
-            .sort(
-              (a, b) =>
-                new Date(
-                  b.created_at || 0
-                ).getTime() -
-                new Date(
-                  a.created_at || 0
-                ).getTime()
-            )
-            .slice(0, limit);
-      }
-
-      /*
-       * FEATURED
-       *
-       * Actually use the is_featured
-       * checkbox from AdminProducts.
-       */
-
-      else if (
-        type === "featured"
-      ) {
-        finalProducts =
-          finalProducts
-            .filter(
-              (product) =>
-                product.is_featured ===
-                true
-            )
-            .sort(
-              (a, b) =>
-                new Date(
-                  b.created_at || 0
-                ).getTime() -
-                new Date(
-                  a.created_at || 0
-                ).getTime()
-            )
-            .slice(0, limit);
-      }
-
-      /*
-       * ALL PRODUCTS
-       */
-
-      else {
-        finalProducts =
-          finalProducts
-            .sort(
-              (a, b) =>
-                new Date(
-                  b.created_at || 0
-                ).getTime() -
-                new Date(
-                  a.created_at || 0
-                ).getTime()
-            )
-            .slice(0, limit);
-      }
-
-      console.log(
-        `HOME ${type.toUpperCase()} PRODUCTS:`,
-        finalProducts
-      );
-
-      setProducts(
-        finalProducts
-      );
+      setProducts(finalProducts);
     } catch (error) {
       console.error(
         "Unexpected homepage product error:",
@@ -297,51 +200,12 @@ export default function ProductSection({
     }
   }, [limit, type]);
 
-  /*
-   * =========================================================
-   * INITIAL LOAD
-   * =========================================================
-   */
-
   useEffect(() => {
-    let mounted = true;
-
-    async function initialLoad() {
-      if (!mounted) {
-        return;
-      }
-
-      setLoading(true);
-
-      await loadProducts();
-    }
-
-    initialLoad();
-
-    return () => {
-      mounted = false;
-    };
+    loadProducts();
   }, [loadProducts]);
-
-  /*
-   * =========================================================
-   * REFRESH WHEN USER RETURNS TO WEBSITE
-   * =========================================================
-   *
-   * This solves:
-   *
-   * Admin → publish product → return to homepage
-   *
-   * The homepage will fetch the latest products again.
-   * =========================================================
-   */
 
   useEffect(() => {
     function handleFocus() {
-      console.log(
-        "Homepage focused — refreshing products..."
-      );
-
       loadProducts();
     }
 
@@ -350,10 +214,6 @@ export default function ProductSection({
         document.visibilityState ===
         "visible"
       ) {
-        console.log(
-          "Homepage visible — refreshing products..."
-        );
-
         loadProducts();
       }
     }
@@ -381,21 +241,6 @@ export default function ProductSection({
     };
   }, [loadProducts]);
 
-  /*
-   * =========================================================
-   * SUPABASE REALTIME
-   * =========================================================
-   *
-   * This is the important part.
-   *
-   * If admin creates/updates/deletes a product,
-   * homepage automatically reloads.
-   *
-   * If admin uploads product images,
-   * homepage automatically reloads.
-   * =========================================================
-   */
-
   useEffect(() => {
     const channel =
       supabase
@@ -409,12 +254,7 @@ export default function ProductSection({
             schema: "public",
             table: "products",
           },
-          (payload) => {
-            console.log(
-              "PRODUCT DATABASE CHANGE:",
-              payload
-            );
-
+          () => {
             loadProducts();
           }
         )
@@ -425,50 +265,27 @@ export default function ProductSection({
             schema: "public",
             table: "product_images",
           },
-          (payload) => {
-            console.log(
-              "PRODUCT IMAGE DATABASE CHANGE:",
-              payload
-            );
-
+          () => {
             loadProducts();
           }
         )
-        .subscribe((status) => {
-          console.log(
-            "Homepage realtime:",
-            status
-          );
-        });
+        .subscribe();
 
     return () => {
-      supabase.removeChannel(
-        channel
-      );
+      supabase.removeChannel(channel);
     };
   }, [loadProducts, type]);
-
-  /*
-   * =========================================================
-   * LOADING
-   * =========================================================
-   */
 
   if (loading) {
     return (
       <section className="product-section">
-
         <div className="product-section-header">
-
           <div className="product-section-heading">
-
             <p className="product-section-eyebrow">
               VIRAJ JEWELLERY
             </p>
 
-            <h2>
-              {title}
-            </h2>
+            <h2>{title}</h2>
 
             {(description ||
               subtitle) && (
@@ -477,24 +294,15 @@ export default function ProductSection({
                   subtitle}
               </p>
             )}
-
           </div>
-
         </div>
 
         <div className="product-section-loading">
           Loading jewellery...
         </div>
-
       </section>
     );
   }
-
-  /*
-   * =========================================================
-   * PAGE
-   * =========================================================
-   */
 
   return (
     <section className="product-section">
@@ -509,9 +317,7 @@ export default function ProductSection({
             VIRAJ JEWELLERY
           </p>
 
-          <h2>
-            {title}
-          </h2>
+          <h2>{title}</h2>
 
           {(description ||
             subtitle) && (
@@ -539,12 +345,14 @@ export default function ProductSection({
 
         <div className="product-section-grid">
 
-          {products.map(
-            (product) => (
+          {products.map((product) => {
 
-              <Link
+            const wishlistActive =
+              isInWishlist(product.id);
+
+            return (
+              <div
                 key={product.id}
-                to={`/product/${product.id}`}
                 className="homepage-product-card"
               >
 
@@ -555,22 +363,13 @@ export default function ProductSection({
                   {product.mainImage ? (
 
                     <img
-                      src={
-                        product.mainImage
-                      }
+                      src={product.mainImage}
                       alt={
                         product.name ||
                         "Viraj Jewellery"
                       }
                       loading="lazy"
-                      onError={(
-                        event
-                      ) => {
-                        console.error(
-                          "Product image failed:",
-                          product.mainImage
-                        );
-
+                      onError={(event) => {
                         event.currentTarget.style.display =
                           "none";
                       }}
@@ -579,7 +378,6 @@ export default function ProductSection({
                   ) : (
 
                     <div className="homepage-product-placeholder">
-
                       <strong>
                         VIRAJ
                       </strong>
@@ -587,95 +385,127 @@ export default function ProductSection({
                       <span>
                         JEWELLERY
                       </span>
-
                     </div>
 
                   )}
 
-                </div>
+                  {/* WISHLIST */}
 
-                {/* DETAILS */}
+                  <button
+                    type="button"
+                    className={`homepage-wishlist ${
+                      wishlistActive
+                        ? "active"
+                        : ""
+                    }`}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      event.stopPropagation();
 
-                <div className="homepage-product-info">
-
-                  <p className="homepage-product-category">
-
-                    {product.categories
-                      ?.name ||
-                      product.category ||
-                      "JEWELLERY"}
-
-                  </p>
-
-                  <h3>
-                    {product.name}
-                  </h3>
-
-                  <div className="homepage-product-meta">
-
-                    {product.weight !==
-                      null &&
-                      product.weight !==
-                        undefined &&
-                      product.weight !==
-                        "" && (
-
-                        <span>
-                          {
-                            product.weight
-                          }{" "}
-                          g
-                        </span>
-
-                      )}
-
-                    {product.purity && (
-                      <>
-                        {product.weight !==
-                          null &&
-                          product.weight !==
-                            undefined &&
-                          product.weight !==
-                            "" && (
-                            <span className="meta-dot">
-                              •
-                            </span>
-                          )}
-
-                        <span>
-                          {
-                            product.purity
-                          }
-                        </span>
-                      </>
-                    )}
-
-                  </div>
-
-                  <div className="homepage-product-bottom">
-
-                    <strong>
-                      ₹
-                      {Number(
-                        product.price ||
-                          0
-                      ).toLocaleString(
-                        "en-IN"
-                      )}
-                    </strong>
-
-                    <span className="homepage-product-button">
-                      View Product
-                    </span>
-
-                  </div>
+                      toggleWishlist(product);
+                    }}
+                    aria-label={
+                      wishlistActive
+                        ? "Remove from wishlist"
+                        : "Add to wishlist"
+                    }
+                    title={
+                      wishlistActive
+                        ? "Remove from wishlist"
+                        : "Add to wishlist"
+                    }
+                  >
+                    {wishlistActive
+                      ? "♥"
+                      : "♡"}
+                  </button>
 
                 </div>
 
-              </Link>
+                {/* PRODUCT DETAILS */}
 
-            )
-          )}
+                <Link
+                  to={`/product/${product.id}`}
+                  className="homepage-product-link"
+                >
+
+                  <div className="homepage-product-info">
+
+                    <p className="homepage-product-category">
+                      {product.categories
+                        ?.name ||
+                        product.category ||
+                        "JEWELLERY"}
+                    </p>
+
+                    <h3>
+                      {product.name}
+                    </h3>
+
+                    <div className="homepage-product-meta">
+
+                      {product.weight !==
+                        null &&
+                        product.weight !==
+                          undefined &&
+                        product.weight !==
+                          "" && (
+                          <span>
+                            {
+                              product.weight
+                            }{" "}
+                            g
+                          </span>
+                        )}
+
+                      {product.purity && (
+                        <>
+                          {product.weight !==
+                            null &&
+                            product.weight !==
+                              undefined &&
+                            product.weight !==
+                              "" && (
+                              <span className="meta-dot">
+                                •
+                              </span>
+                            )}
+
+                          <span>
+                            {
+                              product.purity
+                            }
+                          </span>
+                        </>
+                      )}
+
+                    </div>
+
+                    <div className="homepage-product-bottom">
+
+                      <strong>
+                        ₹
+                        {Number(
+                          product.price ||
+                            0
+                        ).toLocaleString(
+                          "en-IN"
+                        )}
+                      </strong>
+
+                      <span className="homepage-product-button">
+                        View Product
+                      </span>
+
+                    </div>
+
+                  </div>
+
+                </Link>
+
+              </div>
+            );
+          })}
 
         </div>
 

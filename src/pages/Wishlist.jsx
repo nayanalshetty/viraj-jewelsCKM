@@ -11,7 +11,7 @@ function Wishlist() {
   } = useWishlist();
 
   const formatPrice = (price) => {
-    return `₹${price.toLocaleString("en-IN")}`;
+    return `₹${Number(price || 0).toLocaleString("en-IN")}`;
   };
 
   if (wishlist.length === 0) {
@@ -79,80 +79,107 @@ function Wishlist() {
 
       <section className="wishlist-grid">
 
-        {wishlist.map((product) => (
+        {wishlist.map((product) => {
 
-          <article
-            className="wishlist-card"
-            key={product.id}
-          >
+          const imageUrl =
+            product.image ||
+            product.mainImage ||
+            product.images?.[0] ||
+            product.product_images?.[0]?.image_url ||
+            "";
 
-            <Link
-              to={`/product/${product.id}`}
-              className="wishlist-image"
+          return (
+            <article
+              className="wishlist-card"
+              key={product.id}
             >
 
-              {product.image ? (
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  onError={(event) => {
-                    event.currentTarget.style.display =
-                      "none";
-                  }}
-                />
-              ) : null}
-
-              <div className="wishlist-placeholder">
-                <span>VIRAJ</span>
-                <small>Jewellery</small>
-              </div>
-
-            </Link>
-
-            <div className="wishlist-card-content">
-
-              <p>
-                {product.category}
-              </p>
+              {/* IMAGE */}
 
               <Link
                 to={`/product/${product.id}`}
-                className="wishlist-product-name"
+                className="wishlist-image"
               >
-                {product.name}
+
+                {imageUrl ? (
+                  <img
+                    src={imageUrl}
+                    alt={
+                      product.name ||
+                      "Viraj Jewellery"
+                    }
+                    loading="lazy"
+                    onError={(event) => {
+                      event.currentTarget.style.display =
+                        "none";
+                    }}
+                  />
+                ) : null}
+
+                <div
+                  className="wishlist-placeholder"
+                  style={{
+                    display: imageUrl
+                      ? "none"
+                      : "flex",
+                  }}
+                >
+                  <span>VIRAJ</span>
+                  <small>Jewellery</small>
+                </div>
+
               </Link>
 
-              <strong>
-                {formatPrice(product.price)}
-              </strong>
+              {/* CONTENT */}
 
-              <div className="wishlist-card-actions">
+              <div className="wishlist-card-content">
+
+                <p>
+                  {product.category ||
+                    product.categories?.name ||
+                    "JEWELLERY"}
+                </p>
 
                 <Link
                   to={`/product/${product.id}`}
-                  className="wishlist-view"
+                  className="wishlist-product-name"
                 >
-                  View Product
+                  {product.name}
                 </Link>
 
-                <button
-                  type="button"
-                  onClick={() =>
-                    removeFromWishlist(
-                      product.id
-                    )
-                  }
-                >
-                  Remove
-                </button>
+                <strong>
+                  {formatPrice(product.price)}
+                </strong>
+
+                {/* ACTIONS */}
+
+                <div className="wishlist-card-actions">
+
+                  <Link
+                    to={`/product/${product.id}`}
+                    className="wishlist-view"
+                  >
+                    View Product
+                  </Link>
+
+                  <button
+                    type="button"
+                    onClick={() =>
+                      removeFromWishlist(
+                        product.id
+                      )
+                    }
+                  >
+                    Remove
+                  </button>
+
+                </div>
 
               </div>
 
-            </div>
-
-          </article>
-
-        ))}
+            </article>
+          );
+        })}
 
       </section>
 

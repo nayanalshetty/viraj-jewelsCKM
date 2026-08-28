@@ -1,6 +1,6 @@
 /* =========================================================
-   VIRAJ JEWELLERS — PREMIUM CREAM / GOLD HEADER
-   FINAL PROJECT VERSION
+   VIRAJ JEWELS — PREMIUM DARK LUXURY HEADER
+   Desktop + Mobile
    ========================================================= */
 
 .site-header,
@@ -10,123 +10,218 @@
   box-sizing: border-box;
 }
 
+/* =========================================================
+   MAIN HEADER
+   ========================================================= */
+
 .site-header {
   width: 100%;
   position: relative;
   z-index: 10000;
-  background: #fffaf3;
-  color: #2d2117;
-  box-shadow: 0 1px 0 rgba(123, 86, 35, .10);
+
+  background: #211a18;
+  color: #f1e7d9;
+
+  border-bottom: 1px solid rgba(200, 169, 107, 0.16);
 }
+
+/* =========================================================
+   ANNOUNCEMENT BAR
+   ========================================================= */
 
 .announcement-bar {
   width: 100%;
   height: 28px;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 14px;
-  background: #f1e4d2;
-  border-bottom: 1px solid #e3d1b8;
-  color: #8f6426;
-  font-size: 9px;
+
+  gap: 12px;
+  padding: 0 12px;
+
+  background: #2a211e;
+
+  border-bottom: 1px solid rgba(200, 169, 107, 0.1);
+
+  color: #c8a96b;
+
+  font-size: 8px;
   font-weight: 600;
-  letter-spacing: 3px;
+
+  letter-spacing: 2px;
   text-transform: uppercase;
+
   white-space: nowrap;
+  overflow: hidden;
 }
+
+.announcement-bar span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.announcement-divider {
+  color: #806846;
+  flex-shrink: 0;
+}
+
+/* =========================================================
+   HEADER MAIN
+   ========================================================= */
 
 .header-main {
   width: 100%;
-  height: 92px;
+  height: 82px;
+
   position: relative;
+
   display: grid;
   grid-template-columns: 190px minmax(0, 1fr) 190px;
+
   align-items: center;
+
   padding: 0 48px;
-  background: #fffaf3;
-  border-bottom: 1px solid #eadfce;
+
+  background: #211a18;
+
+  border-bottom: 1px solid rgba(200, 169, 107, 0.12);
 }
+
+/* =========================================================
+   LOGO
+   ========================================================= */
 
 .header-logo {
   width: 190px;
-  height: 92px;
+  height: 82px;
+
   display: flex;
   align-items: center;
   justify-content: flex-start;
+
   margin: 0;
   padding: 0;
-  text-decoration: none;
+
   position: relative;
+
+  text-decoration: none;
+
   z-index: 10001;
 }
 
+/*
+   SQUARE LOGO
+   No circle
+   No border
+   No background
+*/
+
 .viraj-logo {
-  width: 78px;
-  height: 78px;
+  width: 68px;
+  height: 68px;
+
   display: block;
-  flex: 0 0 78px;
+
   margin: 0;
   padding: 0;
-  object-fit: cover;
+
+  object-fit: contain;
   object-position: center;
-  border-radius: 50%;
-  border: 1px solid #c9a15a;
-  background: #f8efe2;
-  box-shadow: 0 4px 16px rgba(100, 67, 24, .12);
-  transition: transform .3s ease, box-shadow .3s ease;
+
+  border-radius: 0;
+  border: none;
+
+  background: transparent;
+
+  box-shadow: none;
+
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
 }
 
 .header-logo:hover .viraj-logo {
   transform: scale(1.03);
-  box-shadow: 0 6px 20px rgba(100, 67, 24, .18);
+  opacity: 0.95;
 }
+
+/* =========================================================
+   DESKTOP NAVIGATION
+   ========================================================= */
 
 .main-navigation {
   width: 100%;
-  height: 92px;
+  height: 82px;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 38px;
+
+  gap: 34px;
+
   min-width: 0;
 }
 
 .nav-link,
 .nav-dropdown-button {
-  height: 92px;
+  height: 82px;
+
   display: flex;
   align-items: center;
+
   position: relative;
+
+  padding: 0;
+
   background: transparent;
   border: none;
-  color: #3a2b1d;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: 1.2px;
+
+  color: #eee3d6;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  letter-spacing: 1.3px;
+
   text-decoration: none;
-  cursor: pointer;
+
   white-space: nowrap;
+
+  cursor: pointer;
+
+  transition: color 0.25s ease;
 }
 
 .nav-link::after,
 .nav-dropdown-button::after {
   content: "";
+
   position: absolute;
+
   left: 0;
   right: 0;
-  bottom: 25px;
+  bottom: 20px;
+
   height: 1px;
-  background: #ad7a2c;
+
+  background: #c8a96b;
+
   transform: scaleX(0);
+
   transform-origin: center;
-  transition: transform .25s ease;
+
+  transition: transform 0.25s ease;
 }
 
 .nav-link:hover,
 .nav-dropdown-button:hover {
-  color: #9b6b25;
+  color: #d8bd82;
 }
 
 .nav-link:hover::after,
@@ -134,19 +229,29 @@
   transform: scaleX(1);
 }
 
+/* =========================================================
+   DROPDOWN
+   ========================================================= */
+
 .nav-dropdown {
+  height: 82px;
+
   position: relative;
-  height: 92px;
+
   display: flex;
   align-items: center;
 }
 
 .nav-dropdown-button span {
-  margin-left: 8px;
-  color: #a9782e;
-  font-size: 13px;
+  margin-left: 7px;
+
+  color: #c8a96b;
+
+  font-size: 11px;
+
   line-height: 1;
-  transition: transform .25s ease;
+
+  transition: transform 0.25s ease;
 }
 
 .nav-dropdown:hover .nav-dropdown-button span {
@@ -155,95 +260,188 @@
 
 .dropdown-menu {
   position: absolute;
-  top: 82px;
+
+  top: 72px;
   left: 50%;
+
   width: 220px;
-  padding: 14px 0;
-  background: #fffaf3;
-  border: 1px solid #e1d1ba;
-  box-shadow: 0 20px 50px rgba(77, 51, 20, .14);
+
+  padding: 12px 0;
+
+  background: #2c2220;
+
+  border: 1px solid rgba(200, 169, 107, 0.23);
+
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.42);
+
   opacity: 0;
   visibility: hidden;
-  transform: translateX(-50%) translateY(10px);
-  transition: opacity .25s ease, transform .25s ease, visibility .25s ease;
+
+  transform:
+    translateX(-50%)
+    translateY(10px);
+
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease,
+    visibility 0.25s ease;
+
   z-index: 11000;
 }
 
 .nav-dropdown:hover .dropdown-menu {
   opacity: 1;
   visibility: visible;
-  transform: translateX(-50%) translateY(0);
+
+  transform:
+    translateX(-50%)
+    translateY(0);
 }
 
 .dropdown-menu a {
   display: block;
+
   padding: 11px 20px;
-  color: #594838;
-  font-size: 13px;
-  letter-spacing: .5px;
+
+  color: #d6c9ba;
+
+  font-size: 12px;
+
+  letter-spacing: 0.5px;
+
   text-decoration: none;
-  transition: background .2s ease, color .2s ease, padding-left .2s ease;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    padding-left 0.2s ease;
 }
 
 .dropdown-menu a:hover {
-  background: #f4e9da;
-  color: #9c6b25;
+  background: rgba(200, 169, 107, 0.08);
+
+  color: #d8bd82;
+
   padding-left: 26px;
 }
 
+/* =========================================================
+   HEADER ACTIONS
+   ========================================================= */
+
 .header-actions {
   width: 190px;
-  height: 92px;
+  height: 82px;
+
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 27px;
+
+  gap: 20px;
+
   margin: 0;
   padding: 0;
 }
 
 .header-icon {
+  width: 30px;
+  height: 30px;
+
   position: relative;
-  width: 28px;
-  height: 28px;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #3b2d20;
+
+  color: #eee3d6;
+
   text-decoration: none;
+
   flex-shrink: 0;
-  transition: color .2s ease, transform .2s ease;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .header-icon:hover {
-  color: #a7762d;
+  color: #d8bd82;
+
   transform: translateY(-1px);
 }
+
+.header-icon svg {
+  width: 22px;
+  height: 22px;
+
+  fill: none;
+
+  stroke: currentColor;
+
+  stroke-width: 1.6;
+}
+
+/* =========================================================
+   COUNTERS
+   ========================================================= */
 
 .cart-count,
 .wishlist-count {
   position: absolute;
-  top: -7px;
-  right: -9px;
-  min-width: 17px;
-  height: 17px;
+
+  top: -5px;
+  right: -7px;
+
+  min-width: 16px;
+  height: 16px;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   padding: 0 4px;
+
   border-radius: 50%;
-  background: #a47732;
-  color: #fff;
-  font-size: 9px;
+
+  background: #c8a96b;
+
+  color: #211a18;
+
+  font-size: 8px;
+
   line-height: 1;
-  font-weight: 600;
+
+  font-weight: 700;
+
   z-index: 10;
 }
 
-/* Laptop */
+/* =========================================================
+   MOBILE MENU BUTTON
+   ========================================================= */
+
+.mobile-menu-button {
+  display: none;
+}
+
+/* =========================================================
+   MOBILE SEARCH
+   ========================================================= */
+
+.mobile-search-wrapper {
+  display: none;
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
 @media (max-width: 1200px) and (min-width: 851px) {
+
   .header-main {
     grid-template-columns: 150px minmax(0, 1fr) 150px;
+
     padding: 0 30px;
   }
 
@@ -252,98 +450,340 @@
   }
 
   .viraj-logo {
-    width: 74px;
-    height: 74px;
-    flex-basis: 74px;
+    width: 62px;
+    height: 62px;
   }
 
   .main-navigation {
-    gap: 22px;
+    gap: 21px;
+  }
+
+  .nav-link,
+  .nav-dropdown-button {
+    font-size: 12px;
+    letter-spacing: 1px;
   }
 
   .header-actions {
     width: 150px;
-    gap: 18px;
+    gap: 15px;
   }
 }
 
-/* Narrow browser / mobile */
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
 @media (max-width: 850px) {
+
+  /* -------------------------------------------------------
+     ANNOUNCEMENT
+     ------------------------------------------------------- */
+
   .announcement-bar {
-    height: 26px;
-    font-size: 7px;
-    letter-spacing: 1.2px;
+    height: 24px;
+
     gap: 7px;
-    overflow: hidden;
+
+    padding: 0 8px;
+
+    font-size: 6.5px;
+
+    letter-spacing: 0.9px;
   }
+
+  /* -------------------------------------------------------
+     MAIN HEADER
+     ------------------------------------------------------- */
 
   .header-main {
-    height: 82px;
+    width: 100%;
+    height: 64px;
+
+    position: relative;
+
     display: flex;
+
     align-items: center;
-    padding: 0 24px;
+
+    justify-content: flex-start;
+
+    padding: 0 12px;
+
+    background: #211a18;
   }
 
-  .header-logo {
-    width: 82px;
-    height: 82px;
-    flex: 0 0 82px;
+  /* -------------------------------------------------------
+     MOBILE MENU
+     ------------------------------------------------------- */
+
+  .mobile-menu-button {
+    width: 34px;
+    height: 34px;
+
+    flex: 0 0 34px;
+
     display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    justify-content: center;
+
+    gap: 4px;
+
+    padding: 6px;
+
+    margin: 0;
+
+    background: transparent;
+
+    border: 0;
+
+    cursor: pointer;
+
+    z-index: 20;
+  }
+
+  .mobile-menu-button span {
+    display: block;
+
+    width: 20px;
+    height: 1px;
+
+    margin: 0;
+
+    background: #c8a96b;
+  }
+
+  /* -------------------------------------------------------
+     LOGO — LEFT SIDE / SQUARE
+     ------------------------------------------------------- */
+
+  .header-logo {
+    position: relative;
+
+    left: auto;
+    top: auto;
+
+    width: 52px;
+    height: 52px;
+
+    flex: 0 0 52px;
+
+    display: flex;
+
     align-items: center;
-    justify-content: flex-start;
+
+    justify-content: center;
+
+    margin: 0 0 0 5px;
+
+    padding: 0;
+
+    transform: none;
+
+    z-index: 10;
   }
 
   .viraj-logo {
-    width: 70px;
-    height: 70px;
-    flex-basis: 70px;
+    width: 50px;
+    height: 50px;
+
+    flex: 0 0 50px;
+
+    display: block;
+
+    margin: 0;
+    padding: 0;
+
+    object-fit: contain;
+    object-position: center;
+
+    border-radius: 0;
+    border: none;
+
+    background: transparent;
+
+    box-shadow: none;
+
+    overflow: visible;
+
+    transform: none;
   }
+
+  /* -------------------------------------------------------
+     HIDE DESKTOP NAV
+     ------------------------------------------------------- */
 
   .main-navigation {
     display: none;
   }
 
+  /* -------------------------------------------------------
+     RIGHT ACTIONS
+     ------------------------------------------------------- */
+
   .header-actions {
     width: auto;
-    height: 82px;
-    flex: 1;
+    height: 64px;
+
+    flex: 0 0 auto;
+
+    display: flex;
+
+    align-items: center;
+
     justify-content: flex-end;
-    gap: 20px;
-  }
-}
 
-/* Small mobile */
-@media (max-width: 480px) {
-  .announcement-bar {
-    height: 24px;
-    font-size: 6.5px;
-    letter-spacing: .8px;
+    gap: 6px;
+
+    margin-left: auto;
+
+    padding: 0;
+
+    z-index: 20;
   }
 
-  .header-main {
-    height: 76px;
-    padding: 0 16px;
-  }
-
-  .header-logo {
-    width: 72px;
-    height: 76px;
-    flex-basis: 72px;
-  }
-
-  .viraj-logo {
-    width: 62px;
-    height: 62px;
-    flex-basis: 62px;
-  }
-
-  .header-actions {
-    height: 76px;
-    gap: 15px;
+  .header-icon {
+    width: 34px;
+    height: 34px;
   }
 
   .header-icon svg {
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
+  }
+
+  .cart-count,
+  .wishlist-count {
+    top: 0;
+    right: 0;
+  }
+
+  /* -------------------------------------------------------
+     MOBILE SEARCH
+     ------------------------------------------------------- */
+
+  .mobile-search-wrapper {
+    width: 100%;
+
+    display: block;
+
+    padding: 0 12px 10px;
+
+    background: #211a18;
+  }
+
+  .mobile-search {
+    width: 100%;
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 0 12px;
+
+    background: #2c2220;
+
+    border: 1px solid rgba(200, 169, 107, 0.17);
+
+    border-radius: 5px;
+
+    color: #91857b;
+
+    text-decoration: none;
+
+    font-size: 11px;
+  }
+
+  .mobile-search svg {
+    width: 17px;
+    height: 17px;
+
+    flex: 0 0 17px;
+
+    fill: none;
+
+    stroke: #c8a96b;
+
+    stroke-width: 1.6;
+  }
+}
+
+/* =========================================================
+   SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+  .header-main {
+    padding: 0 8px;
+  }
+
+  .mobile-menu-button {
+    width: 32px;
+    height: 32px;
+
+    flex-basis: 32px;
+  }
+
+  .header-logo {
+    width: 48px;
+    height: 48px;
+
+    flex-basis: 48px;
+
+    margin-left: 4px;
+  }
+
+  .viraj-logo {
+    width: 46px;
+    height: 46px;
+
+    flex-basis: 46px;
+
+    border-radius: 0;
+    border: none;
+
+    background: transparent;
+
+    box-shadow: none;
+  }
+
+  .header-actions {
+    gap: 3px;
+  }
+
+  .header-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .header-icon svg {
+    width: 19px;
+    height: 19px;
+  }
+
+  .mobile-search-wrapper {
+    padding-left: 9px;
+    padding-right: 9px;
+  }
+}
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .site-header *,
+  .site-header *::before,
+  .site-header *::after {
+    transition: none !important;
   }
 }

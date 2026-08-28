@@ -11,51 +11,72 @@ function Home() {
   return (
     <main className="home">
 
-      {/* HERO */}
-      <Hero />
+      {/* =====================================================
+          DESKTOP HERO
+          Hidden/reduced on mobile through CSS
+          ===================================================== */}
+      <section className="home-hero">
+        <Hero />
+      </section>
 
-      {/* SHOP BY CATEGORY */}
-      <ShopByCategory />
 
-      {/* NEW ARRIVALS */}
+      {/* =====================================================
+          SHOP BY CATEGORY
+          Mobile-first compact category navigation
+          ===================================================== */}
+      <section className="home-categories">
+        <ShopByCategory />
+      </section>
+
+
+      {/* =====================================================
+          NEW ARRIVALS
+          ===================================================== */}
       <ProductSection
         title="New Arrivals"
-        subtitle="Discover the latest additions to our jewellery collection."
+        subtitle="Fresh designs from VIRAJ"
         type="new"
         limit={4}
       />
 
-      {/* BESTSELLERS */}
+
+      {/* =====================================================
+          BESTSELLERS
+          ===================================================== */}
       <ProductSection
         title="Bestsellers"
-        subtitle="Our most loved jewellery, chosen by Viraj customers."
+        subtitle="Loved by our customers"
         type="bestseller"
         limit={4}
       />
 
-      {/* EXPLORE ALL JEWELLERY */}
+
+      {/* =====================================================
+          EXPLORE JEWELLERY
+          ===================================================== */}
       <ProductSection
-        title="Explore Our Jewellery"
-        subtitle="Timeless designs crafted for every occasion."
+        title="Explore Jewellery"
+        subtitle="Find something made for you"
         type="all"
         limit={8}
       />
 
-      {/* COLLECTION BANNER */}
+
+      {/* =====================================================
+          COLLECTION BANNER
+          ===================================================== */}
       <CollectionBanner />
 
-      {/* FEATURED COLLECTION */}
-      <ProductSection
-        title="Featured Jewellery"
-        subtitle="Signature pieces selected from the VIRAJ collection."
-        type="featured"
-        limit={4}
-      />
 
-      {/* NEWSLETTER */}
+      {/* =====================================================
+          NEWSLETTER
+          ===================================================== */}
       <Newsletter />
 
-      {/* FOOTER */}
+
+      {/* =====================================================
+          FOOTER
+          ===================================================== */}
       <Footer />
 
     </main>

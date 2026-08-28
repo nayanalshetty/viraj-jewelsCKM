@@ -1,14 +1,33 @@
 /* =========================================================
-   VIRAJ JEWELLERS — HERO SLIDESHOW
+   VIRAJ JEWELLERS
+   PREMIUM HERO SLIDESHOW
+   Desktop + Tablet + Mobile
+   ========================================================= */
+
+.hero,
+.hero *,
+.hero *::before,
+.hero *::after {
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   HERO CONTAINER
    ========================================================= */
 
 .hero {
   position: relative;
+
   width: 100%;
+  max-width: 100%;
+
   margin: 0;
   padding: 0;
+
   overflow: hidden;
-  background: #f8eee1;
+
+  background: #211a18;
+
   line-height: 0;
 }
 
@@ -18,49 +37,59 @@
 
 .hero-image {
   display: block;
+
   width: 100%;
   height: auto;
+
   max-width: 100%;
+
   margin: 0;
   padding: 0;
+
   object-fit: contain;
   object-position: center;
+
+  user-select: none;
+  -webkit-user-drag: none;
+
+  vertical-align: top;
 }
 
-
 /* =========================================================
-   INVISIBLE EXPLORE COLLECTION CLICK AREA
+   EXPLORE COLLECTION CLICK AREA
+   =========================================================
 
-   Your Explore Collection button is already inside
-   the JPG image.
+   The Explore Collection button is already included
+   inside the JPG hero image.
 
-   This invisible link sits exactly over it.
+   This invisible link sits over that button.
    ========================================================= */
 
 .hero-explore-link {
   position: absolute;
 
-  /*
-     Position of the Explore Collection button
-     inside your generated desktop hero images.
-  */
-
   left: 21.5%;
   top: 68%;
+
   width: 19%;
   height: 10%;
 
   display: block;
 
+  margin: 0;
+  padding: 0;
+
   background: transparent;
-  border: none;
+
+  border: 0;
   outline: none;
 
   cursor: pointer;
 
   z-index: 10;
-}
 
+  -webkit-tap-highlight-color: transparent;
+}
 
 /* =========================================================
    SLIDE DOTS
@@ -75,54 +104,90 @@
   transform: translateX(-50%);
 
   display: flex;
+
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+
+  gap: 9px;
+
+  margin: 0;
+  padding: 0;
 
   z-index: 20;
 }
 
-.hero-dot {
-  width: 9px;
-  height: 9px;
+/* =========================================================
+   DOT
+   ========================================================= */
 
-  padding: 0;
+.hero-dot {
+  width: 8px;
+  height: 8px;
+
+  flex: 0 0 auto;
+
   margin: 0;
+  padding: 0;
 
   border-radius: 50%;
-  border: 1px solid #b9852f;
 
-  background: rgba(255, 255, 255, 0.8);
+  border:
+    1px solid #b9852f;
+
+  background:
+    rgba(255, 255, 255, 0.85);
 
   cursor: pointer;
 
+  appearance: none;
+  -webkit-appearance: none;
+
   transition:
     width 0.3s ease,
+    background 0.3s ease,
     border-radius 0.3s ease,
-    background 0.3s ease;
+    transform 0.2s ease;
+}
+
+.hero-dot:hover {
+  transform: scale(1.08);
 }
 
 .hero-dot.active {
-  width: 30px;
+  width: 28px;
+
   border-radius: 10px;
+
   background: #b9852f;
 }
 
-
 /* =========================================================
-   DESKTOP
+   LARGE DESKTOP
    ========================================================= */
 
 @media (min-width: 1200px) {
 
+  .hero {
+    width: 100%;
+  }
+
+  .hero-image {
+    width: 100%;
+    height: auto;
+  }
+
   .hero-explore-link {
     left: 21.5%;
     top: 68%;
+
     width: 19%;
     height: 10%;
   }
 
+  .hero-dots {
+    bottom: 3.5%;
+  }
 }
-
 
 /* =========================================================
    LAPTOP
@@ -133,32 +198,45 @@
   .hero-explore-link {
     left: 21%;
     top: 67%;
+
     width: 20%;
     height: 11%;
   }
 
+  .hero-dots {
+    bottom: 3.5%;
+  }
 }
-
 
 /* =========================================================
    TABLET
    ========================================================= */
 
-@media (max-width: 850px) {
+@media (max-width: 850px) and (min-width: 601px) {
 
   .hero-explore-link {
     left: 20%;
     top: 66%;
+
     width: 22%;
     height: 12%;
   }
 
   .hero-dots {
     bottom: 4%;
+
+    gap: 8px;
   }
 
-}
+  .hero-dot {
+    width: 8px;
+    height: 8px;
+  }
 
+  .hero-dot.active {
+    width: 25px;
+  }
+}
 
 /* =========================================================
    MOBILE
@@ -166,25 +244,97 @@
 
 @media (max-width: 600px) {
 
+  .hero {
+    width: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    overflow: hidden;
+  }
+
+  .hero-image {
+    width: 100%;
+    height: auto;
+
+    object-fit: contain;
+    object-position: center;
+  }
+
+  /* ---------------------------------------------
+     MOBILE EXPLORE BUTTON AREA
+     --------------------------------------------- */
+
   .hero-explore-link {
     left: 18%;
     top: 65%;
+
     width: 27%;
     height: 13%;
   }
 
+  /* ---------------------------------------------
+     MOBILE DOTS
+     --------------------------------------------- */
+
   .hero-dots {
+    left: 50%;
     bottom: 4%;
+
     gap: 7px;
   }
 
   .hero-dot {
-    width: 7px;
-    height: 7px;
+    width: 6px;
+    height: 6px;
+
+    border-width: 1px;
   }
 
   .hero-dot.active {
-    width: 22px;
+    width: 21px;
+  }
+}
+
+/* =========================================================
+   SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+  .hero-explore-link {
+    left: 17%;
+    top: 64%;
+
+    width: 29%;
+    height: 14%;
   }
 
+  .hero-dots {
+    bottom: 3.5%;
+
+    gap: 6px;
+  }
+
+  .hero-dot {
+    width: 6px;
+    height: 6px;
+  }
+
+  .hero-dot.active {
+    width: 19px;
+  }
+}
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .hero *,
+  .hero *::before,
+  .hero *::after {
+    transition: none !important;
+  }
 }
