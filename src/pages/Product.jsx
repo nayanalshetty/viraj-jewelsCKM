@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+
 import { supabase } from "../lib/supabase.js";
 import { useWishlist } from "../context/WishlistContext.jsx";
+
 import "./Product.css";
 
 export default function Product() {
@@ -12,20 +14,155 @@ export default function Product() {
   const [product, setProduct] = useState(null);
   const [images, setImages] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
+
+  const [rates, setRates] = useState(null);
+
   const [loading, setLoading] = useState(true);
+  const [ratesLoading, setRatesLoading] = useState(true);
+
   const [error, setError] = useState("");
+  const [ratesError, setRatesError] = useState("");
+
+  /* =========================================================
+     NUMBER HELPER
+     ========================================================= */
+
+  function toNumber(value) {
+    if (
+      value === null ||
+      value === undefined ||
+      value === ""
+    ) {
+      return 0;
+    }
+
+    const number = Number(
+      String(value)
+        .replace(/,/g, "")
+        .replace(/[₹$]/g, "")
+        .trim()
+    );
+
+    return Number.isFinite(number) ? number : 0;
+  }
 
   /* =========================================================
      UUID CHECK
      ========================================================= */
 
-  const isValidUUID = (value) => {
+  function isValidUUID(value) {
     if (!value) return false;
 
     return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
       value
     );
-  };
+  }
+
+  /* =========================================================
+     LOAD LATEST GOLD & SILVER RATE
+     ========================================================= */
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadRates() {
+      setRatesLoading(true);
+      setRatesError("");
+
+      try {
+        /*
+         * IMPORTANT:
+         * Get the latest row from gold_rates.
+         */
+
+        const { data, error } = await supabase
+          .from("gold_rates")
+          .select(
+            "rate_24k, rate_22k, rate_18k, silver_rate, effective_date, created_at"
+          )
+          .order("effective_date", {
+            ascending: false,
+          })
+          .order("created_at", {
+            ascending: false,
+          })
+          .limit(1)
+          .maybeSingle();
+
+        if (error) {
+          throw error;
+        }
+
+        if (!data) {
+          throw new Error(
+            "No Gold & Silver rates found."
+          );
+        }
+
+        console.log(
+          "================================="
+        );
+
+        console.log(
+          "VIRAJ LATEST RATE:"
+        );
+
+        console.log(data);
+
+        console.log(
+          "24K:",
+          data.rate_24k
+        );
+
+        console.log(
+          "22K:",
+          data.rate_22k
+        );
+
+        console.log(
+          "18K:",
+          data.rate_18k
+        );
+
+        console.log(
+          "SILVER:",
+          data.silver_rate
+        );
+
+        console.log(
+          "================================="
+        );
+
+        if (!cancelled) {
+          setRates(data);
+        }
+      } catch (err) {
+        console.error(
+          "VIRAJ RATE ERROR:",
+          err
+        );
+
+        if (!cancelled) {
+          setRates(null);
+
+          setRatesError(
+            err?.message ||
+              "Unable to load Gold & Silver rates."
+          );
+        }
+      } finally {
+        if (!cancelled) {
+          setRatesLoading(false);
+        }
+      }
+    }
+
+    loadRates();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   /* =========================================================
      LOAD PRODUCT
@@ -55,40 +192,60 @@ export default function Product() {
         const uuid = isValidUUID(id);
 
         /* =====================================================
-           FIRST TRY: PRODUCT UUID
+           SEARCH BY UUID
            ===================================================== */
 
         if (uuid) {
           const result = await supabase
             .from("products")
-            .select("*")
+            .select(`
+              *,
+              categories (
+                id,
+                name,
+                slug
+              )
+            `)
             .eq("id", id)
             .limit(1);
 
-          productData = result.data?.[0] || null;
-          productError = result.error;
+          productData =
+            result.data?.[0] || null;
+
+          productError =
+            result.error;
         }
 
         /* =====================================================
-           SECOND TRY: PRODUCT SKU
-           Example:
-           /product/ring-001
+           SEARCH BY SKU
            ===================================================== */
 
-        if (!productData && !productError) {
+        if (
+          !productData &&
+          !productError
+        ) {
           const result = await supabase
             .from("products")
-            .select("*")
+            .select(`
+              *,
+              categories (
+                id,
+                name,
+                slug
+              )
+            `)
             .eq("sku", id)
             .limit(1);
 
-          productData = result.data?.[0] || null;
-          productError = result.error;
+          productData =
+            result.data?.[0] || null;
+
+          productError =
+            result.error;
         }
 
         /* =====================================================
-           THIRD TRY: PRODUCT CODE
-           Useful if your database uses product_code
+           SEARCH BY PRODUCT CODE
            ===================================================== */
 
         if (
@@ -98,12 +255,22 @@ export default function Product() {
         ) {
           const result = await supabase
             .from("products")
-            .select("*")
+            .select(`
+              *,
+              categories (
+                id,
+                name,
+                slug
+              )
+            `)
             .eq("product_code", id)
             .limit(1);
 
-          productData = result.data?.[0] || null;
-          productError = result.error;
+          productData =
+            result.data?.[0] || null;
+
+          productError =
+            result.error;
         }
 
         /* =====================================================
@@ -112,16 +279,19 @@ export default function Product() {
 
         if (productError) {
           console.error(
-            "PRODUCT DATABASE ERROR:",
+            "VIRAJ PRODUCT ERROR:",
             productError
           );
 
           if (!cancelled) {
-            setError(productError.message);
+            setError(
+              productError.message
+            );
+
             setProduct(null);
+            setLoading(false);
           }
 
-          setLoading(false);
           return;
         }
 
@@ -130,45 +300,39 @@ export default function Product() {
            ===================================================== */
 
         if (!productData) {
-          console.error(
-            "PRODUCT NOT FOUND FOR URL:",
-            id
-          );
-
           if (!cancelled) {
             setError(
               `No product found for "${id}".`
             );
+
             setProduct(null);
+            setLoading(false);
           }
 
-          setLoading(false);
           return;
         }
 
         console.log(
-          "VIRAJ PRODUCT FOUND:",
+          "VIRAJ PRODUCT:",
           productData
         );
 
         /* =====================================================
-           LOAD PRODUCT IMAGES SEPARATELY
-           This avoids Supabase relationship errors.
+           LOAD IMAGES
            ===================================================== */
 
         let productImages = [];
 
-        const imageResult = await supabase
-          .from("product_images")
-          .select("*")
-          .eq("product_id", productData.id);
+        const imageResult =
+          await supabase
+            .from("product_images")
+            .select("*")
+            .eq(
+              "product_id",
+              productData.id
+            );
 
-        if (imageResult.error) {
-          console.warn(
-            "PRODUCT IMAGES ERROR:",
-            imageResult.error
-          );
-        } else {
+        if (!imageResult.error) {
           productImages =
             imageResult.data || [];
         }
@@ -177,42 +341,42 @@ export default function Product() {
            SORT IMAGES
            ===================================================== */
 
-        productImages = productImages
-          .filter(
-            (image) =>
-              image &&
-              image.image_url
-          )
-          .sort((a, b) => {
-            const orderA =
-              Number(
-                a.order ??
-                  a.sort_order ??
-                  a.position ??
-                  0
-              );
-
-            const orderB =
-              Number(
-                b.order ??
-                  b.sort_order ??
-                  b.position ??
-                  0
-              );
-
-            return orderA - orderB;
-          })
-          .map((image) => ({
-            ...image,
-            image_url:
-              String(
+        productImages =
+          productImages
+            .filter(
+              (image) =>
+                image &&
                 image.image_url
-              ).trim(),
-          }));
+            )
+            .sort((a, b) => {
+              const orderA =
+                Number(
+                  a.order ??
+                    a.sort_order ??
+                    a.position ??
+                    0
+                );
+
+              const orderB =
+                Number(
+                  b.order ??
+                    b.sort_order ??
+                    b.position ??
+                    0
+                );
+
+              return orderA - orderB;
+            })
+            .map((image) => ({
+              ...image,
+              image_url:
+                String(
+                  image.image_url
+                ).trim(),
+            }));
 
         /* =====================================================
-           FALLBACK 1:
-           products.image
+           FALLBACK IMAGE
            ===================================================== */
 
         if (
@@ -220,7 +384,7 @@ export default function Product() {
           productData.image
         ) {
           productImages.push({
-            id: "main-product-image",
+            id: "main-image",
             image_url:
               String(
                 productData.image
@@ -230,20 +394,22 @@ export default function Product() {
         }
 
         /* =====================================================
-           FALLBACK 2:
-           products.images
+           FALLBACK IMAGES ARRAY
            ===================================================== */
 
         if (
           productImages.length === 0 &&
-          Array.isArray(productData.images)
+          Array.isArray(
+            productData.images
+          )
         ) {
           productData.images
             .filter(Boolean)
             .forEach(
               (image, index) => {
                 const imageUrl =
-                  typeof image === "string"
+                  typeof image ===
+                  "string"
                     ? image
                     : image?.image_url ||
                       image?.url ||
@@ -263,23 +429,15 @@ export default function Product() {
             );
         }
 
-        console.log(
-          "VIRAJ PRODUCT IMAGES:",
-          productImages
-        );
-
-        /* =====================================================
-           SET DATA
-           ===================================================== */
-
         if (!cancelled) {
           setProduct(productData);
           setImages(productImages);
           setActiveIndex(0);
+          setLoading(false);
         }
       } catch (err) {
         console.error(
-          "UNEXPECTED PRODUCT ERROR:",
+          "VIRAJ PRODUCT LOAD ERROR:",
           err
         );
 
@@ -290,11 +448,8 @@ export default function Product() {
           );
 
           setProduct(null);
+          setLoading(false);
         }
-      }
-
-      if (!cancelled) {
-        setLoading(false);
       }
     }
 
@@ -306,32 +461,58 @@ export default function Product() {
   }, [id]);
 
   /* =========================================================
-     IMAGE SWAP
+     IMAGE NAVIGATION
      ========================================================= */
 
   function previousImage() {
     if (images.length <= 1) return;
 
-    setActiveIndex((current) => {
-      if (current === 0) {
-        return images.length - 1;
-      }
-
-      return current - 1;
-    });
+    setActiveIndex((current) =>
+      current === 0
+        ? images.length - 1
+        : current - 1
+    );
   }
 
   function nextImage() {
     if (images.length <= 1) return;
 
-    setActiveIndex((current) => {
-      if (current === images.length - 1) {
-        return 0;
+    setActiveIndex((current) =>
+      current === images.length - 1
+        ? 0
+        : current + 1
+    );
+  }
+
+  /* =========================================================
+     KEYBOARD NAVIGATION
+     ========================================================= */
+
+  useEffect(() => {
+    function handleKeyDown(event) {
+      if (images.length <= 1) return;
+
+      if (event.key === "ArrowLeft") {
+        previousImage();
       }
 
-      return current + 1;
-    });
-  }
+      if (event.key === "ArrowRight") {
+        nextImage();
+      }
+    }
+
+    window.addEventListener(
+      "keydown",
+      handleKeyDown
+    );
+
+    return () => {
+      window.removeEventListener(
+        "keydown",
+        handleKeyDown
+      );
+    };
+  }, [images.length]);
 
   /* =========================================================
      LOADING
@@ -341,14 +522,14 @@ export default function Product() {
     return (
       <main className="product-page">
         <div className="product-loading">
-          Loading product...
+          <p>Loading product...</p>
         </div>
       </main>
     );
   }
 
   /* =========================================================
-     NOT FOUND
+     PRODUCT NOT FOUND
      ========================================================= */
 
   if (!product) {
@@ -356,13 +537,17 @@ export default function Product() {
       <main className="product-page">
         <div className="product-not-found">
 
+          <p className="product-eyebrow">
+            VIRAJ JEWELLERY
+          </p>
+
           <h1>
             Product Not Found
           </h1>
 
           <p>
             {error ||
-              "Product not found."}
+              "The requested product could not be found."}
           </p>
 
           <Link to="/">
@@ -375,7 +560,7 @@ export default function Product() {
   }
 
   /* =========================================================
-     PRODUCT DATA
+     PRODUCT INFORMATION
      ========================================================= */
 
   const categoryName =
@@ -384,14 +569,15 @@ export default function Product() {
     "Jewellery";
 
   const activeImage =
-    images[activeIndex]?.image_url ||
-    "";
+    images[activeIndex]
+      ?.image_url || "";
+
+  const weightNumber =
+    toNumber(product.weight);
 
   const weight =
-    product.weight !== null &&
-    product.weight !== undefined &&
-    product.weight !== ""
-      ? `${product.weight} g`
+    weightNumber > 0
+      ? `${weightNumber} g`
       : "";
 
   const purity =
@@ -405,8 +591,193 @@ export default function Product() {
     product.material ||
     "";
 
+  const sku =
+    product.sku ||
+    product.product_code ||
+    "";
+
   const wishlisted =
     isInWishlist(product.id);
+
+  /* =========================================================
+     NORMALIZE METAL
+     ========================================================= */
+
+  const metalText =
+    String(metal)
+      .toLowerCase()
+      .trim();
+
+  const purityText =
+    String(purity)
+      .toLowerCase()
+      .replace(/\s+/g, "");
+
+  const isSilver =
+    metalText.includes("silver");
+
+  const isGold =
+    !isSilver;
+
+  /* =========================================================
+     CURRENT RATE
+     ========================================================= */
+
+  let metalRate = 0;
+
+  if (rates) {
+
+    /* =======================================================
+       SILVER
+       ======================================================= */
+
+    if (isSilver) {
+
+      metalRate =
+        toNumber(
+          rates.silver_rate
+        );
+
+    }
+
+    /* =======================================================
+       GOLD
+       ======================================================= */
+
+    if (isGold) {
+
+      if (
+        purityText.includes("24")
+      ) {
+
+        metalRate =
+          toNumber(
+            rates.rate_24k
+          );
+
+      } else if (
+        purityText.includes("18")
+      ) {
+
+        metalRate =
+          toNumber(
+            rates.rate_18k
+          );
+
+      } else {
+
+        /*
+         * 22K is the default.
+         */
+
+        metalRate =
+          toNumber(
+            rates.rate_22k
+          );
+      }
+    }
+  }
+
+  /* =========================================================
+     PRICE CALCULATION
+     ========================================================= */
+
+  const metalValue =
+    weightNumber * metalRate;
+
+  const makingCharge =
+    toNumber(
+      product.making_charge
+    );
+
+  const makingTotal =
+    weightNumber *
+    makingCharge;
+
+  const subtotal =
+    metalValue +
+    makingTotal;
+
+  const gstPercentage =
+    toNumber(product.gst);
+
+  const gstAmount =
+    subtotal *
+    (gstPercentage / 100);
+
+  const calculatedPrice =
+    Math.round(
+      subtotal + gstAmount
+    );
+
+  /* =========================================================
+     VALIDATION
+     ========================================================= */
+
+  const hasRate =
+    metalRate > 0;
+
+  const hasWeight =
+    weightNumber > 0;
+
+  const hasPrice =
+    hasRate &&
+    hasWeight &&
+    calculatedPrice > 0;
+
+  /* =========================================================
+     PRICE MESSAGE
+     ========================================================= */
+
+  let priceMessage = "";
+
+  if (ratesLoading) {
+
+    priceMessage =
+      "Loading current metal rate...";
+
+  } else if (ratesError) {
+
+    priceMessage =
+      ratesError;
+
+  } else if (!hasRate) {
+
+    priceMessage =
+      isSilver
+        ? "Silver rate is not available."
+        : `Gold ${
+            purity || "22K"
+          } rate is not available.`;
+
+  } else if (!hasWeight) {
+
+    priceMessage =
+      "Product weight is required for automatic pricing.";
+
+  }
+
+  /* =========================================================
+     DEBUG
+     ========================================================= */
+
+  console.log(
+    "VIRAJ FINAL PRICE:",
+    {
+      product: product.name,
+      metal,
+      purity,
+      weight: weightNumber,
+      rate: metalRate,
+      makingCharge,
+      gst: gstPercentage,
+      metalValue,
+      makingTotal,
+      gstAmount,
+      finalPrice:
+        calculatedPrice,
+    }
+  );
 
   /* =========================================================
      RENDER
@@ -441,22 +812,18 @@ export default function Product() {
 
 
       {/* =====================================================
-          MAIN PRODUCT
+          PRODUCT DETAIL
           ===================================================== */}
 
       <div className="product-detail">
 
         {/* ===================================================
-            LEFT — GALLERY
+            GALLERY
             =================================================== */}
 
         <section className="product-gallery">
 
           <div className="product-gallery-layout">
-
-            {/* ===============================================
-                DESKTOP THUMBNAILS
-                =============================================== */}
 
             {images.length > 1 && (
               <div className="product-thumbnails">
@@ -470,12 +837,15 @@ export default function Product() {
                       }
                       type="button"
                       className={
-                        activeIndex === index
+                        activeIndex ===
+                        index
                           ? "product-thumbnail active"
                           : "product-thumbnail"
                       }
                       onClick={() =>
-                        setActiveIndex(index)
+                        setActiveIndex(
+                          index
+                        )
                       }
                     >
 
@@ -495,10 +865,7 @@ export default function Product() {
               </div>
             )}
 
-
-            {/* ===============================================
-                MAIN PRODUCT IMAGE
-                =============================================== */}
+            {/* MAIN IMAGE */}
 
             <div className="product-main-image">
 
@@ -510,15 +877,6 @@ export default function Product() {
                     product.name ||
                     "Viraj Jewellery"
                   }
-                  onError={(event) => {
-                    console.error(
-                      "IMAGE FAILED:",
-                      activeImage
-                    );
-
-                    event.currentTarget.style.display =
-                      "none";
-                  }}
                 />
 
               ) : (
@@ -537,62 +895,40 @@ export default function Product() {
 
               )}
 
-
-              {/* ===========================================
-                  PREVIOUS
-                  =========================================== */}
-
               {images.length > 1 && (
-                <button
-                  type="button"
-                  className="gallery-arrow gallery-arrow-left"
-                  onClick={
-                    previousImage
-                  }
-                  aria-label="Previous product image"
-                >
-                  ←
-                </button>
-              )}
+                <>
+                  <button
+                    type="button"
+                    className="gallery-arrow gallery-arrow-left"
+                    onClick={
+                      previousImage
+                    }
+                  >
+                    ←
+                  </button>
 
+                  <button
+                    type="button"
+                    className="gallery-arrow gallery-arrow-right"
+                    onClick={
+                      nextImage
+                    }
+                  >
+                    →
+                  </button>
 
-              {/* ===========================================
-                  NEXT
-                  =========================================== */}
-
-              {images.length > 1 && (
-                <button
-                  type="button"
-                  className="gallery-arrow gallery-arrow-right"
-                  onClick={
-                    nextImage
-                  }
-                  aria-label="Next product image"
-                >
-                  →
-                </button>
-              )}
-
-
-              {/* ===========================================
-                  IMAGE COUNTER
-                  =========================================== */}
-
-              {images.length > 1 && (
-                <span className="gallery-count">
-                  {activeIndex + 1} /{" "}
-                  {images.length}
-                </span>
+                  <span className="gallery-count">
+                    {activeIndex + 1} /{" "}
+                    {images.length}
+                  </span>
+                </>
               )}
 
             </div>
 
           </div>
 
-
-          {/* =================================================
-              MOBILE THUMBNAILS
-              ================================================= */}
+          {/* MOBILE THUMBNAILS */}
 
           {images.length > 1 && (
             <div className="mobile-product-thumbnails">
@@ -602,16 +938,19 @@ export default function Product() {
                   <button
                     key={
                       image.id ||
-                      `mobile-${image.image_url}-${index}`
+                      `mobile-${index}`
                     }
                     type="button"
                     className={
-                      activeIndex === index
+                      activeIndex ===
+                      index
                         ? "product-thumbnail active"
                         : "product-thumbnail"
                     }
                     onClick={() =>
-                      setActiveIndex(index)
+                      setActiveIndex(
+                        index
+                      )
                     }
                   >
 
@@ -635,7 +974,7 @@ export default function Product() {
 
 
         {/* ===================================================
-            RIGHT — PRODUCT INFORMATION
+            PRODUCT INFORMATION
             =================================================== */}
 
         <section className="product-information">
@@ -652,33 +991,21 @@ export default function Product() {
             {product.name}
           </h1>
 
-
-          {/* ===============================================
-              PRODUCT CODE
-              =============================================== */}
-
-          {(product.sku ||
-            product.product_code) && (
+          {sku && (
             <p className="product-code">
-
               Product Code:{" "}
-
               <strong>
-                {product.sku ||
-                  product.product_code}
+                {sku}
               </strong>
-
             </p>
           )}
 
-
-          {/* ===============================================
-              SPECIFICATIONS
-              =============================================== */}
+          {/* SPECIFICATIONS */}
 
           {(weight ||
             purity ||
             metal) && (
+
             <div className="product-specifications">
 
               {weight && (
@@ -727,9 +1054,9 @@ export default function Product() {
           )}
 
 
-          {/* ===============================================
+          {/* =================================================
               PRICE
-              =============================================== */}
+              ================================================= */}
 
           <div className="product-price-box">
 
@@ -737,21 +1064,91 @@ export default function Product() {
               Price
             </span>
 
-            <strong>
-              ₹
-              {Number(
-                product.price || 0
-              ).toLocaleString(
-                "en-IN"
-              )}
-            </strong>
+            {ratesLoading ? (
+
+              <strong>
+                Calculating...
+              </strong>
+
+            ) : hasPrice ? (
+
+              <strong>
+                ₹
+                {calculatedPrice.toLocaleString(
+                  "en-IN"
+                )}
+              </strong>
+
+            ) : (
+
+              <strong>
+                Price unavailable
+              </strong>
+
+            )}
 
           </div>
 
 
-          {/* ===============================================
-              SHORT DESCRIPTION
-              =============================================== */}
+          {/* =================================================
+              PRICE DETAILS
+              ================================================= */}
+
+          {hasPrice && (
+            <div
+              className="product-price-note"
+              style={{
+                marginTop: "8px",
+                fontSize: "12px",
+                lineHeight: "1.5",
+                opacity: 0.7,
+              }}
+            >
+
+              Current{" "}
+              {isSilver
+                ? "Silver"
+                : `Gold ${
+                    purity || "22K"
+                  }`}{" "}
+              rate: ₹
+              {metalRate.toLocaleString(
+                "en-IN"
+              )}
+              /g
+
+              {makingCharge > 0 &&
+                ` · Making ₹${makingCharge.toLocaleString(
+                  "en-IN"
+                )}/g`}
+
+              {gstPercentage > 0 &&
+                ` · GST ${gstPercentage}%`}
+
+            </div>
+          )}
+
+
+          {!ratesLoading &&
+            !hasPrice &&
+            priceMessage && (
+
+              <div
+                className="product-price-note"
+                style={{
+                  marginTop: "8px",
+                  fontSize: "12px",
+                  lineHeight: "1.5",
+                  opacity: 0.75,
+                }}
+              >
+                {priceMessage}
+              </div>
+
+            )}
+
+
+          {/* DESCRIPTION */}
 
           {product.short_description && (
             <div className="product-short-description">
@@ -761,16 +1158,13 @@ export default function Product() {
               </h3>
 
               <p>
-                {product.short_description}
+                {
+                  product.short_description
+                }
               </p>
 
             </div>
           )}
-
-
-          {/* ===============================================
-              DESCRIPTION
-              =============================================== */}
 
           {product.description && (
             <div className="product-description">
@@ -787,9 +1181,7 @@ export default function Product() {
           )}
 
 
-          {/* ===============================================
-              ACTIONS
-              =============================================== */}
+          {/* ACTIONS */}
 
           <div className="product-actions">
 
@@ -801,15 +1193,15 @@ export default function Product() {
                   : "product-wishlist-button"
               }
               onClick={() =>
-                toggleWishlist(
-                  product
-                )
+                toggleWishlist(product)
               }
             >
 
-              {wishlisted
-                ? "♥"
-                : "♡"}
+              <span className="wishlist-symbol">
+                {wishlisted
+                  ? "♥"
+                  : "♡"}
+              </span>
 
               <span>
                 {wishlisted
@@ -818,7 +1210,6 @@ export default function Product() {
               </span>
 
             </button>
-
 
             <Link
               to="/category"

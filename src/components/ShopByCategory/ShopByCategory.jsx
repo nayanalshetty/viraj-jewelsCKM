@@ -282,24 +282,8 @@ export default function ShopByCategory() {
   if (loading) {
     return (
       <section className="shop-category">
-
         <div className="shop-category-heading">
-
-          <p className="shop-category-eyebrow">
-            VIRAJ JEWELLERY
-          </p>
-
-          <h2>
-            Shop By{" "}
-            <span>Category</span>
-          </h2>
-
-          <p>
-            Discover jewellery designed for
-            every occasion, every celebration
-            and every story.
-          </p>
-
+          <h2>Category</h2>
         </div>
 
         <div className="shop-category-loading">
@@ -318,25 +302,9 @@ export default function ShopByCategory() {
 
   return (
     <section className="shop-category">
-
-      <div className="shop-category-heading">
-
-        <p className="shop-category-eyebrow">
-          VIRAJ JEWELLERY
-        </p>
-
-        <h2>
-          Shop By{" "}
-          <span>Category</span>
-        </h2>
-
-        <p>
-          Discover jewellery designed for
-          every occasion, every celebration
-          and every story.
-        </p>
-
-      </div>
+        <div className="shop-category-heading">
+          <h2>Category</h2>
+        </div>
 
       {categories.length > 0 ? (
 
@@ -408,29 +376,12 @@ export default function ShopByCategory() {
 
                   </div>
 
-                  <span className="shop-category-badge">
-                    {category.label}
-                  </span>
-
                 </div>
 
                 <div className="shop-category-content">
-
                   <div>
-
-                    <h3>
-                      {category.name}
-                    </h3>
-
-                    <p>
-                      {category.description}
-                    </p>
-
+                    <h3>{category.name}</h3>
                   </div>
-
-                  <span className="shop-category-arrow">
-                    ↗
-                  </span>
 
                 </div>
 

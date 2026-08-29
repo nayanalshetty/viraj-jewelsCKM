@@ -1,732 +1,207 @@
 /* =========================================================
-   VIRAJ JEWELLERS
-   JEWELLERY MADE FOR EVERY MOMENT
-   PREMIUM LUXURY COLLECTION BANNER
+   VIRAJ JEWELS — MODERN COLLECTION PROMO
+   Compact luxury banner for desktop + mobile
    ========================================================= */
 
 .collection-banner {
   position: relative;
-  width: 100%;
-  min-height: 650px;
+  width: calc(100% - 32px);
+  max-width: 1380px;
+  min-height: 330px;
+  margin: 24px auto;
   overflow: hidden;
-
   display: grid;
-  grid-template-columns: 52% 48%;
+  grid-template-columns: 48% 52%;
   align-items: stretch;
-
-  background:
-    radial-gradient(
-      circle at 25% 35%,
-      rgba(255, 255, 255, 0.9),
-      transparent 38%
-    ),
-    linear-gradient(
-      115deg,
-      #fbf6ed 0%,
-      #f5eadb 52%,
-      #ead8bd 100%
-    );
-
-  border-top: 1px solid #dfc69d;
-  border-bottom: 1px solid #dfc69d;
+  background: #efe0c5;
+  border: 1px solid rgba(174, 130, 58, 0.22);
+  border-radius: 26px;
+  box-shadow: 0 12px 35px rgba(74, 48, 19, 0.08);
 }
-
-
-/* =========================================================
-   BACKGROUND
-   ========================================================= */
-
-.collection-banner-background {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-
-  background:
-    radial-gradient(
-      circle at 8% 15%,
-      rgba(183, 133, 50, 0.08),
-      transparent 25%
-    ),
-    radial-gradient(
-      circle at 88% 80%,
-      rgba(183, 133, 50, 0.1),
-      transparent 30%
-    );
-}
-
-
-/* =========================================================
-   CONTENT
-   ========================================================= */
 
 .collection-banner-content {
   position: relative;
-  z-index: 5;
-
-  align-self: center;
-
-  padding: 70px 5vw 70px 7vw;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 38px clamp(28px, 5vw, 72px);
+  background:
+    radial-gradient(circle at 15% 20%, rgba(255,255,255,.7), transparent 34%),
+    linear-gradient(135deg, #fbf6ed 0%, #f2e4cc 100%);
 }
-
-
-/* =========================================================
-   EYEBROW
-   ========================================================= */
 
 .collection-eyebrow {
-  margin: 0 0 18px;
-
+  margin: 0 0 10px;
   color: #a87529;
-
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 700;
-
-  letter-spacing: 4px;
+  letter-spacing: 3px;
   text-transform: uppercase;
 }
-
-
-/* =========================================================
-   TITLE
-   ========================================================= */
 
 .collection-banner-content h2 {
   margin: 0;
-
-  max-width: 620px;
-
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
-
-  font-size: clamp(48px, 5vw, 76px);
-  line-height: 0.98;
-
+  color: #241a14;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(38px, 4.4vw, 60px);
+  line-height: .95;
   font-weight: 400;
-
-  letter-spacing: -1.5px;
-
-  color: #2a1e16;
+  letter-spacing: -1.2px;
 }
-
-
-/* =========================================================
-   DIVIDER
-   ========================================================= */
-
-.collection-divider {
-  width: 300px;
-  max-width: 80%;
-
-  display: flex;
-  align-items: center;
-
-  gap: 10px;
-
-  margin: 24px 0 20px;
-}
-
-.collection-divider span {
-  flex: 1;
-  height: 1px;
-
-  background: #c9a264;
-}
-
-.collection-divider i {
-  font-style: normal;
-
-  color: #a87529;
-
-  font-size: 12px;
-}
-
-
-/* =========================================================
-   DESCRIPTION
-   ========================================================= */
 
 .collection-description {
-  max-width: 500px;
-
-  margin: 0;
-
-  color: #6e5b4a;
-
-  font-size: 14px;
-  line-height: 1.65;
+  max-width: 330px;
+  margin: 14px 0 0;
+  color: #756454;
+  font-size: 12px;
+  line-height: 1.5;
 }
-
-
-/* =========================================================
-   FEATURES
-   ========================================================= */
-
-.collection-points {
-  display: flex;
-  align-items: stretch;
-
-  max-width: 610px;
-
-  margin-top: 27px;
-}
-
-.collection-point {
-  flex: 1;
-
-  display: flex;
-  align-items: center;
-
-  gap: 10px;
-
-  padding: 0 18px;
-
-  border-right: 1px solid
-    rgba(169, 126, 55, 0.28);
-}
-
-.collection-point:first-child {
-  padding-left: 0;
-}
-
-.collection-point:last-child {
-  border-right: 0;
-}
-
-.collection-point-icon {
-  flex: 0 0 32px;
-
-  width: 32px;
-  height: 32px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border: 1px solid #c49a57;
-  border-radius: 50%;
-
-  color: #a87529;
-
-  font-size: 14px;
-}
-
-.collection-point strong {
-  display: block;
-
-  margin-bottom: 3px;
-
-  color: #94631f;
-
-  font-size: 9px;
-  font-weight: 700;
-
-  letter-spacing: 1.3px;
-}
-
-.collection-point small {
-  display: block;
-
-  color: #776759;
-
-  font-size: 9px;
-
-  line-height: 1.3;
-}
-
-
-/* =========================================================
-   BUTTON
-   ========================================================= */
 
 .collection-button {
-  width: 270px;
-
-  margin-top: 30px;
-
-  padding: 15px 20px;
-
+  width: 190px;
+  margin-top: 20px;
+  padding: 11px 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  border: 1px solid #ae792a;
-
-  background: #2a1e16;
-
-  color: #f7ead6;
-
+  border: 1px solid #b28135;
+  border-radius: 999px;
+  background: #2b211b;
+  color: #f8ead2;
   text-decoration: none;
-
-  font-size: 10px;
-  font-weight: 600;
-
-  letter-spacing: 1.8px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
-
-  transition:
-    background 0.25s ease,
-    color 0.25s ease,
-    transform 0.25s ease;
+  transition: transform .25s ease, background .25s ease;
 }
 
 .collection-button:hover {
-  background: #ae792a;
-  color: #fff;
-
   transform: translateY(-2px);
-}
-
-
-/* =========================================================
-   STORY
-   ========================================================= */
-
-.collection-story {
-  display: flex;
-  align-items: flex-start;
-
-  gap: 12px;
-
-  margin-top: 25px;
-}
-
-.story-line {
-  position: relative;
-
-  flex: 0 0 20px;
-
-  width: 20px;
-  height: 20px;
-
-  margin-top: 3px;
-}
-
-.story-line::before {
-  content: "";
-
-  position: absolute;
-
-  width: 8px;
-  height: 8px;
-
-  top: 2px;
-  left: 50%;
-
-  border: 1px solid #a87529;
-
-  transform:
-    translateX(-50%)
-    rotate(45deg);
-}
-
-.story-line::after {
-  content: "";
-
-  position: absolute;
-
-  width: 1px;
-  height: 7px;
-
-  left: 50%;
-  bottom: 0;
-
   background: #a87529;
-
-  transform: translateX(-50%);
 }
-
-.collection-story p {
-  margin: 0;
-
-  color: #766455;
-
-  font-size: 10px;
-  line-height: 1.6;
-}
-
-
-/* =========================================================
-   MODEL AREA
-   ========================================================= */
 
 .collection-model {
   position: relative;
-
-  min-height: 650px;
-
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-
+  min-height: 330px;
   overflow: hidden;
-
-  z-index: 2;
+  background: #dbc19a;
 }
-
-
-/* =========================================================
-   ARCH
-   ========================================================= */
-
-.collection-arch {
-  position: absolute;
-
-  right: 6%;
-  bottom: -9%;
-
-  width: 80%;
-  height: 94%;
-
-  border: 1px solid
-    rgba(175, 133, 65, 0.62);
-
-  border-bottom: 0;
-
-  border-radius:
-    50%
-    50%
-    0
-    0;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255,255,255,0.22),
-      rgba(255,255,255,0)
-    );
-
-  box-shadow:
-    inset 0 0 35px
-    rgba(255,255,255,0.12);
-
-  z-index: 0;
-}
-
-
-/* =========================================================
-   MODEL IMAGE
-   ========================================================= */
 
 .collection-model img {
-  position: relative;
-
-  z-index: 2;
-
   width: 100%;
   height: 100%;
-
-  max-width: none;
-
   display: block;
-
   object-fit: cover;
-
-  object-position: center top;
+  object-position: center 25%;
 }
 
-
-/* =========================================================
-   DECORATIVE ELEMENTS
-   ========================================================= */
-
-.collection-flower {
+.collection-image-glow {
   position: absolute;
-
+  inset: 0;
   pointer-events: none;
-
-  z-index: 4;
-
-  opacity: 0.65;
+  background: linear-gradient(90deg, rgba(239,224,197,.55), transparent 35%, rgba(42,28,18,.04));
 }
 
-.collection-flower::before,
-.collection-flower::after {
-  content: "";
-  position: absolute;
-}
-
-
-/* TOP LEFT */
-
-.flower-top-left {
-  top: 25px;
-  left: 25px;
-
-  width: 100px;
-  height: 100px;
-
-  border-radius: 50%;
-
-  background:
-    radial-gradient(
-      circle at center,
-      rgba(255,255,255,0.75) 0 9%,
-      transparent 10%
-    ),
-    radial-gradient(
-      ellipse at center,
-      rgba(194,151,85,0.4) 0 18%,
-      transparent 20%
-    );
-}
-
-
-/* BOTTOM LEFT */
-
-.flower-bottom-left {
-  bottom: -65px;
-  left: -40px;
-
-  width: 170px;
-  height: 170px;
-
-  border-radius: 50%;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(198,157,92,0.18),
-      transparent 65%
-    );
-}
-
-
-/* BOTTOM CENTER */
-
-.flower-bottom-center {
-  bottom: -70px;
-  left: 47%;
-
-  width: 170px;
-  height: 170px;
-
-  border-radius: 50%;
-
-  background:
-    radial-gradient(
-      circle at 30% 40%,
-      rgba(255,255,255,0.7) 0 8%,
-      transparent 9%
-    );
-}
-
-
-/* RIGHT */
-
-.flower-right {
-  top: 13%;
-  right: 2%;
-
-  width: 90px;
-  height: 90px;
-
-  border-radius: 50%;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(255,255,255,0.5) 0 14%,
-      transparent 15%
-    );
-}
-
-
-/* =========================================================
-   TABLET
-   ========================================================= */
-
-@media (max-width: 1000px) {
-
+@media (max-width: 800px) {
   .collection-banner {
-    grid-template-columns: 1fr;
+    width: calc(100% - 24px);
+    min-height: 290px;
+    margin: 18px auto;
+    grid-template-columns: 46% 54%;
+    border-radius: 21px;
   }
 
   .collection-banner-content {
-    padding: 60px 7vw 30px;
-  }
-
-  .collection-model {
-    min-height: 540px;
-  }
-
-  .collection-arch {
-    right: 8%;
-    width: 78%;
-  }
-}
-
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
-@media (max-width: 600px) {
-
-  .collection-banner {
-    display: block;
-
-    min-height: auto;
-  }
-
-  .collection-banner-content {
-    padding: 45px 20px 25px;
+    padding: 25px 18px;
   }
 
   .collection-eyebrow {
-    margin-bottom: 14px;
-
-    font-size: 8px;
-    letter-spacing: 3px;
+    margin-bottom: 8px;
+    font-size: 7px;
+    letter-spacing: 2px;
   }
 
   .collection-banner-content h2 {
-    font-size: 42px;
-
-    line-height: 0.98;
-
-    letter-spacing: -0.8px;
-  }
-
-  .collection-divider {
-    width: 230px;
-
-    margin: 19px 0;
+    font-size: 34px;
   }
 
   .collection-description {
-    font-size: 13px;
-    line-height: 1.6;
+    margin-top: 10px;
+    font-size: 10px;
+    line-height: 1.4;
   }
-
-
-  /* FEATURES */
-
-  .collection-points {
-    flex-direction: column;
-
-    gap: 0;
-
-    margin-top: 22px;
-  }
-
-  .collection-point {
-    padding: 11px 0;
-
-    border-right: 0;
-
-    border-bottom:
-      1px solid
-      rgba(169, 126, 55, 0.22);
-  }
-
-  .collection-point:first-child {
-    padding-top: 0;
-  }
-
-  .collection-point:last-child {
-    border-bottom: 0;
-  }
-
-
-  /* BUTTON */
 
   .collection-button {
-    width: 100%;
-
-    margin-top: 22px;
-
-    padding: 14px 17px;
-
-    font-size: 9px;
+    width: 145px;
+    margin-top: 14px;
+    padding: 9px 11px;
+    font-size: 7px;
+    letter-spacing: 1px;
   }
-
-
-  /* STORY */
-
-  .collection-story {
-    margin-top: 20px;
-  }
-
-  .collection-story p {
-    font-size: 9px;
-  }
-
-
-  /* MODEL */
 
   .collection-model {
-    min-height: 430px;
-
-    margin-top: 5px;
-  }
-
-  .collection-arch {
-    width: 92%;
-
-    right: 4%;
-  }
-
-  .collection-model img {
-    object-position: center top;
-  }
-
-
-  /* DECORATION */
-
-  .flower-top-left {
-    width: 70px;
-    height: 70px;
-
-    top: 12px;
-    left: 8px;
-  }
-
-  .flower-right {
-    width: 60px;
-    height: 60px;
-
-    right: -5px;
+    min-height: 290px;
   }
 }
 
-
-/* =========================================================
-   VERY SMALL PHONES
-   ========================================================= */
-
-@media (max-width: 380px) {
+@media (max-width: 480px) {
+  .collection-banner {
+    width: calc(100% - 20px);
+    min-height: 225px;
+    grid-template-columns: 49% 51%;
+    margin: 16px auto;
+    border-radius: 18px;
+  }
 
   .collection-banner-content {
-    padding-left: 16px;
-    padding-right: 16px;
+    padding: 20px 14px;
+  }
+
+  .collection-eyebrow {
+    font-size: 6px;
+    letter-spacing: 1.6px;
   }
 
   .collection-banner-content h2 {
-    font-size: 38px;
+    font-size: 28px;
+    letter-spacing: -.7px;
   }
 
   .collection-description {
-    font-size: 12px;
+    max-width: 145px;
+    font-size: 8px;
+  }
+
+  .collection-button {
+    width: 125px;
+    margin-top: 11px;
+    padding: 8px 9px;
+    font-size: 6.5px;
   }
 
   .collection-model {
-    min-height: 390px;
+    min-height: 225px;
   }
 }
 
+@media (max-width: 360px) {
+  .collection-banner-content h2 {
+    font-size: 25px;
+  }
 
-/* =========================================================
-   REDUCED MOTION
-   ========================================================= */
+  .collection-description {
+    font-size: 7px;
+  }
+
+  .collection-button {
+    width: 112px;
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
-
-  .collection-banner *,
-  .collection-banner *::before,
-  .collection-banner *::after {
+  .collection-banner * {
     transition: none !important;
   }
 }

@@ -1,13 +1,11 @@
-.viraj-home,
 .home {
   width: 100%;
-  background: #f7f0e6;
-  color: #2d2117;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: #f7ead1;
+  color: #201914;
 }
 
-.viraj-hero {
-  background: #f7f0e6;
+.home > * {
+  width: 100%;
 }
-
-.hero-glow { display: none; }
-.hero-orbit { display: none; }

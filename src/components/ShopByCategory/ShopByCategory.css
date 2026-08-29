@@ -1,762 +1,200 @@
-/* =========================================================
-   VIRAJ JEWELLERY
-   SHOP BY CATEGORY — PREMIUM DARK LUXURY
-   Desktop + Tablet + Mobile
-   ========================================================= */
-
-.shop-category,
-.shop-category *,
-.shop-category *::before,
-.shop-category *::after {
-  box-sizing: border-box;
-}
-
-/* =========================================================
-   SECTION
-   ========================================================= */
-
 .shop-category {
   width: 100%;
-  padding: 58px 24px 65px;
-
-  background: #211a18;
-  color: #eee3d6;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 22px 20px 18px;
+  background: #f7ead1;
+  color: #201914;
 }
-
-/* =========================================================
-   HEADING
-   ========================================================= */
 
 .shop-category-heading {
-  width: 100%;
-  max-width: 850px;
-
-  margin: 0 auto 34px;
-
-  text-align: center;
-}
-
-.shop-category-eyebrow {
-  margin: 0 0 9px;
-
-  color: #c8a96b;
-
-  font-size: 9px;
-  font-weight: 600;
-
-  letter-spacing: 3.5px;
-  text-transform: uppercase;
+  margin: 0 0 14px;
 }
 
 .shop-category-heading h2 {
   margin: 0;
-
-  color: #f1e7d9;
-
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
-
-  font-size: clamp(34px, 4vw, 50px);
-
-  line-height: 1.05;
-
-  font-weight: 400;
+  color: #17120e;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.5px;
 }
 
-.shop-category-heading h2 span {
-  color: #c8a96b;
+.shop-category-eyebrow,
+.shop-category-heading > p:last-child,
+.shop-category-badge,
+.shop-category-content p,
+.shop-category-arrow,
+.shop-category-features {
+  display: none !important;
 }
-
-.shop-category-heading > p:last-child {
-  max-width: 650px;
-
-  margin: 13px auto 0;
-
-  color: #a99b8f;
-
-  font-size: 13px;
-
-  line-height: 1.55;
-}
-
-/* =========================================================
-   DESKTOP GRID
-   ========================================================= */
 
 .shop-category-grid {
   width: 100%;
-  max-width: 1180px;
-
-  margin: 0 auto;
-
-  display: grid;
-
-  grid-template-columns:
-    repeat(3, minmax(0, 1fr));
-
-  gap: 16px;
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 2px 0 8px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
 }
 
-/* =========================================================
-   CATEGORY CARD
-   ========================================================= */
+.shop-category-grid::-webkit-scrollbar {
+  display: none;
+}
 
 .shop-category-card {
-  width: 100%;
-  min-width: 0;
-
-  display: block;
-
-  overflow: hidden;
-
-  background: #2c2220;
-
-  border:
-    1px solid rgba(200, 169, 107, 0.18);
-
+  flex: 0 0 74px;
+  width: 74px;
+  min-width: 74px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   color: inherit;
-
   text-decoration: none;
-
-  transition:
-    transform 0.25s ease,
-    border-color 0.25s ease,
-    box-shadow 0.25s ease;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  transform: none !important;
 }
-
-.shop-category-card:hover {
-  transform: translateY(-4px);
-
-  border-color:
-    rgba(200, 169, 107, 0.45);
-
-  box-shadow:
-    0 18px 40px rgba(0, 0, 0, 0.28);
-}
-
-/* =========================================================
-   IMAGE
-   ========================================================= */
 
 .shop-category-image {
   position: relative;
-
-  width: 100%;
-  height: 270px;
-
+  width: 66px;
+  height: 66px;
+  flex: 0 0 66px;
   overflow: hidden;
-
-  background:
-    radial-gradient(
-      circle at center,
-      #f7f0e6 0%,
-      #e7d8c3 65%,
-      #cbb89b 100%
-    );
+  border-radius: 50%;
+  background: #ead5ad;
+  border: 2px solid #fff9ed;
+  box-shadow: 0 4px 12px rgba(74, 48, 19, 0.13);
 }
 
 .shop-category-image img {
   width: 100%;
   height: 100%;
-
   display: block;
-
   object-fit: cover;
-  object-position: center;
-
-  transition:
-    transform 0.5s ease;
 }
 
-.shop-category-card:hover
-.shop-category-image img {
-  transform: scale(1.04);
+.shop-category-image::after {
+  display: none;
 }
-
-/* =========================================================
-   FALLBACK
-   ========================================================= */
 
 .shop-category-placeholder {
-  position: absolute;
-
-  inset: 0;
-
+  width: 100%;
+  height: 100%;
   display: flex;
-
   align-items: center;
   justify-content: center;
-
-  flex-direction: column;
-
-  background:
-    radial-gradient(
-      circle at center,
-      #f7f0e6 0%,
-      #e7d8c3 65%,
-      #cbb89b 100%
-    );
-
-  color: #a87935;
+  border-radius: 50%;
+  background: #ead5ad;
+  color: #85652f;
+  text-align: center;
 }
 
 .shop-category-placeholder strong {
   font-family: Georgia, serif;
-
-  font-size: 25px;
-
-  letter-spacing: 6px;
-
-  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 1px;
 }
 
 .shop-category-placeholder span {
-  margin-top: 4px;
-
-  font-size: 7px;
-
-  letter-spacing: 4px;
+  display: none;
 }
-
-/* =========================================================
-   BADGE
-   ========================================================= */
-
-.shop-category-badge {
-  position: absolute;
-
-  top: 11px;
-  left: 11px;
-
-  padding: 6px 9px;
-
-  background:
-    rgba(33, 26, 24, 0.88);
-
-  border:
-    1px solid rgba(200, 169, 107, 0.45);
-
-  color: #d7bc80;
-
-  font-size: 8px;
-
-  font-weight: 600;
-
-  letter-spacing: 1.5px;
-}
-
-/* =========================================================
-   CONTENT
-   ========================================================= */
 
 .shop-category-content {
-  min-height: 72px;
-
-  padding: 14px 15px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-between;
-
-  gap: 10px;
-
-  background: #2c2220;
+  width: 100%;
+  padding: 7px 0 0;
+  text-align: center;
 }
 
 .shop-category-content h3 {
-  min-width: 0;
-
   margin: 0;
-
-  color: #f0e4d5;
-
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
-
-  font-size: 19px;
-
-  line-height: 1.1;
-
-  font-weight: 400;
-}
-
-.shop-category-content p {
-  margin: 5px 0 0;
-
-  color: #9e9186;
-
-  font-size: 10px;
-
-  line-height: 1.35;
-
-  display: -webkit-box;
-
-  -webkit-line-clamp: 1;
-
-  -webkit-box-orient: vertical;
-
+  width: 100%;
   overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #40372f;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.2;
 }
-
-/* =========================================================
-   ARROW
-   ========================================================= */
-
-.shop-category-arrow {
-  flex: 0 0 auto;
-
-  width: 30px;
-  height: 30px;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  border:
-    1px solid rgba(200, 169, 107, 0.35);
-
-  color: #c8a96b;
-
-  font-size: 15px;
-
-  transition:
-    background 0.2s ease,
-    color 0.2s ease;
-}
-
-.shop-category-card:hover
-.shop-category-arrow {
-  background: #c8a96b;
-
-  color: #211a18;
-}
-
-/* =========================================================
-   LOADING
-   ========================================================= */
 
 .shop-category-loading {
-  width: 100%;
-  max-width: 1180px;
-
-  min-height: 100px;
-
-  margin: 0 auto;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  color: #9e9186;
-
-  font-size: 12px;
+  padding: 20px;
+  color: #6d5c4b;
+  font-size: 11px;
+  text-align: center;
 }
 
-/* =========================================================
-   TABLET
-   ========================================================= */
-
-@media (max-width: 900px) and (min-width: 701px) {
-
+@media (min-width: 769px) {
   .shop-category {
-    padding: 48px 20px 55px;
+    padding: 34px 5% 30px;
   }
-
-  .shop-category-grid {
-    grid-template-columns:
-      repeat(3, minmax(0, 1fr));
-
-    gap: 11px;
-  }
-
-  .shop-category-image {
-    height: 210px;
-  }
-
-  .shop-category-content {
-    padding: 12px;
-  }
-
-  .shop-category-content h3 {
-    font-size: 17px;
-  }
-}
-
-/* =========================================================
-   MOBILE — MODERN COMPACT 2 COLUMN GRID
-   ========================================================= */
-
-@media (max-width: 700px) {
-
-  .shop-category {
-    width: 100%;
-
-    padding:
-      32px 12px 38px;
-
-    background: #211a18;
-
-    overflow: hidden;
-  }
-
-  /* =====================================================
-     MOBILE HEADING
-     ===================================================== */
 
   .shop-category-heading {
-    width: 100%;
-
-    margin: 0 0 20px;
-
-    padding: 0 2px;
-
-    text-align: left;
-  }
-
-  .shop-category-eyebrow {
-    margin: 0 0 6px;
-
-    color: #c8a96b;
-
-    font-size: 7px;
-
-    letter-spacing: 2.5px;
+    margin-bottom: 20px;
   }
 
   .shop-category-heading h2 {
-    margin: 0;
-
-    color: #f1e7d9;
-
-    font-size: 28px;
-
-    line-height: 1.05;
+    font-size: 31px;
   }
-
-  .shop-category-heading > p:last-child {
-    max-width: 330px;
-
-    margin: 7px 0 0;
-
-    color: #9d9085;
-
-    font-size: 10px;
-
-    line-height: 1.45;
-  }
-
-  /* =====================================================
-     MOBILE GRID
-     ===================================================== */
 
   .shop-category-grid {
-    width: 100%;
-    max-width: none;
-
-    margin: 0;
-    padding: 0;
-
     display: grid;
-
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr));
-
-    gap: 9px;
+    grid-template-columns: repeat(6, 92px);
+    gap: 28px;
+    padding: 0;
+    overflow: visible;
   }
-
-  /* =====================================================
-     MOBILE CARD
-     ===================================================== */
 
   .shop-category-card {
-    width: 100%;
-    min-width: 0;
-
-    display: block;
-
-    background: #2c2220;
-
-    border:
-      1px solid rgba(200, 169, 107, 0.18);
-
-    border-radius: 2px;
-
-    overflow: hidden;
-
-    box-shadow:
-      0 5px 16px rgba(0, 0, 0, 0.16);
-
-    transform: none;
+    width: 92px;
+    min-width: 92px;
   }
-
-  .shop-category-card:hover {
-    transform: none;
-
-    border-color:
-      rgba(200, 169, 107, 0.30);
-
-    box-shadow:
-      0 6px 18px rgba(0, 0, 0, 0.20);
-  }
-
-  /* =====================================================
-     MOBILE IMAGE
-     ===================================================== */
 
   .shop-category-image {
-    width: 100%;
-
-    height: auto;
-
-    aspect-ratio: 1 / 1.08;
-
-    overflow: hidden;
-
-    background:
-      radial-gradient(
-        circle at center,
-        #f7f0e6 0%,
-        #e7d8c3 65%,
-        #cbb89b 100%
-      );
+    width: 82px;
+    height: 82px;
+    flex-basis: 82px;
   }
-
-  .shop-category-image img {
-    width: 100%;
-    height: 100%;
-
-    display: block;
-
-    object-fit: cover;
-
-    object-position: center;
-
-    transition:
-      transform 0.35s ease;
-  }
-
-  .shop-category-card:active
-  .shop-category-image img {
-    transform: scale(1.02);
-  }
-
-  /* =====================================================
-     MOBILE BADGE
-     ===================================================== */
-
-  .shop-category-badge {
-    top: 6px;
-    left: 6px;
-
-    padding: 4px 6px;
-
-    background:
-      rgba(33, 26, 24, 0.90);
-
-    border:
-      1px solid rgba(200, 169, 107, 0.40);
-
-    color: #d7bc80;
-
-    font-size: 5.5px;
-
-    letter-spacing: 0.8px;
-
-    white-space: nowrap;
-  }
-
-  /* =====================================================
-     MOBILE CONTENT
-     ===================================================== */
 
   .shop-category-content {
-    width: 100%;
-
-    min-height: 48px;
-    height: 48px;
-
-    padding: 8px 9px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 7px;
-
-    background: #2c2220;
+    padding-top: 9px;
   }
 
   .shop-category-content h3 {
-    min-width: 0;
-
-    margin: 0;
-
-    color: #f0e4d5;
-
-    font-family:
-      Georgia,
-      "Times New Roman",
-      serif;
-
-    font-size: 14px;
-
-    line-height: 1.1;
-
-    font-weight: 400;
-
-    white-space: nowrap;
-
-    overflow: hidden;
-
-    text-overflow: ellipsis;
-  }
-
-  /* =====================================================
-     HIDE DESCRIPTION ON MOBILE
-     ===================================================== */
-
-  .shop-category-content p {
-    display: none;
-  }
-
-  /* =====================================================
-     MOBILE ARROW
-     ===================================================== */
-
-  .shop-category-arrow {
-    flex: 0 0 auto;
-
-    width: 22px;
-    height: 22px;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    border:
-      1px solid rgba(200, 169, 107, 0.30);
-
-    color: #c8a96b;
-
     font-size: 11px;
-  }
-
-  .shop-category-card:active
-  .shop-category-arrow {
-    background: #c8a96b;
-
-    color: #211a18;
-  }
-
-  /* =====================================================
-     MOBILE PLACEHOLDER
-     ===================================================== */
-
-  .shop-category-placeholder strong {
-    font-size: 19px;
-
-    letter-spacing: 4px;
-  }
-
-  .shop-category-placeholder span {
-    margin-top: 3px;
-
-    font-size: 5px;
-
-    letter-spacing: 2.5px;
   }
 }
 
-/* =========================================================
-   VERY SMALL PHONES
-   ========================================================= */
-
 @media (max-width: 380px) {
-
   .shop-category {
-    padding:
-      28px 10px 34px;
-  }
-
-  .shop-category-heading {
-    margin-bottom: 17px;
-
-    padding-left: 1px;
-    padding-right: 1px;
-  }
-
-  .shop-category-heading h2 {
-    font-size: 26px;
-  }
-
-  .shop-category-heading > p:last-child {
-    font-size: 9px;
+    padding-left: 16px;
+    padding-right: 16px;
   }
 
   .shop-category-grid {
-    gap: 7px;
+    gap: 15px;
   }
 
-  .shop-category-content {
-    min-height: 44px;
+  .shop-category-card {
+    flex-basis: 66px;
+    width: 66px;
+    min-width: 66px;
+  }
 
-    height: 44px;
-
-    padding:
-      7px 8px;
+  .shop-category-image {
+    width: 58px;
+    height: 58px;
+    flex-basis: 58px;
   }
 
   .shop-category-content h3 {
-    font-size: 13px;
-  }
-
-  .shop-category-arrow {
-    width: 20px;
-    height: 20px;
-
-    font-size: 10px;
-  }
-
-  .shop-category-badge {
-    top: 5px;
-    left: 5px;
-
-    padding: 3px 5px;
-
-    font-size: 5px;
-  }
-
-  .shop-category-placeholder strong {
-    font-size: 17px;
-
-    letter-spacing: 3px;
-  }
-
-  .shop-category-placeholder span {
-    font-size: 4.5px;
-  }
-}
-
-/* =========================================================
-   ACCESSIBILITY
-   ========================================================= */
-
-@media (prefers-reduced-motion: reduce) {
-
-  .shop-category *,
-  .shop-category *::before,
-  .shop-category *::after {
-    transition: none !important;
+    font-size: 9px;
   }
 }

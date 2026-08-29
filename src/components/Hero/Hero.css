@@ -1,340 +1,86 @@
-/* =========================================================
-   VIRAJ JEWELLERS
-   PREMIUM HERO SLIDESHOW
-   Desktop + Tablet + Mobile
-   ========================================================= */
-
-.hero,
-.hero *,
-.hero *::before,
-.hero *::after {
-  box-sizing: border-box;
-}
-
-/* =========================================================
-   HERO CONTAINER
-   ========================================================= */
-
 .hero {
-  position: relative;
-
   width: 100%;
-  max-width: 100%;
-
-  margin: 0;
-  padding: 0;
-
+  position: relative;
   overflow: hidden;
-
-  background: #211a18;
-
-  line-height: 0;
+  padding: 12px 20px 0;
+  background: #f7ead1;
 }
-
-/* =========================================================
-   HERO IMAGE
-   ========================================================= */
 
 .hero-image {
-  display: block;
-
   width: 100%;
   height: auto;
-
-  max-width: 100%;
-
-  margin: 0;
-  padding: 0;
-
-  object-fit: contain;
-  object-position: center;
-
-  user-select: none;
-  -webkit-user-drag: none;
-
-  vertical-align: top;
+  aspect-ratio: 1855 / 848;
+  display: block;
+  object-fit: cover;
+  border-radius: 24px;
 }
-
-/* =========================================================
-   EXPLORE COLLECTION CLICK AREA
-   =========================================================
-
-   The Explore Collection button is already included
-   inside the JPG hero image.
-
-   This invisible link sits over that button.
-   ========================================================= */
 
 .hero-explore-link {
   position: absolute;
-
-  left: 21.5%;
-  top: 68%;
-
-  width: 19%;
-  height: 10%;
-
-  display: block;
-
-  margin: 0;
-  padding: 0;
-
-  background: transparent;
-
-  border: 0;
-  outline: none;
-
-  cursor: pointer;
-
-  z-index: 10;
-
-  -webkit-tap-highlight-color: transparent;
+  inset: 12px 20px 0;
+  z-index: 2;
+  border-radius: 24px;
 }
-
-/* =========================================================
-   SLIDE DOTS
-   ========================================================= */
 
 .hero-dots {
   position: absolute;
-
-  left: 50%;
-  bottom: 3.5%;
-
-  transform: translateX(-50%);
-
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  z-index: 4;
   display: flex;
-
   align-items: center;
   justify-content: center;
-
-  gap: 9px;
-
-  margin: 0;
-  padding: 0;
-
-  z-index: 20;
+  gap: 8px;
 }
-
-/* =========================================================
-   DOT
-   ========================================================= */
 
 .hero-dot {
-  width: 8px;
-  height: 8px;
-
-  flex: 0 0 auto;
-
-  margin: 0;
+  width: 7px;
+  height: 7px;
   padding: 0;
-
+  border: 1px solid #a8792e;
   border-radius: 50%;
-
-  border:
-    1px solid #b9852f;
-
-  background:
-    rgba(255, 255, 255, 0.85);
-
-  cursor: pointer;
-
-  appearance: none;
-  -webkit-appearance: none;
-
-  transition:
-    width 0.3s ease,
-    background 0.3s ease,
-    border-radius 0.3s ease,
-    transform 0.2s ease;
-}
-
-.hero-dot:hover {
-  transform: scale(1.08);
+  background: #fff9ed;
 }
 
 .hero-dot.active {
-  width: 28px;
-
-  border-radius: 10px;
-
-  background: #b9852f;
+  width: 24px;
+  border-radius: 999px;
+  background: #c49a4e;
 }
 
-/* =========================================================
-   LARGE DESKTOP
-   ========================================================= */
-
-@media (min-width: 1200px) {
-
+@media (min-width: 769px) {
   .hero {
-    width: 100%;
+    padding: 18px 5% 0;
   }
 
   .hero-image {
-    width: 100%;
-    height: auto;
+    border-radius: 28px;
   }
 
   .hero-explore-link {
-    left: 21.5%;
-    top: 68%;
-
-    width: 19%;
-    height: 10%;
+    inset: 18px 5% 0;
+    border-radius: 28px;
   }
 
   .hero-dots {
-    bottom: 3.5%;
+    bottom: 14px;
   }
 }
-
-/* =========================================================
-   LAPTOP
-   ========================================================= */
-
-@media (max-width: 1199px) and (min-width: 851px) {
-
-  .hero-explore-link {
-    left: 21%;
-    top: 67%;
-
-    width: 20%;
-    height: 11%;
-  }
-
-  .hero-dots {
-    bottom: 3.5%;
-  }
-}
-
-/* =========================================================
-   TABLET
-   ========================================================= */
-
-@media (max-width: 850px) and (min-width: 601px) {
-
-  .hero-explore-link {
-    left: 20%;
-    top: 66%;
-
-    width: 22%;
-    height: 12%;
-  }
-
-  .hero-dots {
-    bottom: 4%;
-
-    gap: 8px;
-  }
-
-  .hero-dot {
-    width: 8px;
-    height: 8px;
-  }
-
-  .hero-dot.active {
-    width: 25px;
-  }
-}
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
-@media (max-width: 600px) {
-
-  .hero {
-    width: 100%;
-
-    margin: 0;
-    padding: 0;
-
-    overflow: hidden;
-  }
-
-  .hero-image {
-    width: 100%;
-    height: auto;
-
-    object-fit: contain;
-    object-position: center;
-  }
-
-  /* ---------------------------------------------
-     MOBILE EXPLORE BUTTON AREA
-     --------------------------------------------- */
-
-  .hero-explore-link {
-    left: 18%;
-    top: 65%;
-
-    width: 27%;
-    height: 13%;
-  }
-
-  /* ---------------------------------------------
-     MOBILE DOTS
-     --------------------------------------------- */
-
-  .hero-dots {
-    left: 50%;
-    bottom: 4%;
-
-    gap: 7px;
-  }
-
-  .hero-dot {
-    width: 6px;
-    height: 6px;
-
-    border-width: 1px;
-  }
-
-  .hero-dot.active {
-    width: 21px;
-  }
-}
-
-/* =========================================================
-   SMALL PHONES
-   ========================================================= */
 
 @media (max-width: 380px) {
+  .hero {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
 
   .hero-explore-link {
-    left: 17%;
-    top: 64%;
-
-    width: 29%;
-    height: 14%;
+    left: 16px;
+    right: 16px;
+    border-radius: 20px;
   }
 
-  .hero-dots {
-    bottom: 3.5%;
-
-    gap: 6px;
-  }
-
-  .hero-dot {
-    width: 6px;
-    height: 6px;
-  }
-
-  .hero-dot.active {
-    width: 19px;
-  }
-}
-
-/* =========================================================
-   ACCESSIBILITY
-   ========================================================= */
-
-@media (prefers-reduced-motion: reduce) {
-
-  .hero *,
-  .hero *::before,
-  .hero *::after {
-    transition: none !important;
+  .hero-image {
+    border-radius: 20px;
   }
 }

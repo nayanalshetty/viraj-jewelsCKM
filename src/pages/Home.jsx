@@ -11,72 +11,26 @@ function Home() {
   return (
     <main className="home">
 
-      {/* =====================================================
-          DESKTOP HERO
-          Hidden/reduced on mobile through CSS
-          ===================================================== */}
-      <section className="home-hero">
-        <Hero />
-      </section>
+      <Hero />
 
+      <ShopByCategory />
 
-      {/* =====================================================
-          SHOP BY CATEGORY
-          Mobile-first compact category navigation
-          ===================================================== */}
-      <section className="home-categories">
-        <ShopByCategory />
-      </section>
-
-
-      {/* =====================================================
-          NEW ARRIVALS
-          ===================================================== */}
       <ProductSection
-        title="New Arrivals"
-        subtitle="Fresh designs from VIRAJ"
-        type="new"
-        limit={4}
-      />
-
-
-      {/* =====================================================
-          BESTSELLERS
-          ===================================================== */}
-      <ProductSection
-        title="Bestsellers"
-        subtitle="Loved by our customers"
+        title="Best Sellers"
         type="bestseller"
-        limit={4}
+        limit={6}
       />
 
-
-      {/* =====================================================
-          EXPLORE JEWELLERY
-          ===================================================== */}
-      <ProductSection
-        title="Explore Jewellery"
-        subtitle="Find something made for you"
-        type="all"
-        limit={8}
-      />
-
-
-      {/* =====================================================
-          COLLECTION BANNER
-          ===================================================== */}
       <CollectionBanner />
 
+      <ProductSection
+        title="New Arrivals"
+        type="new"
+        limit={6}
+      />
 
-      {/* =====================================================
-          NEWSLETTER
-          ===================================================== */}
       <Newsletter />
 
-
-      {/* =====================================================
-          FOOTER
-          ===================================================== */}
       <Footer />
 
     </main>
