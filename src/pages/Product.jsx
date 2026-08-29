@@ -70,11 +70,6 @@ export default function Product() {
       setRatesError("");
 
       try {
-        /*
-         * IMPORTANT:
-         * Get the latest row from gold_rates.
-         */
-
         const { data, error } = await supabase
           .from("gold_rates")
           .select(
@@ -580,11 +575,6 @@ export default function Product() {
       ? `${weightNumber} g`
       : "";
 
-  const purity =
-    product.purity ||
-    product.gold_purity ||
-    "";
-
   const metal =
     product.metal_type ||
     product.metal ||
@@ -608,16 +598,40 @@ export default function Product() {
       .toLowerCase()
       .trim();
 
-  const purityText =
-    String(purity)
-      .toLowerCase()
-      .replace(/\s+/g, "");
-
   const isSilver =
     metalText.includes("silver");
 
   const isGold =
     !isSilver;
+
+  /* =========================================================
+     PURITY
+     ========================================================= */
+
+  /*
+   * SILVER IS ALWAYS 92.5
+   *
+   * This intentionally ignores any incorrect
+   * purity value stored in the product database.
+   */
+
+  const purity =
+    isSilver
+      ? "925"
+      : (
+          product.purity ||
+          product.gold_purity ||
+          ""
+        );
+
+  /* =========================================================
+     PURITY TEXT
+     ========================================================= */
+
+  const purityText =
+    String(purity)
+      .toLowerCase()
+      .replace(/\s+/g, "");
 
   /* =========================================================
      CURRENT RATE
