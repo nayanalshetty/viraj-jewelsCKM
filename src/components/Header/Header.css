@@ -1,0 +1,391 @@
+.site-header,
+.site-header *,
+.site-header *::before,
+.site-header *::after {
+  box-sizing: border-box;
+}
+
+.site-header {
+  width: 100%;
+  position: relative;
+  z-index: 10000;
+  background: #f7ead1;
+  color: #2a211b;
+  border-bottom: 1px solid rgba(168, 121, 46, 0.16);
+}
+
+.announcement-bar { display: none; }
+
+.header-main {
+  width: 100%;
+  height: 72px;
+  display: grid;
+  grid-template-columns: 170px minmax(0, 1fr) 170px;
+  align-items: center;
+  padding: 0 5%;
+  background: #f7ead1;
+  border-bottom: 1px solid rgba(168, 121, 46, 0.1);
+}
+
+.header-logo {
+  width: 170px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+}
+
+.viraj-logo {
+  width: 58px;
+  height: 58px;
+  display: block;
+  object-fit: contain;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.main-navigation {
+  width: 100%;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+
+.nav-link,
+.nav-dropdown-button {
+  height: 72px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  color: #3b3028;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.nav-link::after,
+.nav-dropdown-button::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 17px;
+  height: 1px;
+  background: #a8792e;
+  transform: scaleX(0);
+  transition: transform 0.2s ease;
+}
+
+.nav-link:hover,
+.nav-dropdown-button:hover { color: #9b6f28; }
+.nav-link:hover::after,
+.nav-dropdown-button:hover::after { transform: scaleX(1); }
+
+.nav-dropdown {
+  height: 72px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.nav-dropdown-button span {
+  margin-left: 6px;
+  color: #a8792e;
+  font-size: 10px;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 62px;
+  left: 50%;
+  width: 210px;
+  padding: 10px 0;
+  background: #fff8ec;
+  border: 1px solid rgba(168, 121, 46, 0.18);
+  box-shadow: 0 20px 45px rgba(70, 45, 20, 0.12);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-50%) translateY(8px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+  z-index: 11000;
+}
+
+.nav-dropdown:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 10px 18px;
+  color: #4b3b2f;
+  font-size: 11px;
+  text-decoration: none;
+}
+
+.dropdown-menu a:hover {
+  background: rgba(168, 121, 46, 0.07);
+  color: #9b6f28;
+}
+
+.header-actions {
+  width: 170px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.header-icon {
+  width: 32px;
+  height: 32px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #3d3026;
+  text-decoration: none;
+}
+
+.header-icon:hover { color: #a8792e; }
+
+.header-icon svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+}
+
+.cart-count,
+.wishlist-count {
+  position: absolute;
+  top: -2px;
+  right: -3px;
+  min-width: 15px;
+  height: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: #b98a3e;
+  color: #fffaf0;
+  font-size: 7px;
+  font-weight: 700;
+}
+
+.mobile-menu-button,
+.mobile-search-wrapper,
+.mobile-menu { display: none; }
+
+@media (max-width: 1200px) and (min-width: 851px) {
+  .header-main { grid-template-columns: 130px minmax(0, 1fr) 130px; padding: 0 30px; }
+  .header-logo, .header-actions { width: 130px; }
+  .main-navigation { gap: 18px; }
+  .nav-link, .nav-dropdown-button { font-size: 11px; }
+}
+
+@media (max-width: 850px) {
+  .header-main {
+    height: 62px;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+  }
+
+  .mobile-menu-button {
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 4px;
+    padding: 6px;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+  }
+
+  .mobile-menu-button span {
+    display: block;
+    width: 20px;
+    height: 1px;
+    background: #9c722e;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .mobile-menu-button.active span:nth-child(1) { transform: translateY(5px) rotate(45deg); }
+  .mobile-menu-button.active span:nth-child(2) { opacity: 0; }
+  .mobile-menu-button.active span:nth-child(3) { transform: translateY(-5px) rotate(-45deg); }
+
+  .header-logo {
+    width: 52px;
+    height: 52px;
+    flex: 0 0 52px;
+    justify-content: center;
+    margin-left: 5px;
+  }
+
+  .viraj-logo { width: 48px; height: 48px; }
+  .main-navigation { display: none; }
+
+  .header-actions {
+    width: auto;
+    height: 62px;
+    flex: 0 0 auto;
+    margin-left: auto;
+    gap: 5px;
+  }
+
+  .header-icon { width: 34px; height: 34px; }
+  .header-icon svg { width: 20px; height: 20px; }
+  .cart-count, .wishlist-count { top: 0; right: 0; }
+
+  .mobile-menu {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-height: calc(100vh - 62px);
+    overflow-y: auto;
+    padding: 16px 20px 22px;
+    background: #fff8ec;
+    border-top: 1px solid rgba(168, 121, 46, 0.14);
+    border-bottom: 1px solid rgba(168, 121, 46, 0.18);
+    box-shadow: 0 12px 30px rgba(70, 45, 20, 0.1);
+  }
+
+  .mobile-menu a {
+    display: block;
+    padding: 10px 0;
+    color: #3b2e25;
+    font-size: 13px;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(190, 160, 110, 0.16);
+  }
+
+  .mobile-menu-title {
+    margin-top: 14px;
+    margin-bottom: 2px;
+    color: #a8792e;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+  }
+}
+
+@media (max-width: 380px) {
+  .header-main { padding: 0 8px; }
+  .header-logo { width: 48px; flex-basis: 48px; margin-left: 4px; }
+  .viraj-logo { width: 44px; height: 44px; }
+  .header-actions { gap: 2px; }
+  .header-icon { width: 32px; height: 32px; }
+}
+
+/* Mobile menu accordion */
+.mobile-menu-section-button {
+  width: 100%;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid rgba(190, 160, 110, 0.16);
+  color: #3b2e25;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+}
+
+.mobile-menu-section-button.open {
+  color: #9b6f28;
+}
+
+.mobile-menu-chevron {
+  color: #a8792e;
+  font-size: 15px;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.mobile-menu-section-button.open .mobile-menu-chevron {
+  transform: rotate(180deg);
+}
+
+.mobile-menu-submenu {
+  padding: 2px 0 5px 14px;
+  border-left: 1px solid rgba(168, 121, 46, 0.22);
+  margin: 3px 0 5px 2px;
+  animation: mobileSubmenuIn 0.2s ease both;
+}
+
+.mobile-menu-submenu a {
+  padding: 8px 0 8px 2px;
+  font-size: 12px;
+  border-bottom: 0;
+  color: #665448;
+}
+
+.mobile-menu-submenu a:hover {
+  color: #9b6f28;
+}
+
+@keyframes mobileSubmenuIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Compact luxury announcement bar */
+.announcement-bar {
+  min-height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 5px 12px;
+  background: #f1e2c6;
+  color: #7b5b32;
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+@media (max-width: 850px) {
+  .announcement-bar {
+    min-height: 21px;
+    padding: 4px 8px;
+    gap: 7px;
+    font-size: 5.5px;
+    letter-spacing: 1px;
+  }
+  .header-main { height: 60px; }
+}
