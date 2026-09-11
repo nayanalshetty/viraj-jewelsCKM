@@ -1,0 +1,29 @@
+/* VIRAJ ADMIN DASHBOARD */
+.admin-dashboard{min-height:100vh;background:#f8f5ef;color:#171513;padding:52px 5% 90px}
+.admin-dashboard-header{display:flex;justify-content:space-between;gap:30px;align-items:flex-end;max-width:1400px;margin:0 auto 34px}
+.admin-eyebrow{margin:0 0 10px;color:#a06b2c;font-size:11px;font-weight:800;letter-spacing:2.5px}
+.admin-dashboard h1{font-family:Georgia,serif;font-weight:400;font-size:48px;line-height:1.05}
+.admin-dashboard-header>div:first-child>p:last-child{margin-top:12px;color:#77736c}
+.admin-dashboard-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.admin-role-pill{padding:10px 13px;border:1px solid #d9d0c3;background:#fffdfa;font-size:10px;letter-spacing:1.5px;font-weight:800}
+.admin-light-button,.admin-dark-button{padding:12px 18px;border:1px solid #d8cfc1;background:#fffdfa;color:#171513;font-weight:700;font-size:12px;cursor:pointer}
+.admin-dark-button{background:#171513;color:#fff}
+.admin-welcome{max-width:1400px;margin:0 auto 25px;display:grid;grid-template-columns:1fr 1fr;border:1px solid #e2dbd1;background:#fffdfa}
+.admin-welcome>div{padding:20px 24px}
+.admin-welcome>div+div{border-left:1px solid #e2dbd1}
+.admin-welcome span{display:block;color:#8a8278;text-transform:uppercase;letter-spacing:1.2px;font-size:10px;margin-bottom:7px}
+.admin-welcome strong{font-size:14px}
+.admin-card-grid{max-width:1400px;margin:auto;display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.admin-module-card{display:flex;gap:22px;padding:28px;background:#fff;border:1px solid #e2dbd1;transition:.2s;text-decoration:none;color:inherit}
+.admin-module-card:hover{transform:translateY(-2px);box-shadow:0 12px 35px rgba(50,40,30,.08);border-color:#cdbda9}
+.admin-module-icon{width:58px;height:58px;display:grid;place-items:center;background:#f5efe6;font-size:25px;flex:none}
+.admin-module-body{flex:1}
+.admin-module-top{display:flex;justify-content:space-between;gap:20px}
+.admin-module-top h2{font-family:Georgia,serif;font-size:25px;font-weight:400}
+.admin-module-top strong{font-size:24px}
+.admin-module-body p{margin:9px 0 17px;color:#77736c;line-height:1.55}
+.admin-module-body span{font-size:11px;letter-spacing:1px;text-transform:uppercase;font-weight:800;color:#a06b2c}
+.admin-loading-box,.admin-owner-note{max-width:1400px;margin:25px auto;padding:22px;background:#fffdfa;border:1px solid #e2dbd1}
+.admin-owner-note p{margin-top:7px;color:#77736c}
+.admin-owner-note code{background:#f0ebe3;padding:2px 5px}
+@media(max-width:800px){.admin-dashboard{padding:35px 18px 70px}.admin-dashboard-header{align-items:flex-start;flex-direction:column}.admin-dashboard h1{font-size:38px}.admin-card-grid,.admin-welcome{grid-template-columns:1fr}.admin-welcome>div+div{border-left:0;border-top:1px solid #e2dbd1}}

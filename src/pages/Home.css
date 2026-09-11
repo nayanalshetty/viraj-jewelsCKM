@@ -1,0 +1,113 @@
+.home {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: #f7ead1;
+  color: #201914;
+}
+
+.home > * { width: 100%; }
+
+.viraj-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .72s cubic-bezier(.2,.7,.2,1), transform .82s cubic-bezier(.2,.7,.2,1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.viraj-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .viraj-reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* =========================================================
+   COMPACT HOMEPAGE RHYTHM
+   ========================================================= */
+.home-mini-campaign {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  min-height: 250px;
+  margin: 10px auto 18px;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #ead9bb;
+}
+
+.home-mini-campaign-media { overflow: hidden; }
+.home-mini-campaign-media img {
+  width: 100%;
+  height: 100%;
+  min-height: 250px;
+  display: block;
+  object-fit: cover;
+  transition: transform .9s cubic-bezier(.2,.65,.2,1);
+}
+.home-mini-campaign:hover .home-mini-campaign-media img { transform: scale(1.045); }
+.home-mini-campaign-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 28px clamp(24px, 4vw, 54px);
+}
+.home-mini-campaign-copy > span {
+  color: #9b6f30;
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+}
+.home-mini-campaign-copy h2 {
+  max-width: 390px;
+  margin: 8px 0 9px;
+  color: #241a13;
+  font: 400 clamp(28px, 3.4vw, 46px)/.96 Georgia, serif;
+  letter-spacing: -1px;
+}
+.home-mini-campaign-copy p {
+  max-width: 340px;
+  margin: 0 0 16px;
+  color: #796653;
+  font-size: 10px;
+  line-height: 1.55;
+}
+.home-mini-campaign-copy a {
+  width: fit-content;
+  color: #5b4328;
+  text-decoration: none;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(91,67,40,.4);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+.home-mini-campaign-copy a b { margin-left: 8px; }
+
+@media (max-width: 700px) {
+  .home-mini-campaign {
+    grid-template-columns: .9fr 1.1fr;
+    min-height: 190px;
+    margin: 5px 10px 12px;
+    border-radius: 15px;
+  }
+  .home-mini-campaign-media img { min-height: 190px; }
+  .home-mini-campaign-copy { padding: 18px; }
+  .home-mini-campaign-copy h2 { font-size: 27px; }
+  .home-mini-campaign-copy p { font-size: 8px; margin-bottom: 11px; }
+  .home-mini-campaign-copy a { font-size: 7px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-mini-campaign-media img { transition: none; }
+}
+
+/* Final luxury catalogue rhythm */
+.home { background: #f8eedc; }
+.home > .hero { margin-top: 0; }
+.home-mini-campaign { margin-top: 5px; }
+
+/* The admin-driven spotlight is the single main hero/animation on the homepage. */
+.home-media-spotlight { margin-top: 0; }

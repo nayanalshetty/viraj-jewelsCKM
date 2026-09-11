@@ -1,0 +1,215 @@
+/* =========================================================
+   VIRAJ JEWELS — MODERN COLLECTION PROMO
+   Compact luxury banner for desktop + mobile
+   ========================================================= */
+
+.collection-banner {
+  position: relative;
+  width: calc(100% - 32px);
+  max-width: 1380px;
+  min-height: 330px;
+  margin: 24px auto;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 48% 52%;
+  align-items: stretch;
+  background: #efe0c5;
+  border: 1px solid rgba(174, 130, 58, 0.22);
+  border-radius: 26px;
+  box-shadow: 0 12px 35px rgba(74, 48, 19, 0.08);
+}
+
+.collection-banner-content {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 38px clamp(28px, 5vw, 72px);
+  background:
+    radial-gradient(circle at 15% 20%, rgba(255,255,255,.7), transparent 34%),
+    linear-gradient(135deg, #fbf6ed 0%, #f2e4cc 100%);
+}
+
+.collection-eyebrow {
+  margin: 0 0 10px;
+  color: #a87529;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.collection-banner-content h2 {
+  margin: 0;
+  color: #241a14;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(38px, 4.4vw, 60px);
+  line-height: .95;
+  font-weight: 400;
+  letter-spacing: -1.2px;
+}
+
+.collection-description {
+  max-width: 330px;
+  margin: 14px 0 0;
+  color: #756454;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.collection-button {
+  width: 190px;
+  margin-top: 20px;
+  padding: 11px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #b28135;
+  border-radius: 999px;
+  background: #2b211b;
+  color: #f8ead2;
+  text-decoration: none;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  transition: transform .25s ease, background .25s ease;
+}
+
+.collection-button:hover {
+  transform: translateY(-2px);
+  background: #a87529;
+}
+
+.collection-model {
+  position: relative;
+  min-height: 330px;
+  overflow: hidden;
+  background: #dbc19a;
+}
+
+.collection-model img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center 25%;
+}
+
+.collection-image-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(239,224,197,.55), transparent 35%, rgba(42,28,18,.04));
+}
+
+@media (max-width: 800px) {
+  .collection-banner {
+    width: calc(100% - 24px);
+    min-height: 290px;
+    margin: 18px auto;
+    grid-template-columns: 46% 54%;
+    border-radius: 21px;
+  }
+
+  .collection-banner-content {
+    padding: 25px 18px;
+  }
+
+  .collection-eyebrow {
+    margin-bottom: 8px;
+    font-size: 7px;
+    letter-spacing: 2px;
+  }
+
+  .collection-banner-content h2 {
+    font-size: 34px;
+  }
+
+  .collection-description {
+    margin-top: 10px;
+    font-size: 10px;
+    line-height: 1.4;
+  }
+
+  .collection-button {
+    width: 145px;
+    margin-top: 14px;
+    padding: 9px 11px;
+    font-size: 7px;
+    letter-spacing: 1px;
+  }
+
+  .collection-model {
+    min-height: 290px;
+  }
+}
+
+@media (max-width: 480px) {
+  .collection-banner {
+    width: calc(100% - 20px);
+    min-height: 225px;
+    grid-template-columns: 49% 51%;
+    margin: 16px auto;
+    border-radius: 18px;
+  }
+
+  .collection-banner-content {
+    padding: 20px 14px;
+  }
+
+  .collection-eyebrow {
+    font-size: 6px;
+    letter-spacing: 1.6px;
+  }
+
+  .collection-banner-content h2 {
+    font-size: 28px;
+    letter-spacing: -.7px;
+  }
+
+  .collection-description {
+    max-width: 145px;
+    font-size: 8px;
+  }
+
+  .collection-button {
+    width: 125px;
+    margin-top: 11px;
+    padding: 8px 9px;
+    font-size: 6.5px;
+  }
+
+  .collection-model {
+    min-height: 225px;
+  }
+}
+
+@media (max-width: 360px) {
+  .collection-banner-content h2 {
+    font-size: 25px;
+  }
+
+  .collection-description {
+    font-size: 7px;
+  }
+
+  .collection-button {
+    width: 112px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .collection-banner * {
+    transition: none !important;
+  }
+}
+
+.collection-model img { transition: transform 1.2s cubic-bezier(.2,.65,.2,1); }
+.collection-banner:hover .collection-model img { transform: scale(1.045); }
+.collection-banner-content { animation: collectionCopyIn .8s .08s both; }
+@keyframes collectionCopyIn { from { opacity: 0; transform: translateX(-16px); } to { opacity: 1; transform: translateX(0); } }
+@media (prefers-reduced-motion: reduce) {
+  .collection-model img, .collection-banner-content { animation: none; transition: none; }
+}
