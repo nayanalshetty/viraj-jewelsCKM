@@ -6,6 +6,7 @@ import Reveal from "../components/HomeSections/Reveal.jsx";
 import HomeMediaSpotlight from "../components/HomeSections/HomeMediaSpotlight.jsx";
 import HomeEditorialTiles from "../components/HomeSections/HomeEditorialTiles.jsx";
 import HomeSearch from "../components/HomeSections/HomeSearch.jsx";
+import HomeCampaign from "../components/HomeSections/HomeCampaign.jsx";
 
 import "./Home.css";
 
@@ -30,17 +31,7 @@ function Home() {
       </Reveal>
 
       <Reveal>
-        <section className="home-mini-campaign section-shell">
-          <div className="home-mini-campaign-media">
-            <img src="/images/collection-girl.jpg" alt="Viraj Jewellery collection" loading="lazy" />
-          </div>
-          <div className="home-mini-campaign-copy">
-            <span>THE FESTIVE EDIT</span>
-            <h2>Moments deserve a little more sparkle.</h2>
-            <p>Discover elegant gold and silver pieces made for celebrations, gifting and memories.</p>
-            <a href="/category">Explore collection <b>↗</b></a>
-          </div>
-        </section>
+        <HomeCampaign />
       </Reveal>
 
       <Reveal>

@@ -2402,3 +2402,544 @@
     transition: none !important;
   }
 }
+/* =========================================================
+   VIRAJ JEWELLERY
+   PREMIUM PRODUCT GALLERY — FINAL
+   ========================================================= */
+
+.product-main-image {
+  position: relative;
+  overflow: hidden;
+  background: #faf7f1;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: pan-y;
+  cursor: pointer;
+}
+
+.product-main-image.clickable {
+  cursor: pointer;
+}
+
+.product-main-media {
+  width: 100%;
+  height: 100%;
+  display: block;
+
+  object-fit: contain;
+
+  user-select: none;
+  -webkit-user-drag: none;
+
+  transition:
+    transform 0.35s cubic-bezier(.2, .7, .2, 1);
+}
+
+.product-main-image.is-zoomed {
+  cursor: grab;
+  touch-action: none;
+}
+
+.product-main-image.is-zoomed:active {
+  cursor: grabbing;
+}
+
+.product-main-image.is-zoomed
+.product-main-media {
+  transition: none;
+}
+
+
+/* =========================================================
+   IMAGE COUNTER
+   ========================================================= */
+
+.gallery-count {
+  position: absolute;
+
+  right: 14px;
+  bottom: 14px;
+
+  min-width: 42px;
+  height: 26px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 9px;
+
+  border: 1px solid rgba(80, 65, 45, 0.14);
+  border-radius: 999px;
+
+  background: rgba(255, 253, 248, 0.84);
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  color: #5c5040;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  letter-spacing: 0.08em;
+
+  pointer-events: none;
+
+  z-index: 20;
+}
+
+
+/* =========================================================
+   FULLSCREEN BUTTON
+   ========================================================= */
+
+.fullscreen-button {
+  position: absolute;
+
+  top: 14px;
+  right: 14px;
+
+  width: 32px;
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 1px solid rgba(80, 65, 45, 0.13);
+  border-radius: 50%;
+
+  background: rgba(255, 253, 248, 0.82);
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  color: #554936;
+
+  font-size: 15px;
+
+  cursor: pointer;
+
+  opacity: 0.82;
+
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    background 0.2s ease;
+
+  z-index: 25;
+}
+
+.fullscreen-button:hover {
+  opacity: 1;
+  transform: scale(1.06);
+  background: #fffdf8;
+}
+
+
+/* =========================================================
+   REMOVE OLD VISIBLE CONTROLS
+   ========================================================= */
+
+.gallery-arrow {
+  display: none !important;
+}
+
+.zoom-controls {
+  display: none !important;
+}
+
+
+/* =========================================================
+   THUMBNAILS
+   ========================================================= */
+
+.product-thumbnail {
+  border: 1px solid transparent;
+
+  background: transparent;
+
+  padding: 2px;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.product-thumbnail:hover {
+  opacity: 0.82;
+}
+
+.product-thumbnail.active {
+  border-color: #b99a62;
+}
+
+.product-thumbnail img,
+.product-thumbnail video {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+
+/* =========================================================
+   FULLSCREEN
+   ========================================================= */
+
+.fullscreen-gallery {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(24, 20, 15, 0.96);
+
+  padding: 40px;
+}
+
+.fullscreen-media-wrapper {
+  position: relative;
+
+  width: min(92vw, 1200px);
+  height: min(88vh, 900px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 3;
+}
+
+.fullscreen-image {
+  max-width: 100%;
+  max-height: 100%;
+
+  object-fit: contain;
+
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.fullscreen-video {
+  max-width: 100%;
+  max-height: 100%;
+
+  object-fit: contain;
+}
+
+
+/* =========================================================
+   FULLSCREEN CLOSE
+   ========================================================= */
+
+.fullscreen-close {
+  position: absolute;
+
+  top: 20px;
+  right: 24px;
+
+  width: 38px;
+  height: 38px;
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  color: white;
+
+  font-size: 25px;
+  font-weight: 300;
+
+  line-height: 1;
+
+  cursor: pointer;
+
+  z-index: 20;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.fullscreen-close:hover {
+  background: rgba(255, 255, 255, 0.16);
+  transform: scale(1.05);
+}
+
+
+/* =========================================================
+   FULLSCREEN INVISIBLE NAVIGATION ZONES
+
+   No ugly arrows.
+   User simply clicks left/right side.
+   ========================================================= */
+
+.fullscreen-side-zone {
+  position: absolute;
+
+  top: 0;
+  bottom: 0;
+
+  width: 28%;
+
+  border: 0;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  z-index: 8;
+}
+
+.fullscreen-side-zone-left {
+  left: 0;
+}
+
+.fullscreen-side-zone-right {
+  right: 0;
+}
+
+
+/* =========================================================
+   FULLSCREEN COUNTER
+   ========================================================= */
+
+.fullscreen-counter {
+  position: absolute;
+
+  left: 50%;
+  bottom: 22px;
+
+  transform: translateX(-50%);
+
+  padding: 7px 13px;
+
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  color: rgba(255, 255, 255, 0.88);
+
+  font-size: 10px;
+  font-weight: 600;
+
+  letter-spacing: 0.1em;
+
+  pointer-events: none;
+
+  z-index: 20;
+}
+
+
+/* =========================================================
+   MOBILE GALLERY
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  .product-main-image {
+    min-height: 360px;
+
+    touch-action: pan-y;
+  }
+
+  .gallery-count {
+    right: 10px;
+    bottom: 10px;
+
+    min-width: 38px;
+    height: 24px;
+
+    padding: 0 8px;
+
+    font-size: 9px;
+  }
+
+  .fullscreen-button {
+    top: 10px;
+    right: 10px;
+
+    width: 29px;
+    height: 29px;
+
+    font-size: 13px;
+  }
+
+  .fullscreen-gallery {
+    padding: 20px;
+  }
+
+  .fullscreen-media-wrapper {
+    width: 96vw;
+    height: 82vh;
+  }
+
+  .fullscreen-close {
+    top: 12px;
+    right: 14px;
+
+    width: 34px;
+    height: 34px;
+
+    font-size: 22px;
+  }
+
+  .fullscreen-counter {
+    bottom: 14px;
+
+    font-size: 9px;
+  }
+
+  .fullscreen-side-zone {
+    width: 35%;
+  }
+
+}
+/* =========================================================
+   VIRAJ JEWELLERY
+   SOLD OUT
+   ========================================================= */
+
+.product-main-image {
+  position: relative;
+}
+
+/* Main gallery SOLD OUT badge */
+
+.product-sold-out-badge {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  z-index: 20;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 8px 13px;
+
+  background: rgba(35, 31, 28, 0.94);
+  color: #ffffff;
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  line-height: 1;
+
+  border-radius: 2px;
+
+  pointer-events: none;
+}
+
+/* Product information SOLD OUT status */
+
+.product-sold-out-status {
+  display: inline-flex;
+  align-items: center;
+
+  margin-top: 8px;
+  padding: 6px 10px;
+
+  background: #2d2926;
+  color: #ffffff;
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  line-height: 1;
+
+  border-radius: 2px;
+}
+
+/* Disabled purchase button */
+
+.product-sold-out-button,
+.product-sold-out-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+/* Disabled quantity + button */
+
+.product-quantity-controls button:disabled {
+  cursor: not-allowed;
+  opacity: 0.35;
+}
+
+/* Similar product */
+
+.similar-product-image {
+  position: relative;
+  display: block;
+}
+
+.similar-product-sold-out {
+  position: relative;
+}
+
+.similar-product-sold-out-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 5;
+
+  padding: 6px 9px;
+
+  background: rgba(35, 31, 28, 0.94);
+  color: #ffffff;
+
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  line-height: 1;
+
+  border-radius: 2px;
+
+  pointer-events: none;
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+  .product-sold-out-badge {
+    top: 12px;
+    left: 12px;
+
+    padding: 7px 10px;
+
+    font-size: 9px;
+    letter-spacing: 1.2px;
+  }
+
+  .product-sold-out-status {
+    margin-top: 6px;
+    padding: 5px 8px;
+
+    font-size: 9px;
+  }
+
+  .similar-product-sold-out-badge {
+    top: 8px;
+    left: 8px;
+
+    padding: 5px 7px;
+
+    font-size: 8px;
+  }
+}

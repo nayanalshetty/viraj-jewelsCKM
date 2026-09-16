@@ -18,6 +18,7 @@ export default function HomeMediaSpotlight() {
       const { data, error } = await supabase
         .from("homepage_media")
         .select("id, media_type, title, subtitle, media_url, link_url, display_order")
+        .eq("placement", "hero")
         .eq("is_published", true)
         .order("display_order", { ascending: true })
         .order("created_at", { ascending: false })
@@ -39,17 +40,17 @@ export default function HomeMediaSpotlight() {
   }, [items.length]);
 
   const item = items[active];
-  const video = item ? isVideo(item) : false;
 
   const fallbackItem = {
     id: "viraj-signature",
     media_type: "image",
     title: "Crafted to become your story.",
     subtitle: "A little luxury, beautifully made.",
-    media_url: "/images/collection-girl.jpg",
+    media_url: "/images/viraj-hero.jpg",
     link_url: "/category",
   };
   const activeItem = item || fallbackItem;
+  const video = isVideo(activeItem);
 
   return (
     <Reveal>

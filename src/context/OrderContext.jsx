@@ -3,6 +3,7 @@ import {
   useContext,
   useEffect,
   useState,
+  useCallback,
 } from "react";
 
 import { supabase } from "../lib/supabase.js";
@@ -11,21 +12,189 @@ export const OrderContext = createContext(null);
 
 const ORDER_STORAGE_KEY = "viraj_orders";
 
+/* =========================================================
+   STATUS HELPERS
+   ========================================================= */
+
+const normalizeOrderStatus = (status) => {
+  const value = String(status || "new")
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, "_")
+    .replace(/-/g, "_");
+
+  const aliases = {
+    pending: "new",
+    placed: "new",
+    new: "new",
+
+    confirmed: "confirmed",
+
+    processing: "processing",
+
+    shipped: "shipped",
+
+    out_for_delivery: "out_for_delivery",
+
+    delivered: "delivered",
+
+    cancelled: "cancelled",
+  };
+
+  return aliases[value] || value || "new";
+};
+
+const getOrderId = (order) => {
+  return (
+    order?.supabaseId ||
+    order?.id ||
+    order?.order_id ||
+    null
+  );
+};
+
+/* =========================================================
+   CONVERT SUPABASE ORDER
+   ========================================================= */
+
+const convertSupabaseOrder = (data, items = []) => {
+  if (!data) return null;
+
+  return {
+    id: data.id,
+
+    supabaseId: data.id,
+
+    orderNumber:
+      data.order_number ||
+      data.orderNumber ||
+      String(data.id || ""),
+
+    createdAt:
+      data.created_at ||
+      new Date().toISOString(),
+
+    orderStatus:
+      normalizeOrderStatus(
+        data.order_status
+      ),
+
+    paymentStatus:
+      data.payment_status ||
+      "pending",
+
+    paymentMethod:
+      data.payment_method ||
+      "cod",
+
+    customer: {
+      name:
+        data.shipping_name ||
+        data.name ||
+        "",
+
+      mobile:
+        data.mobile ||
+        data.phone ||
+        "",
+
+      email:
+        data.email ||
+        "",
+    },
+
+    address: {
+      house:
+        data.house ||
+        "",
+
+      street:
+        data.street ||
+        "",
+
+      city:
+        data.city ||
+        "",
+
+      state:
+        data.state ||
+        "",
+
+      pincode:
+        data.pincode ||
+        "",
+    },
+
+    items: Array.isArray(items)
+      ? items
+      : [],
+
+    subtotal:
+      Number(data.subtotal || 0),
+
+    shipping:
+      Number(
+        data.shipping_charge ||
+          data.shipping ||
+          0
+      ),
+
+    discount:
+      Number(data.discount || 0),
+
+    tax:
+      Number(data.tax || 0),
+
+    total:
+      Number(
+        data.total_amount ||
+          data.total ||
+          0
+      ),
+
+    paymentId:
+      data.razorpay_payment_id ||
+      data.payment_id ||
+      null,
+
+    razorpayOrderId:
+      data.razorpay_order_id ||
+      null,
+
+    razorpaySignature:
+      data.razorpay_signature ||
+      null,
+  };
+};
+
+/* =========================================================
+   PROVIDER
+   ========================================================= */
+
 export function OrderProvider({ children }) {
   const [orders, setOrders] = useState(() => {
     try {
-      const saved = localStorage.getItem(ORDER_STORAGE_KEY);
+      const saved =
+        localStorage.getItem(
+          ORDER_STORAGE_KEY
+        );
 
-      return saved ? JSON.parse(saved) : [];
+      return saved
+        ? JSON.parse(saved)
+        : [];
     } catch (error) {
-      console.error("Unable to load local orders:", error);
+      console.error(
+        "Unable to load local orders:",
+        error
+      );
+
       return [];
     }
   });
 
-  /* --------------------------------------------------
+  /* =======================================================
      SAVE LOCAL BACKUP
-  -------------------------------------------------- */
+     ======================================================= */
 
   useEffect(() => {
     try {
@@ -34,13 +203,16 @@ export function OrderProvider({ children }) {
         JSON.stringify(orders)
       );
     } catch (error) {
-      console.error("Unable to save local orders:", error);
+      console.error(
+        "Unable to save local orders:",
+        error
+      );
     }
   }, [orders]);
 
-  /* --------------------------------------------------
+  /* =======================================================
      CREATE ORDER
-  -------------------------------------------------- */
+     ======================================================= */
 
   const createOrder = async (orderData) => {
     const now = new Date();
@@ -48,31 +220,47 @@ export function OrderProvider({ children }) {
     const orderNumber =
       "VIRAJ-" +
       now.getFullYear() +
-      String(now.getMonth() + 1).padStart(2, "0") +
-      String(now.getDate()).padStart(2, "0") +
+      String(
+        now.getMonth() + 1
+      ).padStart(2, "0") +
+      String(
+        now.getDate()
+      ).padStart(2, "0") +
       "-" +
       String(Date.now()).slice(-6);
 
     const supabaseOrder = {
-      order_number: orderNumber,
+      order_number:
+        orderNumber,
 
       customer_id:
-        orderData.customer_id || null,
+        orderData.customer_id ||
+        null,
 
       subtotal:
-        Number(orderData.subtotal || 0),
+        Number(
+          orderData.subtotal || 0
+        ),
 
       shipping_charge:
-        Number(orderData.shipping || 0),
+        Number(
+          orderData.shipping || 0
+        ),
 
       discount:
-        Number(orderData.discount || 0),
+        Number(
+          orderData.discount || 0
+        ),
 
       tax:
-        Number(orderData.tax || 0),
+        Number(
+          orderData.tax || 0
+        ),
 
       total_amount:
-        Number(orderData.total || 0),
+        Number(
+          orderData.total || 0
+        ),
 
       payment_status:
         "pending",
@@ -81,7 +269,8 @@ export function OrderProvider({ children }) {
         "new",
 
       payment_method:
-        orderData.paymentMethod || "cod",
+        orderData.paymentMethod ||
+        "cod",
 
       shipping_name:
         orderData.name || "",
@@ -104,16 +293,21 @@ export function OrderProvider({ children }) {
         orderData.pincode || "",
 
       shipping:
-        Number(orderData.shipping || 0),
+        Number(
+          orderData.shipping || 0
+        ),
 
       razorpay_order_id:
-        orderData.razorpayOrderId || null,
+        orderData.razorpayOrderId ||
+        null,
 
       razorpay_payment_id:
-        orderData.paymentId || null,
+        orderData.paymentId ||
+        null,
 
       razorpay_signature:
-        orderData.razorpaySignature || null,
+        orderData.razorpaySignature ||
+        null,
     };
 
     console.log(
@@ -121,9 +315,9 @@ export function OrderProvider({ children }) {
       supabaseOrder
     );
 
-    /* --------------------------------------------------
-       INSERT INTO SUPABASE
-    -------------------------------------------------- */
+    /* =====================================================
+       INSERT ORDER
+       ===================================================== */
 
     const {
       data,
@@ -141,7 +335,8 @@ export function OrderProvider({ children }) {
       );
 
       throw new Error(
-        error.message || "Unable to save order."
+        error.message ||
+          "Unable to save order."
       );
     }
 
@@ -150,25 +345,32 @@ export function OrderProvider({ children }) {
       data
     );
 
-    /* --------------------------------------------------
-       CREATE LOCAL ORDER OBJECT
-    -------------------------------------------------- */
+    /* =====================================================
+       LOCAL ORDER
+       ===================================================== */
 
     const newOrder = {
-      id:
+      id: data.id,
+
+      supabaseId:
         data.id,
 
       orderNumber:
-        data.order_number || orderNumber,
+        data.order_number ||
+        orderNumber,
 
       createdAt:
-        data.created_at || now.toISOString(),
+        data.created_at ||
+        now.toISOString(),
 
       orderStatus:
-        data.order_status || "new",
+        normalizeOrderStatus(
+          data.order_status
+        ),
 
       paymentStatus:
-        data.payment_status || "pending",
+        data.payment_status ||
+        "pending",
 
       paymentMethod:
         data.payment_method ||
@@ -204,289 +406,625 @@ export function OrderProvider({ children }) {
       },
 
       items:
-        orderData.items || [],
+        Array.isArray(
+          orderData.items
+        )
+          ? orderData.items
+          : [],
 
       subtotal:
-        Number(orderData.subtotal || 0),
+        Number(
+          orderData.subtotal || 0
+        ),
 
       shipping:
-        Number(orderData.shipping || 0),
+        Number(
+          orderData.shipping || 0
+        ),
 
       discount:
-        Number(orderData.discount || 0),
+        Number(
+          orderData.discount || 0
+        ),
 
       tax:
-        Number(orderData.tax || 0),
+        Number(
+          orderData.tax || 0
+        ),
 
       total:
-        Number(orderData.total || 0),
+        Number(
+          orderData.total || 0
+        ),
 
       paymentId:
-        orderData.paymentId || null,
+        orderData.paymentId ||
+        null,
 
       razorpayOrderId:
-        orderData.razorpayOrderId || null,
+        orderData.razorpayOrderId ||
+        null,
 
-      supabaseId:
-        data.id,
+      razorpaySignature:
+        orderData.razorpaySignature ||
+        null,
     };
 
-    /* --------------------------------------------------
-       SAVE LOCALLY
-    -------------------------------------------------- */
+    /* =====================================================
+       SAVE LOCAL
+       ===================================================== */
 
     setOrders((current) => [
       newOrder,
-      ...current,
+      ...current.filter(
+        (order) =>
+          String(
+            getOrderId(order)
+          ) !==
+          String(data.id)
+      ),
     ]);
 
     return newOrder;
   };
 
-  /* --------------------------------------------------
-     GET ORDER BY ID
-  -------------------------------------------------- */
+  /* =======================================================
+     GET ORDER BY ID / ORDER NUMBER
+     ======================================================= */
 
-  const getOrderById = async (orderId) => {
-    if (!orderId) {
-      return null;
-    }
+  const getOrderById = useCallback(
+    async (orderId) => {
+      if (!orderId) {
+        return null;
+      }
 
-    console.log(
-      "SEARCHING FOR ORDER:",
-      orderId
-    );
-
-    /* FIRST: LOCAL STORAGE */
-
-    const localOrder = orders.find(
-      (order) =>
-        String(order.id) === String(orderId) ||
-        String(order.orderNumber) === String(orderId) ||
-        String(order.supabaseId) === String(orderId)
-    );
-
-    if (localOrder) {
       console.log(
-        "ORDER FOUND IN LOCAL STORAGE:",
-        localOrder
-      );
-
-      return localOrder;
-    }
-
-    /* SECOND: SUPABASE */
-
-    const {
-      data,
-      error,
-    } = await supabase
-      .from("orders")
-      .select("*")
-      .eq("id", orderId)
-      .maybeSingle();
-
-    if (error) {
-      console.error(
-        "SUPABASE ORDER LOOKUP ERROR:",
-        error
-      );
-
-      return null;
-    }
-
-    if (!data) {
-      console.log(
-        "ORDER NOT FOUND:",
+        "SEARCHING FOR ORDER:",
         orderId
       );
 
-      return null;
-    }
+      /* ===================================================
+         FIRST: LOCAL STORAGE
+         =================================================== */
 
-    console.log(
-      "ORDER FOUND IN SUPABASE:",
-      data
-    );
+      const localOrder =
+        orders.find((order) => {
+          return (
+            String(order.id) ===
+              String(orderId) ||
+            String(
+              order.supabaseId
+            ) ===
+              String(orderId) ||
+            String(
+              order.orderNumber
+            ).toLowerCase() ===
+              String(
+                orderId
+              ).toLowerCase()
+          );
+        });
 
-    /* Convert Supabase format to website format */
+      if (localOrder) {
+        console.log(
+          "ORDER FOUND LOCALLY:",
+          localOrder
+        );
 
-    return {
-      id:
-        data.id,
+        /*
+         * We still refresh from Supabase below.
+         * This is important because the admin may
+         * have changed the status.
+         */
+      }
 
-      orderNumber:
-        data.order_number,
+      /* ===================================================
+         SECOND: SUPABASE BY UUID
+         =================================================== */
 
-      createdAt:
-        data.created_at,
+      let data = null;
+      let error = null;
 
-      orderStatus:
-        data.order_status || "new",
+      const uuidLookup =
+        await supabase
+          .from("orders")
+          .select("*")
+          .eq("id", orderId)
+          .maybeSingle();
 
-      paymentStatus:
-        data.payment_status || "pending",
+      data =
+        uuidLookup.data;
 
-      paymentMethod:
-        data.payment_method || "cod",
+      error =
+        uuidLookup.error;
 
-      customer: {
-        name:
-          data.shipping_name || "",
-      },
+      /*
+       * If ID lookup failed because the customer
+       * supplied the order number instead of UUID,
+       * search by order_number.
+       */
 
-      address: {
-        street:
-          data.street || "",
+      if (
+        !data &&
+        !error
+      ) {
+        const orderNumberLookup =
+          await supabase
+            .from("orders")
+            .select("*")
+            .eq(
+              "order_number",
+              orderId
+            )
+            .maybeSingle();
 
-        city:
-          data.city || "",
+        data =
+          orderNumberLookup.data;
 
-        state:
-          data.state || "",
+        error =
+          orderNumberLookup.error;
+      }
 
-        pincode:
-          data.pincode || "",
-      },
+      /*
+       * If Supabase lookup failed, use local
+       * order as a fallback.
+       */
 
-      items: [],
+      if (error) {
+        console.error(
+          "SUPABASE ORDER LOOKUP ERROR:",
+          error
+        );
 
-      subtotal:
-        Number(data.subtotal || 0),
+        return localOrder || null;
+      }
 
-      shipping:
-        Number(
-          data.shipping_charge ||
-          data.shipping ||
-          0
-        ),
+      if (!data) {
+        console.log(
+          "ORDER NOT FOUND:",
+          orderId
+        );
 
-      discount:
-        Number(data.discount || 0),
+        return localOrder || null;
+      }
 
-      tax:
-        Number(data.tax || 0),
+      console.log(
+        "ORDER FOUND IN SUPABASE:",
+        data
+      );
 
-      total:
-        Number(data.total_amount || 0),
+      /* ===================================================
+         LOAD ORDER ITEMS
+         =================================================== */
 
-      supabaseId:
-        data.id,
-    };
-  };
+      let orderItems = [];
 
-  /* --------------------------------------------------
-     LOAD ALL ORDERS
-  -------------------------------------------------- */
+      /*
+       * Your existing database may or may not have
+       * an order_items table.
+       *
+       * Try to load it if available.
+       */
 
-  const loadOrders = async () => {
-    const {
-      data,
-      error,
-    } = await supabase
-      .from("orders")
-      .select("*")
-      .order(
-        "created_at",
-        {
-          ascending: false,
+      try {
+        const {
+          data: itemData,
+          error: itemError,
+        } = await supabase
+          .from("order_items")
+          .select("*")
+          .eq(
+            "order_id",
+            data.id
+          );
+
+        if (
+          !itemError &&
+          Array.isArray(itemData)
+        ) {
+          orderItems =
+            itemData.map(
+              (item) => ({
+                id:
+                  item.id,
+
+                productId:
+                  item.product_id ||
+                  item.productId ||
+                  null,
+
+                name:
+                  item.product_name ||
+                  item.name ||
+                  "Jewellery",
+
+                image:
+                  item.image_url ||
+                  item.image ||
+                  "",
+
+                quantity:
+                  Number(
+                    item.quantity || 1
+                  ),
+
+                price:
+                  Number(
+                    item.price ||
+                      item.unit_price ||
+                      0
+                  ),
+              })
+            );
         }
-      );
+      } catch (itemError) {
+        console.warn(
+          "Order items table could not be loaded:",
+          itemError
+        );
+      }
 
-    if (error) {
-      console.error(
-        "Unable to load orders:",
-        error
-      );
+      /*
+       * If order_items doesn't exist or contains
+       * nothing, preserve the local cart items.
+       */
 
-      throw new Error(error.message);
-    }
+      if (
+        orderItems.length === 0 &&
+        localOrder?.items?.length
+      ) {
+        orderItems =
+          localOrder.items;
+      }
 
-    setOrders(data || []);
+      /* ===================================================
+         CONVERT
+         =================================================== */
 
-    return data || [];
-  };
+      const convertedOrder =
+        convertSupabaseOrder(
+          data,
+          orderItems
+        );
 
-  /* --------------------------------------------------
+      /*
+       * Preserve customer details from local checkout
+       * if the existing orders table doesn't contain
+       * those columns.
+       */
+
+      if (localOrder) {
+        convertedOrder.customer = {
+          name:
+            convertedOrder.customer
+              .name ||
+            localOrder.customer?.name ||
+            "",
+
+          mobile:
+            convertedOrder.customer
+              .mobile ||
+            localOrder.customer?.mobile ||
+            "",
+
+          email:
+            convertedOrder.customer
+              .email ||
+            localOrder.customer?.email ||
+            "",
+        };
+
+        convertedOrder.address = {
+          house:
+            convertedOrder.address
+              .house ||
+            localOrder.address?.house ||
+            "",
+
+          street:
+            convertedOrder.address
+              .street ||
+            localOrder.address?.street ||
+            "",
+
+          city:
+            convertedOrder.address
+              .city ||
+            localOrder.address?.city ||
+            "",
+
+          state:
+            convertedOrder.address
+              .state ||
+            localOrder.address?.state ||
+            "",
+
+          pincode:
+            convertedOrder.address
+              .pincode ||
+            localOrder.address?.pincode ||
+            "",
+        };
+
+        if (
+          convertedOrder.items.length ===
+            0 &&
+          localOrder.items?.length
+        ) {
+          convertedOrder.items =
+            localOrder.items;
+        }
+      }
+
+      /* ===================================================
+         UPDATE LOCAL COPY
+         =================================================== */
+
+      setOrders((current) => {
+        const exists =
+          current.some(
+            (item) =>
+              String(
+                getOrderId(item)
+              ) ===
+              String(data.id)
+          );
+
+        if (!exists) {
+          return [
+            convertedOrder,
+            ...current,
+          ];
+        }
+
+        return current.map(
+          (item) =>
+            String(
+              getOrderId(item)
+            ) ===
+            String(data.id)
+              ? {
+                  ...item,
+                  ...convertedOrder,
+                }
+              : item
+        );
+      });
+
+      return convertedOrder;
+    },
+    [orders]
+  );
+
+  /* =======================================================
+     LOAD ALL ORDERS
+     ======================================================= */
+
+  const loadOrders = useCallback(
+    async () => {
+      const {
+        data,
+        error,
+      } = await supabase
+        .from("orders")
+        .select("*")
+        .order(
+          "created_at",
+          {
+            ascending: false,
+          }
+        );
+
+      if (error) {
+        console.error(
+          "Unable to load orders:",
+          error
+        );
+
+        throw new Error(
+          error.message ||
+            "Unable to load orders."
+        );
+      }
+
+      const converted =
+        (data || []).map(
+          (order) =>
+            convertSupabaseOrder(
+              order,
+              []
+            )
+        );
+
+      setOrders(converted);
+
+      return converted;
+    },
+    []
+  );
+
+  /* =======================================================
      UPDATE ORDER STATUS
-  -------------------------------------------------- */
+     ======================================================= */
 
   const updateOrderStatus = async (
     orderId,
     orderStatus
   ) => {
+    if (!orderId) {
+      throw new Error(
+        "Order ID is required."
+      );
+    }
+
+    const normalizedStatus =
+      normalizeOrderStatus(
+        orderStatus
+      );
+
+    console.log(
+      "UPDATING ORDER STATUS:",
+      orderId,
+      normalizedStatus
+    );
+
     const {
+      data,
       error,
     } = await supabase
       .from("orders")
       .update({
-        order_status: orderStatus,
+        order_status:
+          normalizedStatus,
       })
-      .eq("id", orderId);
+      .eq("id", orderId)
+      .select()
+      .single();
 
     if (error) {
-      throw new Error(error.message);
+      console.error(
+        "ORDER STATUS UPDATE ERROR:",
+        error
+      );
+
+      throw new Error(
+        error.message ||
+          "Unable to update order status."
+      );
     }
+
+    const updatedOrder =
+      data
+        ? convertSupabaseOrder(
+            data,
+            []
+          )
+        : null;
 
     setOrders((current) =>
       current.map((order) =>
-        String(order.id) === String(orderId)
+        String(
+          getOrderId(order)
+        ) ===
+        String(orderId)
           ? {
               ...order,
-              orderStatus,
+
+              orderStatus:
+                normalizedStatus,
+
+              ...(updatedOrder
+                ? {
+                    orderNumber:
+                      updatedOrder.orderNumber,
+
+                    createdAt:
+                      updatedOrder.createdAt,
+
+                    paymentStatus:
+                      updatedOrder.paymentStatus,
+
+                    paymentMethod:
+                      updatedOrder.paymentMethod,
+
+                    total:
+                      updatedOrder.total,
+                  }
+                : {}),
             }
           : order
       )
     );
+
+    return updatedOrder;
   };
 
-  /* --------------------------------------------------
+  /* =======================================================
      UPDATE PAYMENT STATUS
-  -------------------------------------------------- */
+     ======================================================= */
 
   const updatePaymentStatus = async (
     orderId,
     paymentStatus
   ) => {
+    if (!orderId) {
+      throw new Error(
+        "Order ID is required."
+      );
+    }
+
+    const normalizedPayment =
+      String(
+        paymentStatus || "pending"
+      )
+        .trim()
+        .toLowerCase();
+
     const {
+      data,
       error,
     } = await supabase
       .from("orders")
       .update({
-        payment_status: paymentStatus,
+        payment_status:
+          normalizedPayment,
       })
-      .eq("id", orderId);
+      .eq("id", orderId)
+      .select()
+      .single();
 
     if (error) {
-      throw new Error(error.message);
+      console.error(
+        "PAYMENT STATUS UPDATE ERROR:",
+        error
+      );
+
+      throw new Error(
+        error.message ||
+          "Unable to update payment status."
+      );
     }
 
     setOrders((current) =>
       current.map((order) =>
-        String(order.id) === String(orderId)
+        String(
+          getOrderId(order)
+        ) ===
+        String(orderId)
           ? {
               ...order,
-              paymentStatus,
+              paymentStatus:
+                normalizedPayment,
             }
           : order
       )
     );
+
+    return data;
   };
 
-  /* --------------------------------------------------
+  /* =======================================================
      CLEAR LOCAL ORDERS
-  -------------------------------------------------- */
+     ======================================================= */
 
   const clearOrders = () => {
     setOrders([]);
-    localStorage.removeItem(
-      ORDER_STORAGE_KEY
-    );
+
+    try {
+      localStorage.removeItem(
+        ORDER_STORAGE_KEY
+      );
+    } catch (error) {
+      console.error(
+        "Unable to clear local orders:",
+        error
+      );
+    }
   };
 
-  /* --------------------------------------------------
+  /* =======================================================
      CONTEXT VALUE
-  -------------------------------------------------- */
+     ======================================================= */
 
   const value = {
     orders,
@@ -505,15 +1043,17 @@ export function OrderProvider({ children }) {
   };
 
   return (
-    <OrderContext.Provider value={value}>
+    <OrderContext.Provider
+      value={value}
+    >
       {children}
     </OrderContext.Provider>
   );
 }
 
-/* --------------------------------------------------
+/* =========================================================
    HOOK
--------------------------------------------------- */
+   ========================================================= */
 
 export function useOrders() {
   const context =

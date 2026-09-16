@@ -12,6 +12,20 @@ const ProductCard = ({
   const navigate = useNavigate();
   const productUrl = `/product/${product.id}`;
 
+  // Supports different possible stock field names
+  const stockValue =
+    product.stock ??
+    product.stock_quantity ??
+    product.inventory ??
+    product.quantity;
+
+  const isSoldOut =
+    product.sold_out === true ||
+    product.soldOut === true ||
+    (stockValue !== undefined &&
+      stockValue !== null &&
+      Number(stockValue) <= 0);
+
   const openProduct = () => navigate(productUrl);
 
   const stopCardNavigation = (event) => {
@@ -20,10 +34,11 @@ const ProductCard = ({
 
   return (
     <article
-      className="product-card"
+      className={`product-card ${isSoldOut ? "product-card-sold-out" : ""}`}
       onClick={openProduct}
       onKeyDown={(event) => {
         if (event.target !== event.currentTarget) return;
+
         if (event.key === "Enter" || event.key === " ") {
           event.preventDefault();
           openProduct();
@@ -47,6 +62,13 @@ const ProductCard = ({
             loading="lazy"
           />
         </Link>
+
+        {/* SOLD OUT BADGE */}
+        {isSoldOut && (
+          <span className="sold-out-badge">
+            SOLD OUT
+          </span>
+        )}
 
         {onToggleWishlist && (
           <button
@@ -86,49 +108,66 @@ const ProductCard = ({
             className="product-description-link"
             onClick={stopCardNavigation}
           >
-            <p className="product-description">{product.description}</p>
+            <p className="product-description">
+              {product.description}
+            </p>
           </Link>
         )}
 
-        {(onIncreaseQuantity || onDecreaseQuantity) && (
-          <div className="quantity-controls" onClick={stopCardNavigation}>
-            <button
-              type="button"
-              onClick={(event) => {
-                stopCardNavigation(event);
-                onDecreaseQuantity?.();
-              }}
-              aria-label="Decrease quantity"
+        {/* Quantity controls only when available */}
+        {!isSoldOut &&
+          (onIncreaseQuantity || onDecreaseQuantity) && (
+            <div
+              className="quantity-controls"
+              onClick={stopCardNavigation}
             >
-              −
-            </button>
-            <span>{quantity || 1}</span>
-            <button
-              type="button"
-              onClick={(event) => {
-                stopCardNavigation(event);
-                onIncreaseQuantity?.();
-              }}
-              aria-label="Increase quantity"
-            >
-              +
-            </button>
-          </div>
-        )}
+              <button
+                type="button"
+                onClick={(event) => {
+                  stopCardNavigation(event);
+                  onDecreaseQuantity?.();
+                }}
+                aria-label="Decrease quantity"
+              >
+                −
+              </button>
 
+              <span>{quantity || 1}</span>
+
+              <button
+                type="button"
+                onClick={(event) => {
+                  stopCardNavigation(event);
+                  onIncreaseQuantity?.();
+                }}
+                aria-label="Increase quantity"
+              >
+                +
+              </button>
+            </div>
+          )}
+
+        {/* Add to cart */}
         {onAddToCart && (
           <button
             type="button"
-            className="add-to-cart-button"
+            className={`add-to-cart-button ${
+              isSoldOut ? "sold-out-button" : ""
+            }`}
+            disabled={isSoldOut}
             onClick={(event) => {
               stopCardNavigation(event);
-              onAddToCart(product);
+
+              if (!isSoldOut) {
+                onAddToCart(product);
+              }
             }}
           >
-            Add to Cart
+            {isSoldOut ? "Sold Out" : "Add to Cart"}
           </button>
         )}
 
+        {/* View Product */}
         <button
           type="button"
           className="view-product-button"

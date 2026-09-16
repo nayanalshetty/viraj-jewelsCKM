@@ -103,3 +103,16 @@
 @media (prefers-reduced-motion: reduce) {
   .shop-category-image img { transition: none; }
 }
+
+/* Luxury image finish */
+.shop-category-image::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1px solid rgba(255,255,255,.38);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.shop-category-card:hover .shop-category-image {
+  box-shadow: 0 10px 24px rgba(73, 48, 22, .14), 0 0 0 1px rgba(158, 116, 53, .14);
+}

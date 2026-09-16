@@ -22,6 +22,7 @@ function formatCategoryName(name) {
 export default function ShopByCategory() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [imageOverrides, setImageOverrides] = useState({});
 
   useEffect(() => {
     loadCategories();
@@ -93,6 +94,13 @@ export default function ShopByCategory() {
        * product_images.image_url
        */
 
+      const { data: categoryMediaData } = await supabase
+        .from("homepage_media")
+        .select("target_key, media_url, display_order")
+        .eq("is_published", true)
+        .eq("placement", "category")
+        .order("display_order", { ascending: true });
+
       const {
         data: productData,
         error: productError,
@@ -157,6 +165,11 @@ export default function ShopByCategory() {
         productByCategory.set(key, existing);
       });
 
+      const categoryMediaBySlug = new Map();
+      (categoryMediaData || []).forEach((item) => {
+        if (item.target_key && item.media_url && !categoryMediaBySlug.has(normalize(item.target_key))) categoryMediaBySlug.set(normalize(item.target_key), item.media_url);
+      });
+
       const cards = categoryCatalog.map((catalogCategory) => {
         const dbCategory =
           dbBySlug.get(normalize(catalogCategory.slug)) ||
@@ -166,9 +179,9 @@ export default function ShopByCategory() {
           ? (productByCategory.get(String(dbCategory.id)) || [])
           : [];
 
-        let selectedImage = catalogCategory.image || "";
+        let selectedImage = categoryMediaBySlug.get(normalize(catalogCategory.slug)) || catalogCategory.image || "";
 
-        for (const product of categoryProducts) {
+        for (const product of (categoryMediaBySlug.get(normalize(catalogCategory.slug)) ? [] : categoryProducts)) {
           const images = (product.product_images || [])
             .filter((image) =>
               image?.image_url &&
@@ -191,6 +204,14 @@ export default function ShopByCategory() {
         };
       });
 
+      const { data: overrideData } = await supabase
+        .from("homepage_media")
+        .select("target_key, media_url")
+        .eq("placement", "category")
+        .eq("is_published", true);
+
+      const overrides = Object.fromEntries((overrideData || []).filter((item) => item.target_key && item.media_url).map((item) => [item.target_key, item.media_url]));
+      setImageOverrides(overrides);
       setCategories(cards);
 
     } catch (error) {
@@ -238,7 +259,7 @@ export default function ShopByCategory() {
               <div className="shop-category-image">
                 {category.image ? (
                   <img
-                    src={category.image}
+                    src={imageOverrides[category.slug] || category.image}
                     alt={category.name}
                     loading={index > 5 ? "lazy" : "eager"}
                     onError={(event) => {
@@ -248,7 +269,7 @@ export default function ShopByCategory() {
                     }}
                   />
                 ) : null}
-                <div className="shop-category-placeholder" style={{ display: category.image ? "none" : "flex" }}>
+                <div className="shop-category-placeholder" style={{ display: (imageOverrides[category.slug] || category.image) ? "none" : "flex" }}>
                   <strong>{category.name.slice(0, 2).toUpperCase()}</strong>
                 </div>
                 <div className="shop-category-shade" />

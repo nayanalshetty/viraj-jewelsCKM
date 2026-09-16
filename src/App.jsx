@@ -16,8 +16,13 @@ import About from "./pages/About.jsx";
 import Contact from "./pages/Contact.jsx";
 import Search from "./pages/Search.jsx";
 import NotFound from "./pages/NotFound.jsx";
+import TrackOrder from "./pages/TrackOrder.jsx";
+import MyOrders from "./pages/MyOrders.jsx";
 
 import OrderSuccess from "./pages/OrderSuccess.jsx";
+
+
+
 import AdminOrders from "./pages/AdminOrders.jsx";
 import AdminDashboard from "./pages/AdminDashboard.jsx";
 import AdminProducts from "./pages/AdminProducts.jsx";
@@ -35,134 +40,149 @@ function App() {
 
       <AuthProvider>
 
-          <Header />
+        <Header />
 
-          <Routes>
+        <Routes>
 
-            {/* =========================
-                CUSTOMER WEBSITE
-            ========================== */}
+          {/* =========================
+              CUSTOMER WEBSITE
+          ========================== */}
+
+          <Route
+            path="/"
+            element={<Home />}
+          />
+
+          <Route
+            path="/category"
+            element={<Category />}
+          />
+
+          <Route
+            path="/category/:slug"
+            element={<Category />}
+          />
+
+          <Route
+            path="/product/:id"
+            element={<Product />}
+          />
+
+          {/* Backward-compatible product URL */}
+          <Route
+            path="/products/:id"
+            element={<Product />}
+          />
+
+          <Route
+            path="/wishlist"
+            element={<Wishlist />}
+          />
+
+          <Route
+            path="/cart"
+            element={<Cart />}
+          />
+
+          <Route
+            path="/checkout"
+            element={<Checkout />}
+          />
+
+          <Route
+            path="/about"
+            element={<About />}
+          />
+
+          <Route
+            path="/contact"
+            element={<Contact />}
+          />
+          <Route
+           path="/track-order/:orderId"
+           element={<TrackOrder />}
+          />
+
+          <Route
+            path="/search"
+            element={<Search />}
+          />
+
+          {/* =========================
+              ORDER
+          ========================== */}
+
+          <Route
+            path="/order-success/:orderId"
+            element={<OrderSuccess />}
+          />
+          <Route
+           path="/my-orders"
+           element={<MyOrders />}
+          />
+
+          <Route
+            path="/track-order/:orderId"
+            element={<TrackOrder />}
+          />
+
+          {/* =========================
+              ADMIN LOGIN
+          ========================== */}
+
+          <Route
+            path="/admin/login"
+            element={<AdminLogin />}
+          />
+
+          {/* =========================
+              PROTECTED ADMIN AREA
+          ========================== */}
+
+          <Route element={<ProtectedAdminRoute />}>
 
             <Route
-              path="/"
-              element={<Home />}
+              path="/admin"
+              element={<AdminDashboard />}
             />
 
             <Route
-             path="/category"
-             element={<Category />}
-             />
-
-            <Route
-             path="/category/:slug"
-             element={<Category />}
-            />
-            <Route
-              path="/product/:id"
-              element={<Product />}
-            />
-
-            {/* Backward-compatible product URL */}
-            <Route
-              path="/products/:id"
-              element={<Product />}
-            />
-            
-            <Route
-              path="/wishlist"
-              element={<Wishlist />}
+              path="/admin/homepage"
+              element={<AdminHomepage />}
             />
 
             <Route
-              path="/cart"
-              element={<Cart />}
+              path="/admin/products"
+              element={<AdminProducts />}
             />
 
             <Route
-              path="/checkout"
-              element={<Checkout />}
+              path="/admin/categories"
+              element={<AdminCategories />}
             />
 
             <Route
-              path="/about"
-              element={<About />}
+              path="/admin/rates"
+              element={<AdminRates />}
             />
 
             <Route
-              path="/contact"
-              element={<Contact />}
+              path="/admin/orders"
+              element={<AdminOrders />}
             />
 
-            <Route
-              path="/search"
-              element={<Search />}
-            />
+          </Route>
 
-            <Route
-              path="/order-success/:orderId"
-              element={<OrderSuccess />}
-            />
+          {/* =========================
+              404
+          ========================== */}
 
+          <Route
+            path="*"
+            element={<NotFound />}
+          />
 
-            {/* =========================
-                ADMIN LOGIN
-            ========================== */}
-
-            <Route
-              path="/admin/login"
-              element={<AdminLogin />}
-            />
-
-
-            {/* =========================
-                PROTECTED ADMIN AREA
-            ========================== */}
-
-            <Route element={<ProtectedAdminRoute />}>
-
-              <Route
-                path="/admin"
-                element={<AdminDashboard />}
-              />
-
-              <Route
-                path="/admin/homepage"
-                element={<AdminHomepage />}
-              />
-
-              <Route
-                path="/admin/products"
-                element={<AdminProducts />}
-              />
-
-              <Route
-                path="/admin/categories"
-                element={<AdminCategories />}
-              />
-
-              <Route
-                path="/admin/rates"
-                element={<AdminRates />}
-              />
-
-              <Route
-                path="/admin/orders"
-                element={<AdminOrders />}
-              />
-
-            </Route>
-
-
-            {/* =========================
-                404
-            ========================== */}
-
-            <Route
-              path="*"
-              element={<NotFound />}
-            />
-
-          </Routes>
+        </Routes>
 
       </AuthProvider>
 

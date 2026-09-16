@@ -215,3 +215,38 @@ drop policy if exists "Public can view homepage media files" on storage.objects;
 create policy "Public can view homepage media files"
 on storage.objects for select to anon, authenticated
 using (bucket_id = 'homepage-media');
+
+-- 9) HOMEPAGE MANAGER V2: organise media by homepage area and slot
+alter table public.homepage_media
+  add column if not exists content_area text not null default 'hero',
+  add column if not exists media_key text;
+
+alter table public.homepage_media drop constraint if exists homepage_media_content_area_check;
+alter table public.homepage_media
+  add constraint homepage_media_content_area_check
+  check (content_area in ('hero','category','tile','campaign'));
+
+create index if not exists homepage_media_area_order_idx
+on public.homepage_media (content_area, display_order);
+
+-- 8) Upgrade Homepage Manager: one table controls hero, tiles, campaign and category images.
+alter table public.homepage_media
+  add column if not exists placement text not null default 'hero',
+  add column if not exists target_key text,
+  add column if not exists eyebrow text;
+
+-- Keep old rows working as hero slides. New valid placements are enforced when supported.
+alter table public.homepage_media drop constraint if exists homepage_media_placement_check;
+alter table public.homepage_media
+  add constraint homepage_media_placement_check
+  check (placement in ('hero','editorial','campaign','category'));
+
+create index if not exists homepage_media_placement_order_idx
+  on public.homepage_media (placement, is_published, display_order);
+
+-- Allow owners/managers to see all homepage items, including hidden drafts.
+drop policy if exists "Managers can view all homepage media" on public.homepage_media;
+create policy "Managers can view all homepage media"
+on public.homepage_media for select
+to authenticated
+using (exists (select 1 from public.admin_roles r where r.user_id = auth.uid() and r.role in ('owner','manager')));

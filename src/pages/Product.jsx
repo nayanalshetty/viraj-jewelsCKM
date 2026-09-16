@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { supabase } from "../lib/supabase.js";
@@ -13,14 +13,12 @@ export default function Product() {
 
   const { toggleWishlist, isInWishlist } = useWishlist();
   const { addToCart } = useCart();
-  const [quantity, setQuantity] = useState(1);
 
+  const [quantity, setQuantity] = useState(1);
   const [product, setProduct] = useState(null);
   const [images, setImages] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
-
   const [similarProducts, setSimilarProducts] = useState([]);
-
   const [rates, setRates] = useState(null);
 
   const [loading, setLoading] = useState(true);
@@ -34,6 +32,7 @@ export default function Product() {
      ========================================================= */
 
   const [zoom, setZoom] = useState(1);
+
   const [position, setPosition] = useState({
     x: 0,
     y: 0,
@@ -42,15 +41,23 @@ export default function Product() {
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   const imageContainerRef = useRef(null);
-
   const draggingRef = useRef(false);
   const pointersRef = useRef(new Map());
   const pinchStartRef = useRef(null);
   const suppressNextClickRef = useRef(false);
   const clickTimerRef = useRef(null);
 
-  const dragStartRef = useRef({ x: 0, y: 0 });
-  const startPositionRef = useRef({ x: 0, y: 0 });
+  const dragStartRef = useRef({
+    x: 0,
+    y: 0,
+  });
+
+  const startPositionRef = useRef({
+    x: 0,
+    y: 0,
+  });
+
+  const swipeStartRef = useRef(null);
 
   /* =========================================================
      NUMBER HELPER
@@ -111,7 +118,9 @@ export default function Product() {
         ""
     ).toLowerCase();
 
-    return /\.(mp4|webm|ogg|mov|m4v)(\?.*)?$/.test(url);
+    return /\.(mp4|webm|ogg|mov|m4v)(\?.*)?$/.test(
+      url
+    );
   }
 
   function getMediaUrl(media) {
@@ -139,9 +148,7 @@ export default function Product() {
      ZOOM IN
      ========================================================= */
 
-  function zoomIn(event) {
-    event?.stopPropagation();
-
+  function zoomIn() {
     setZoom((current) =>
       Math.min(
         Number((current + 0.5).toFixed(2)),
@@ -154,9 +161,7 @@ export default function Product() {
      ZOOM OUT
      ========================================================= */
 
-  function zoomOut(event) {
-    event?.stopPropagation();
-
+  function zoomOut() {
     setZoom((current) => {
       const next = Math.max(
         Number((current - 0.5).toFixed(2)),
@@ -180,10 +185,15 @@ export default function Product() {
 
   function handleDoubleClick(event) {
     event.stopPropagation();
+
     if (clickTimerRef.current) {
-      window.clearTimeout(clickTimerRef.current);
+      window.clearTimeout(
+        clickTimerRef.current
+      );
+
       clickTimerRef.current = null;
     }
+
     suppressNextClickRef.current = false;
 
     setZoom((current) => {
@@ -209,124 +219,230 @@ export default function Product() {
     event.stopPropagation();
 
     if (event.deltaY < 0) {
-      setZoom((current) =>
-        Math.min(
-          Number((current + 0.25).toFixed(2)),
-          4
-        )
-      );
+      zoomIn();
     } else {
-      setZoom((current) => {
-        const next = Math.max(
-          Number((current - 0.25).toFixed(2)),
-          1
-        );
-
-        if (next === 1) {
-          setPosition({
-            x: 0,
-            y: 0,
-          });
-        }
-
-        return next;
-      });
+      zoomOut();
     }
   }
 
   /* =========================================================
-     POINTER / TOUCH ZOOM + PAN
+     POINTER / TOUCH
      ========================================================= */
 
   function distanceBetweenPointers() {
-    const points = Array.from(pointersRef.current.values());
-    if (points.length < 2) return 0;
+    const points = Array.from(
+      pointersRef.current.values()
+    );
+
+    if (points.length < 2) {
+      return 0;
+    }
 
     const [a, b] = points;
-    return Math.hypot(b.x - a.x, b.y - a.y);
+
+    return Math.hypot(
+      b.x - a.x,
+      b.y - a.y
+    );
   }
 
   function handlePointerDown(event) {
     if (activeIsVideo) return;
 
     event.stopPropagation();
-    pointersRef.current.set(event.pointerId, {
-      x: event.clientX,
-      y: event.clientY,
-    });
 
+    pointersRef.current.set(
+      event.pointerId,
+      {
+        x: event.clientX,
+        y: event.clientY,
+      }
+    );
 
-    if (pointersRef.current.size === 2) {
-      const distance = distanceBetweenPointers();
+    /* PINCH START */
+
+    if (
+      pointersRef.current.size === 2
+    ) {
+      const distance =
+        distanceBetweenPointers();
+
       pinchStartRef.current = {
         distance,
         zoom,
       };
+
       draggingRef.current = false;
       suppressNextClickRef.current = true;
+
       return;
     }
 
+    /* SWIPE START */
+
+    swipeStartRef.current = {
+      x: event.clientX,
+      y: event.clientY,
+    };
+
+    /* DRAG WHEN ZOOMED */
+
     if (zoom > 1) {
       draggingRef.current = true;
+
       dragStartRef.current = {
         x: event.clientX,
         y: event.clientY,
       };
-      startPositionRef.current = { ...position };
+
+      startPositionRef.current = {
+        ...position,
+      };
     }
 
-    event.currentTarget.setPointerCapture?.(event.pointerId);
+    event.currentTarget.setPointerCapture?.(
+      event.pointerId
+    );
   }
 
   function handlePointerMove(event) {
     if (activeIsVideo) return;
 
-    if (pointersRef.current.has(event.pointerId)) {
-      pointersRef.current.set(event.pointerId, {
-        x: event.clientX,
-        y: event.clientY,
-      });
+    if (
+      pointersRef.current.has(
+        event.pointerId
+      )
+    ) {
+      pointersRef.current.set(
+        event.pointerId,
+        {
+          x: event.clientX,
+          y: event.clientY,
+        }
+      );
     }
 
-    if (pointersRef.current.size >= 2) {
-      const currentDistance = distanceBetweenPointers();
-      const pinch = pinchStartRef.current;
+    /* PINCH */
 
-      if (pinch?.distance > 0) {
+    if (
+      pointersRef.current.size >= 2
+    ) {
+      const currentDistance =
+        distanceBetweenPointers();
+
+      const pinch =
+        pinchStartRef.current;
+
+      if (
+        pinch?.distance > 0
+      ) {
         const nextZoom = Math.max(
           1,
-          Math.min(4, pinch.zoom * (currentDistance / pinch.distance))
+          Math.min(
+            4,
+            pinch.zoom *
+              (currentDistance /
+                pinch.distance)
+          )
         );
-        setZoom(Number(nextZoom.toFixed(2)));
+
+        setZoom(
+          Number(
+            nextZoom.toFixed(2)
+          )
+        );
       }
+
       return;
     }
 
-    if (!draggingRef.current || zoom <= 1) return;
+    /* DRAG */
 
-    const deltaX = event.clientX - dragStartRef.current.x;
-    const deltaY = event.clientY - dragStartRef.current.y;
+    if (
+      !draggingRef.current ||
+      zoom <= 1
+    ) {
+      return;
+    }
 
-    if (Math.abs(deltaX) + Math.abs(deltaY) > 4) {
+    const deltaX =
+      event.clientX -
+      dragStartRef.current.x;
+
+    const deltaY =
+      event.clientY -
+      dragStartRef.current.y;
+
+    if (
+      Math.abs(deltaX) +
+        Math.abs(deltaY) >
+      4
+    ) {
       suppressNextClickRef.current = true;
     }
 
     setPosition({
-      x: startPositionRef.current.x + deltaX,
-      y: startPositionRef.current.y + deltaY,
+      x:
+        startPositionRef.current.x +
+        deltaX,
+
+      y:
+        startPositionRef.current.y +
+        deltaY,
     });
   }
 
   function handlePointerUp(event) {
-    pointersRef.current.delete(event.pointerId);
+    const start =
+      swipeStartRef.current;
 
-    if (pointersRef.current.size < 2) {
+    pointersRef.current.delete(
+      event.pointerId
+    );
+
+    if (
+      pointersRef.current.size < 2
+    ) {
       pinchStartRef.current = null;
     }
 
+    /* MOBILE SWIPE */
+
+    if (
+      start &&
+      zoom <= 1 &&
+      pointersRef.current.size === 0 &&
+      images.length > 1
+    ) {
+      const deltaX =
+        event.clientX - start.x;
+
+      const deltaY =
+        event.clientY - start.y;
+
+      const horizontalSwipe =
+        Math.abs(deltaX) > 45 &&
+        Math.abs(deltaX) >
+          Math.abs(deltaY);
+
+      if (horizontalSwipe) {
+        suppressNextClickRef.current =
+          true;
+
+        if (deltaX < 0) {
+          nextImage();
+        } else {
+          previousImage();
+        }
+      }
+    }
+
+    swipeStartRef.current = null;
     draggingRef.current = false;
-    event.currentTarget.releasePointerCapture?.(event.pointerId);
+
+    event.currentTarget.releasePointerCapture?.(
+      event.pointerId
+    );
   }
 
   /* =========================================================
@@ -341,20 +457,28 @@ export default function Product() {
       setRatesError("");
 
       try {
-        const { data, error } =
-          await supabase
-            .from("gold_rates")
-            .select(
-              "rate_24k, rate_22k, rate_18k, silver_rate, effective_date, created_at"
-            )
-            .order("effective_date", {
+        const {
+          data,
+          error,
+        } = await supabase
+          .from("gold_rates")
+          .select(
+            "rate_24k, rate_22k, rate_18k, silver_rate, effective_date, created_at"
+          )
+          .order(
+            "effective_date",
+            {
               ascending: false,
-            })
-            .order("created_at", {
+            }
+          )
+          .order(
+            "created_at",
+            {
               ascending: false,
-            })
-            .limit(1)
-            .maybeSingle();
+            }
+          )
+          .limit(1)
+          .maybeSingle();
 
         if (error) {
           throw error;
@@ -404,51 +528,66 @@ export default function Product() {
   async function loadSimilarProducts(
     currentProduct
   ) {
-    if (!currentProduct?.category_id) {
+    if (
+      !currentProduct?.category_id
+    ) {
       setSimilarProducts([]);
       return;
     }
 
     try {
-      const { data, error } =
-        await supabase
-          .from("products")
-          .select(`
+      const {
+        data,
+        error,
+      } = await supabase
+        .from("products")
+        .select(`
+          id,
+          name,
+          slug,
+          sku,
+          product_code,
+          category_id,
+          weight,
+          purity,
+          gold_purity,
+          metal_type,
+          metal,
+          material,
+          making_charge,
+          gst,
+          stock,
+          stock_quantity,
+          inventory,
+          quantity,
+          sold_out,
+          published,
+          created_at,
+          product_images (
             id,
-            name,
-            slug,
-            sku,
-            product_code,
-            category_id,
-            weight,
-            purity,
-            gold_purity,
-            metal_type,
-            metal,
-            material,
-            making_charge,
-            gst,
-            published,
-            created_at,
-            product_images (
-              id,
-              image_url,
-              "order"
-            )
-          `)
-          .eq(
-            "category_id",
-            currentProduct.category_id
+            image_url,
+            "order"
           )
-          .eq("published", true)
-          .neq(
-            "id",
-            currentProduct.id
-          )
-          .order("created_at", {
+        `)
+        .eq(
+          "category_id",
+          currentProduct.category_id
+        )
+        .eq(
+          "published",
+          true
+        )
+        .neq(
+          "id",
+          currentProduct.id
+        )
+        .order(
+          "created_at",
+          {
             ascending: false,
-          })
-          .limit(8);
+          }
+        )
+        .limit(8);
 
       if (error) {
         console.error(
@@ -461,37 +600,41 @@ export default function Product() {
       }
 
       const formatted =
-        (data || []).map((item) => {
-          const itemImages =
-            (
-              item.product_images ||
-              []
-            )
-              .filter(
-                (image) =>
-                  image &&
-                  image.image_url
+        (data || []).map(
+          (item) => {
+            const itemImages =
+              (
+                item.product_images ||
+                []
               )
-              .sort(
-                (a, b) =>
-                  Number(
-                    a.order ?? 0
-                  ) -
-                  Number(
-                    b.order ?? 0
-                  )
-              );
+                .filter(
+                  (image) =>
+                    image &&
+                    image.image_url
+                )
+                .sort(
+                  (a, b) =>
+                    Number(
+                      a.order ?? 0
+                    ) -
+                    Number(
+                      b.order ?? 0
+                    )
+                );
 
-          return {
-            ...item,
+            return {
+              ...item,
 
-            displayImage:
-              itemImages[0]
-                ?.image_url || "",
-          };
-        });
+              displayImage:
+                itemImages[0]
+                  ?.image_url || "",
+            };
+          }
+        );
 
-      setSimilarProducts(formatted);
+      setSimilarProducts(
+        formatted
+      );
     } catch (err) {
       console.error(
         "VIRAJ SIMILAR PRODUCTS LOAD ERROR:",
@@ -523,7 +666,6 @@ export default function Product() {
 
       setLoading(true);
       setError("");
-
       setProduct(null);
       setImages([]);
       setSimilarProducts([]);
@@ -709,9 +851,7 @@ export default function Product() {
                 ).trim(),
             }));
 
-        /* =====================================================
-           OLD MAIN IMAGE FALLBACK
-           ===================================================== */
+        /* OLD MAIN IMAGE FALLBACK */
 
         if (
           productMedia.length === 0 &&
@@ -726,14 +866,11 @@ export default function Product() {
               ).trim(),
 
             media_type: "image",
-
             order: 0,
           });
         }
 
-        /* =====================================================
-           OLD IMAGES ARRAY FALLBACK
-           ===================================================== */
+        /* OLD IMAGES ARRAY FALLBACK */
 
         if (
           productMedia.length === 0 &&
@@ -744,7 +881,10 @@ export default function Product() {
           productData.images
             .filter(Boolean)
             .forEach(
-              (media, index) => {
+              (
+                media,
+                index
+              ) => {
                 const mediaUrl =
                   typeof media ===
                   "string"
@@ -764,7 +904,7 @@ export default function Product() {
 
                     media_type:
                       typeof media ===
-                        "object"
+                      "object"
                         ? media.media_type ||
                           media.type
                         : undefined,
@@ -786,7 +926,6 @@ export default function Product() {
           );
 
           setActiveIndex(0);
-
           setLoading(false);
 
           loadSimilarProducts(
@@ -815,8 +954,14 @@ export default function Product() {
 
     return () => {
       cancelled = true;
-      if (clickTimerRef.current) {
-        window.clearTimeout(clickTimerRef.current);
+
+      if (
+        clickTimerRef.current
+      ) {
+        window.clearTimeout(
+          clickTimerRef.current
+        );
+
         clickTimerRef.current = null;
       }
     };
@@ -863,35 +1008,70 @@ export default function Product() {
 
   /* =========================================================
      MAIN MEDIA CLICK
-     
-     ANYWHERE ON IMAGE -> NEXT MEDIA
+     LEFT = PREVIOUS
+     RIGHT = NEXT
+     DOUBLE CLICK = ZOOM
      ========================================================= */
 
-  function handleMainMediaClick(event) {
-    if (images.length <= 1 || zoom > 1) return;
-
+  function handleMainMediaClick(
+    event
+  ) {
     if (
-      event.target.closest(".zoom-controls") ||
-      event.target.closest(".gallery-arrow") ||
-      event.target.closest(".fullscreen-button")
+      images.length <= 1 ||
+      zoom > 1
     ) {
       return;
     }
 
-    if (suppressNextClickRef.current) {
-      suppressNextClickRef.current = false;
+    if (
+      event.target.closest(
+        ".fullscreen-button"
+      ) ||
+      event.target.closest(
+        ".gallery-count"
+      )
+    ) {
       return;
     }
 
-    // Delay a fraction so a double-click can be used for zoom.
-    if (clickTimerRef.current) {
-      window.clearTimeout(clickTimerRef.current);
+    if (
+      suppressNextClickRef.current
+    ) {
+      suppressNextClickRef.current =
+        false;
+
+      return;
     }
 
-    clickTimerRef.current = window.setTimeout(() => {
-      clickTimerRef.current = null;
-      nextImage();
-    }, 180);
+    if (
+      clickTimerRef.current
+    ) {
+      window.clearTimeout(
+        clickTimerRef.current
+      );
+    }
+
+    clickTimerRef.current =
+      window.setTimeout(() => {
+        clickTimerRef.current =
+          null;
+
+        const rect =
+          event.currentTarget.getBoundingClientRect();
+
+        const clickX =
+          event.clientX -
+          rect.left;
+
+        const middle =
+          rect.width / 2;
+
+        if (clickX < middle) {
+          previousImage();
+        } else {
+          nextImage();
+        }
+      }, 180);
   }
 
   /* =========================================================
@@ -900,7 +1080,6 @@ export default function Product() {
 
   function selectMedia(index) {
     resetZoom();
-
     setActiveIndex(index);
   }
 
@@ -934,23 +1113,13 @@ export default function Product() {
       if (
         event.key === "+"
       ) {
-        setZoom((current) =>
-          Math.min(
-            current + 0.5,
-            4
-          )
-        );
+        zoomIn();
       }
 
       if (
         event.key === "-"
       ) {
-        setZoom((current) =>
-          Math.max(
-            current - 0.5,
-            1
-          )
-        );
+        zoomOut();
       }
     }
 
@@ -1025,7 +1194,8 @@ export default function Product() {
     images[activeIndex];
 
   const activeImage =
-    activeMedia?.image_url || "";
+    activeMedia?.image_url ||
+    "";
 
   const activeIsVideo =
     isVideoMedia(activeMedia);
@@ -1053,6 +1223,36 @@ export default function Product() {
     isInWishlist(product.id);
 
   /* =========================================================
+     SOLD OUT / STOCK
+     ========================================================= */
+
+  const stockValue =
+    product.stock ??
+    product.stock_quantity ??
+    product.inventory ??
+    product.quantity;
+
+  const isSoldOut =
+    product.sold_out === true ||
+    product.soldOut === true ||
+    (
+      stockValue !== undefined &&
+      stockValue !== null &&
+      stockValue !== "" &&
+      Number(stockValue) <= 0
+    );
+
+  const availableStock =
+    stockValue !== undefined &&
+    stockValue !== null &&
+    stockValue !== ""
+      ? Math.max(
+          0,
+          Number(stockValue)
+        )
+      : null;
+
+  /* =========================================================
      METAL
      ========================================================= */
 
@@ -1062,9 +1262,9 @@ export default function Product() {
       .trim();
 
   const isSilver =
-    metalText.includes("silver");
-
-  const isGold = !isSilver;
+    metalText.includes(
+      "silver"
+    );
 
   /* =========================================================
      PURITY
@@ -1158,46 +1358,100 @@ export default function Product() {
 
   let priceMessage = "";
 
+  /* =========================================================
+     CART
+     ========================================================= */
+
   function handleAddToCart() {
-    if (!product || !hasPrice) return;
+    if (
+      !product ||
+      !hasPrice ||
+      isSoldOut
+    ) {
+      return;
+    }
+
     addToCart(
       {
         ...product,
+
         price: calculatedPrice,
-        mainImage: images.find((media) => !isVideoMedia(media))?.image_url || "",
+
+        mainImage:
+          images.find(
+            (media) =>
+              !isVideoMedia(media)
+          )?.image_url || "",
       },
       quantity
     );
   }
 
+  /* =========================================================
+     BUY NOW
+     ========================================================= */
+
   function handleBuyNow() {
-    if (!product || !hasPrice) return;
+    if (
+      !product ||
+      !hasPrice ||
+      isSoldOut
+    ) {
+      return;
+    }
+
     addToCart(
       {
         ...product,
+
         price: calculatedPrice,
-        mainImage: images.find((media) => !isVideoMedia(media))?.image_url || "",
+
+        mainImage:
+          images.find(
+            (media) =>
+              !isVideoMedia(media)
+          )?.image_url || "",
       },
       quantity
     );
+
     navigate("/checkout");
   }
 
+  /* =========================================================
+     WHATSAPP
+     ========================================================= */
+
   function handleWhatsAppEnquiry() {
-    if (!product) return;
+    if (!product) {
+      return;
+    }
+
     const message =
       `Hello Viraj Jewellery,\n\n` +
       `I would like to enquire about:\n` +
       `${product.name}\n` +
-      (hasPrice ? `Price: ₹${calculatedPrice.toLocaleString("en-IN")}\n` : "") +
+      (
+        hasPrice
+          ? `Price: ₹${calculatedPrice.toLocaleString(
+              "en-IN"
+            )}\n`
+          : ""
+      ) +
       `Quantity: ${quantity}`;
+
     window.open(
-      `https://wa.me/?text=${encodeURIComponent(message)}`,
+      `https://wa.me/?text=${encodeURIComponent(
+        message
+      )}`,
       "_blank",
       "noopener,noreferrer"
     );
   }
 
+  /* =========================================================
+     PRICE MESSAGE
+     ========================================================= */
 
   if (
     !ratesLoading &&
@@ -1225,7 +1479,6 @@ export default function Product() {
           ===================================================== */}
 
       <div className="product-breadcrumb">
-
         <Link to="/">
           Home
         </Link>
@@ -1241,9 +1494,7 @@ export default function Product() {
         <span className="breadcrumb-current">
           {product.name}
         </span>
-
       </div>
-
 
       {/* =====================================================
           PRODUCT DETAIL
@@ -1263,12 +1514,15 @@ export default function Product() {
 
             {images.length > 1 && (
               <div className="product-thumbnails">
-
                 {images.map(
-                  (media, index) => {
-
+                  (
+                    media,
+                    index
+                  ) => {
                     const video =
-                      isVideoMedia(media);
+                      isVideoMedia(
+                        media
+                      );
 
                     return (
                       <button
@@ -1289,11 +1543,8 @@ export default function Product() {
                           )
                         }
                       >
-
                         {video ? (
-
                           <div className="video-thumbnail">
-
                             <video
                               src={
                                 media.image_url
@@ -1306,11 +1557,8 @@ export default function Product() {
                             <span className="video-thumbnail-icon">
                               ▶
                             </span>
-
                           </div>
-
                         ) : (
-
                           <img
                             src={
                               media.image_url
@@ -1319,35 +1567,33 @@ export default function Product() {
                               index + 1
                             }`}
                           />
-
                         )}
-
                       </button>
                     );
                   }
                 )}
-
               </div>
             )}
 
-
-            {/* =================================================
-                MAIN MEDIA
-                ================================================= */}
+            {/* MAIN MEDIA */}
 
             <div
               ref={
                 imageContainerRef
               }
-              className={`product-main-image ${
-                images.length > 1
-                  ? "clickable"
-                  : ""
-              } ${
-                zoom > 1
-                  ? "is-zoomed"
-                  : ""
-              }`}
+              className={`
+                product-main-image
+                ${
+                  images.length > 1
+                    ? "clickable"
+                    : ""
+                }
+                ${
+                  zoom > 1
+                    ? "is-zoomed"
+                    : ""
+                }
+              `}
               onClick={
                 handleMainMediaClick
               }
@@ -1383,10 +1629,10 @@ export default function Product() {
               }
             >
 
+              {/* IMAGE / VIDEO */}
+
               {activeImage ? (
-
                 activeIsVideo ? (
-
                   <video
                     key={
                       activeImage
@@ -1403,9 +1649,7 @@ export default function Product() {
                       event.stopPropagation()
                     }
                   />
-
                 ) : (
-
                   <img
                     src={
                       activeImage
@@ -1417,16 +1661,18 @@ export default function Product() {
                     className="product-main-media"
                     draggable="false"
                     style={{
-                      transform: `translate(${position.x}px, ${position.y}px) scale(${zoom})`,
+                      transform: `
+                        translate(
+                          ${position.x}px,
+                          ${position.y}px
+                        )
+                        scale(${zoom})
+                      `,
                     }}
                   />
-
                 )
-
               ) : (
-
                 <div className="product-image-placeholder">
-
                   <strong>
                     VIRAJ
                   </strong>
@@ -1434,77 +1680,20 @@ export default function Product() {
                   <span>
                     JEWELLERY
                   </span>
-
-                </div>
-
-              )}
-
-
-              {/* =================================================
-                  ZOOM CONTROLS
-                  ================================================= */}
-
-              {!activeIsVideo &&
-                activeImage && (
-
-                <div
-                  className="zoom-controls"
-                  onClick={(event) =>
-                    event.stopPropagation()
-                  }
-                >
-
-                  <button
-                    type="button"
-                    onClick={zoomOut}
-                    aria-label="Zoom out"
-                    disabled={
-                      zoom <= 1
-                    }
-                  >
-                    −
-                  </button>
-
-                  <span>
-                    {Math.round(
-                      zoom * 100
-                    )}%
-                  </span>
-
-                  <button
-                    type="button"
-                    onClick={zoomIn}
-                    aria-label="Zoom in"
-                    disabled={
-                      zoom >= 4
-                    }
-                  >
-                    +
-                  </button>
-
-                  <button
-                    type="button"
-                    className="zoom-reset"
-                    onClick={(
-                      event
-                    ) => {
-                      event.stopPropagation();
-                      resetZoom();
-                    }}
-                  >
-                    Reset
-                  </button>
-
                 </div>
               )}
 
+              {/* SOLD OUT BADGE */}
 
-              {/* =================================================
-                  FULLSCREEN
-                  ================================================= */}
+              {isSoldOut && (
+                <span className="product-sold-out-badge">
+                  SOLD OUT
+                </span>
+              )}
+
+              {/* FULLSCREEN BUTTON */}
 
               {activeImage && (
-
                 <button
                   type="button"
                   className="fullscreen-button"
@@ -1521,64 +1710,33 @@ export default function Product() {
                 >
                   ⛶
                 </button>
-
               )}
 
-
-              {/* =================================================
-                  ARROWS
-                  ================================================= */}
+              {/* IMAGE COUNTER */}
 
               {images.length > 1 && (
-                <>
-
-                  <button
-                    type="button"
-                    className="gallery-arrow gallery-arrow-left"
-                    aria-label="Previous image"
-                    onClick={
-                      previousImage
-                    }
-                  >
-                    ←
-                  </button>
-
-                  <button
-                    type="button"
-                    className="gallery-arrow gallery-arrow-right"
-                    aria-label="Next image"
-                    onClick={
-                      nextImage
-                    }
-                  >
-                    →
-                  </button>
-
-                  <span className="gallery-count">
-                    {activeIndex + 1} /{" "}
-                    {images.length}
-                  </span>
-
-                </>
+                <span className="gallery-count">
+                  {activeIndex + 1} /{" "}
+                  {images.length}
+                </span>
               )}
 
             </div>
-
           </div>
 
-
-          {/* =================================================
-              MOBILE THUMBNAILS
-              ================================================= */}
+          {/* MOBILE THUMBNAILS */}
 
           {images.length > 1 && (
             <div className="mobile-product-thumbnails">
-
               {images.map(
-                (media, index) => {
-
+                (
+                  media,
+                  index
+                ) => {
                   const video =
-                    isVideoMedia(media);
+                    isVideoMedia(
+                      media
+                    );
 
                   return (
                     <button
@@ -1599,11 +1757,8 @@ export default function Product() {
                         )
                       }
                     >
-
                       {video ? (
-
                         <div className="video-thumbnail">
-
                           <video
                             src={
                               media.image_url
@@ -1615,11 +1770,8 @@ export default function Product() {
                           <span className="video-thumbnail-icon">
                             ▶
                           </span>
-
                         </div>
-
                       ) : (
-
                         <img
                           src={
                             media.image_url
@@ -1628,19 +1780,15 @@ export default function Product() {
                             index + 1
                           }`}
                         />
-
                       )}
-
                     </button>
                   );
                 }
               )}
-
             </div>
           )}
 
         </section>
-
 
         {/* ===================================================
             PRODUCT INFORMATION
@@ -1660,22 +1808,38 @@ export default function Product() {
             {product.name}
           </h1>
 
+          {/* SOLD OUT STATUS */}
+
+          {isSoldOut && (
+            <div className="product-sold-out-status">
+              SOLD OUT
+            </div>
+          )}
+
+          {/* PRODUCT CODE */}
+
           {sku && (
             <p className="product-code">
               Product Code:
-              <strong>{sku}</strong>
+              <strong>
+                {sku}
+              </strong>
             </p>
           )}
+
+          {/* SPECIFICATIONS */}
 
           {(weight ||
             purity ||
             metal) && (
-
             <div className="product-specifications">
 
               {weight && (
                 <div className="product-spec">
-                  <span>Weight</span>
+                  <span>
+                    Weight
+                  </span>
+
                   <strong>
                     {weight}
                   </strong>
@@ -1684,7 +1848,10 @@ export default function Product() {
 
               {purity && (
                 <div className="product-spec">
-                  <span>Purity</span>
+                  <span>
+                    Purity
+                  </span>
+
                   <strong>
                     {purity}
                   </strong>
@@ -1693,7 +1860,10 @@ export default function Product() {
 
               {metal && (
                 <div className="product-spec">
-                  <span>Metal</span>
+                  <span>
+                    Metal
+                  </span>
+
                   <strong>
                     {metal}
                   </strong>
@@ -1703,48 +1873,43 @@ export default function Product() {
             </div>
           )}
 
-          <div className="product-price-box">
+          {/* PRICE */}
 
-            <span>Price</span>
+          <div className="product-price-box">
+            <span>
+              Price
+            </span>
 
             {ratesLoading ? (
-
               <strong>
                 Calculating...
               </strong>
-
             ) : hasPrice ? (
-
               <strong>
                 ₹
                 {calculatedPrice.toLocaleString(
                   "en-IN"
                 )}
               </strong>
-
             ) : (
-
               <strong>
                 Price unavailable
               </strong>
-
             )}
-
           </div>
 
           {!ratesLoading &&
             !hasPrice &&
             priceMessage && (
+              <div className="product-price-note">
+                {priceMessage}
+              </div>
+            )}
 
-            <div className="product-price-note">
-              {priceMessage}
-            </div>
-
-          )}
+          {/* SHORT DESCRIPTION */}
 
           {product.short_description && (
             <div className="product-short-description">
-
               <h3>
                 About this jewellery
               </h3>
@@ -1754,77 +1919,206 @@ export default function Product() {
                   product.short_description
                 }
               </p>
-
             </div>
           )}
 
+          {/* DESCRIPTION */}
+
           {product.description && (
             <div className="product-description">
-
               <h3>
                 Product Details
               </h3>
 
               <p>
-                {product.description}
+                {
+                  product.description
+                }
               </p>
-
             </div>
           )}
 
+          {/* PURCHASE */}
+
           <div className="product-purchase-panel">
-            <div className="product-quantity-row">
-              <span>Quantity</span>
-              <div className="product-quantity-controls">
-                <button type="button" onClick={() => setQuantity((q) => Math.max(1, q - 1))} aria-label="Decrease quantity">−</button>
-                <strong>{quantity}</strong>
-                <button type="button" onClick={() => setQuantity((q) => q + 1)} aria-label="Increase quantity">+</button>
+
+            {/* QUANTITY */}
+
+            {!isSoldOut && (
+              <div className="product-quantity-row">
+
+                <span>
+                  Quantity
+                </span>
+
+                <div className="product-quantity-controls">
+
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setQuantity(
+                        (q) =>
+                          Math.max(
+                            1,
+                            q - 1
+                          )
+                      )
+                    }
+                    aria-label="Decrease quantity"
+                  >
+                    −
+                  </button>
+
+                  <strong>
+                    {quantity}
+                  </strong>
+
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setQuantity(
+                        (q) => {
+                          if (
+                            availableStock !==
+                              null &&
+                            q >=
+                              availableStock
+                          ) {
+                            return q;
+                          }
+
+                          return q + 1;
+                        }
+                      )
+                    }
+                    disabled={
+                      availableStock !==
+                        null &&
+                      quantity >=
+                        availableStock
+                    }
+                    aria-label="Increase quantity"
+                  >
+                    +
+                  </button>
+
+                </div>
               </div>
-            </div>
+            )}
+
+            {/* PURCHASE BUTTONS */}
 
             <div className="product-purchase-actions">
-              <button type="button" className="product-add-cart-button" onClick={handleAddToCart} disabled={!hasPrice}>
-                Add to Cart
-              </button>
-              <button type="button" className="product-buy-now-button" onClick={handleBuyNow} disabled={!hasPrice}>
-                Buy Now
-              </button>
-            </div>
 
-            <div className="product-secondary-actions">
               <button
                 type="button"
-                className={wishlisted ? "product-wishlist-button active" : "product-wishlist-button"}
-                onClick={() => toggleWishlist(product)}
+                className={`product-add-cart-button ${
+                  isSoldOut
+                    ? "product-sold-out-button"
+                    : ""
+                }`}
+                onClick={
+                  handleAddToCart
+                }
+                disabled={
+                  !hasPrice ||
+                  isSoldOut
+                }
               >
-                <span className="wishlist-symbol">{wishlisted ? "♥" : "♡"}</span>
-                <span>{wishlisted ? "Saved to Wishlist" : "Add to Wishlist"}</span>
+                {isSoldOut
+                  ? "Sold Out"
+                  : "Add to Cart"}
               </button>
 
-              <button type="button" className="product-whatsapp-button" onClick={handleWhatsAppEnquiry}>
+              <button
+                type="button"
+                className={`product-buy-now-button ${
+                  isSoldOut
+                    ? "product-sold-out-button"
+                    : ""
+                }`}
+                onClick={
+                  handleBuyNow
+                }
+                disabled={
+                  !hasPrice ||
+                  isSoldOut
+                }
+              >
+                {isSoldOut
+                  ? "Sold Out"
+                  : "Buy Now"}
+              </button>
+
+            </div>
+
+            {/* SECONDARY ACTIONS */}
+
+            <div className="product-secondary-actions">
+
+              <button
+                type="button"
+                className={
+                  wishlisted
+                    ? "product-wishlist-button active"
+                    : "product-wishlist-button"
+                }
+                onClick={() =>
+                  toggleWishlist(
+                    product
+                  )
+                }
+              >
+                <span className="wishlist-symbol">
+                  {wishlisted
+                    ? "♥"
+                    : "♡"}
+                </span>
+
+                <span>
+                  {wishlisted
+                    ? "Saved to Wishlist"
+                    : "Add to Wishlist"}
+                </span>
+              </button>
+
+              <button
+                type="button"
+                className="product-whatsapp-button"
+                onClick={
+                  handleWhatsAppEnquiry
+                }
+              >
                 WhatsApp Enquiry
               </button>
+
             </div>
+
           </div>
 
+          {/* CONTINUE */}
+
           <div className="product-actions">
-            <Link to="/category" className="product-continue">
+            <Link
+              to="/category"
+              className="product-continue"
+            >
               Continue Shopping
-              <span>→</span>
+
+              <span>
+                →
+              </span>
             </Link>
           </div>
 
         </section>
-
       </div>
-
 
       {/* =====================================================
           SIMILAR PRODUCTS
           ===================================================== */}
 
       {similarProducts.length > 0 && (
-
         <section className="similar-products-section">
 
           <div className="similar-products-header">
@@ -1892,7 +2186,6 @@ export default function Product() {
                 let itemRate = 0;
 
                 if (rates) {
-
                   if (
                     itemIsSilver
                   ) {
@@ -1952,18 +2245,62 @@ export default function Product() {
                       itemGSTAmount
                   );
 
+                const itemStock =
+                  item.stock ??
+                  item.stock_quantity ??
+                  item.inventory ??
+                  item.quantity;
+
+                const itemSoldOut =
+                  item.sold_out === true ||
+                  (
+                    itemStock !==
+                      undefined &&
+                    itemStock !==
+                      null &&
+                    itemStock !== "" &&
+                    Number(itemStock) <=
+                      0
+                  );
+
                 return (
                   <article
-                    key={item.id}
-                    className="similar-product-card"
+                    key={
+                      item.id
+                    }
+                    className={`similar-product-card ${
+                      itemSoldOut
+                        ? "similar-product-sold-out"
+                        : ""
+                    }`}
                     role="link"
                     tabIndex={0}
-                    onClick={() => navigate(`/product/${item.id}`)}
-                    onKeyDown={(event) => {
-                      if (event.target !== event.currentTarget) return;
-                      if (event.key === "Enter" || event.key === " ") {
+                    onClick={() =>
+                      navigate(
+                        `/product/${item.id}`
+                      )
+                    }
+                    onKeyDown={(
+                      event
+                    ) => {
+                      if (
+                        event.target !==
+                        event.currentTarget
+                      ) {
+                        return;
+                      }
+
+                      if (
+                        event.key ===
+                          "Enter" ||
+                        event.key ===
+                          " "
+                      ) {
                         event.preventDefault();
-                        navigate(`/product/${item.id}`);
+
+                        navigate(
+                          `/product/${item.id}`
+                        );
                       }
                     }}
                   >
@@ -1971,23 +2308,23 @@ export default function Product() {
                     <Link
                       to={`/product/${item.id}`}
                       className="similar-product-image"
-                      onClick={(event) => event.stopPropagation()}
+                      onClick={(event) =>
+                        event.stopPropagation()
+                      }
                     >
 
                       {item.displayImage ? (
-
                         <img
                           src={
                             item.displayImage
                           }
-                          alt={item.name}
+                          alt={
+                            item.name
+                          }
                           loading="lazy"
                         />
-
                       ) : (
-
                         <div className="similar-product-placeholder">
-
                           <strong>
                             VIRAJ
                           </strong>
@@ -1995,9 +2332,13 @@ export default function Product() {
                           <span>
                             JEWELLERY
                           </span>
-
                         </div>
+                      )}
 
+                      {itemSoldOut && (
+                        <span className="similar-product-sold-out-badge">
+                          SOLD OUT
+                        </span>
                       )}
 
                     </Link>
@@ -2041,7 +2382,8 @@ export default function Product() {
                       <div className="similar-product-bottom">
 
                         <strong>
-                          {itemPrice > 0
+                          {itemPrice >
+                          0
                             ? `₹${itemPrice.toLocaleString(
                                 "en-IN"
                               )}`
@@ -2051,7 +2393,11 @@ export default function Product() {
                         <Link
                           to={`/product/${item.id}`}
                           className="similar-product-view"
-                          onClick={(event) => event.stopPropagation()}
+                          onClick={(
+                            event
+                          ) =>
+                            event.stopPropagation()
+                          }
                         >
                           View Product
                         </Link>
@@ -2059,24 +2405,20 @@ export default function Product() {
                       </div>
 
                     </div>
-
                   </article>
                 );
               }
             )}
 
           </div>
-
         </section>
       )}
-
 
       {/* =====================================================
           FULLSCREEN GALLERY
           ===================================================== */}
 
       {isFullscreen && (
-
         <div
           className="fullscreen-gallery"
           onClick={() =>
@@ -2094,59 +2436,66 @@ export default function Product() {
             ×
           </button>
 
-          {images.length > 1 && (
-            <button
-              type="button"
-              className="fullscreen-arrow fullscreen-arrow-left"
-              onClick={(event) => {
-                event.stopPropagation();
-                previousImage();
-              }}
-            >
-              ←
-            </button>
-          )}
-
           <div
             className="fullscreen-media-wrapper"
             onClick={(event) =>
               event.stopPropagation()
             }
+            onDoubleClick={
+              activeIsVideo
+                ? undefined
+                : handleDoubleClick
+            }
           >
 
             {activeIsVideo ? (
-
               <video
-                src={activeImage}
+                src={
+                  activeImage
+                }
                 className="fullscreen-video"
                 controls
                 autoPlay
                 playsInline
               />
-
             ) : (
-
               <img
-                src={activeImage}
-                alt={product.name}
+                src={
+                  activeImage
+                }
+                alt={
+                  product.name
+                }
                 className="fullscreen-image"
               />
-
             )}
 
           </div>
 
+          {/* FULLSCREEN LEFT / RIGHT */}
+
           {images.length > 1 && (
-            <button
-              type="button"
-              className="fullscreen-arrow fullscreen-arrow-right"
-              onClick={(event) => {
-                event.stopPropagation();
-                nextImage();
-              }}
-            >
-              →
-            </button>
+            <>
+              <button
+                type="button"
+                className="fullscreen-side-zone fullscreen-side-zone-left"
+                aria-label="Previous image"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  previousImage();
+                }}
+              />
+
+              <button
+                type="button"
+                className="fullscreen-side-zone fullscreen-side-zone-right"
+                aria-label="Next image"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  nextImage();
+                }}
+              />
+            </>
           )}
 
           <div className="fullscreen-counter">

@@ -6,7 +6,8 @@ import { useOrders } from "../context/OrderContext.jsx";
 import "./AdminOrders.css";
 
 export default function AdminOrders() {
-    const { user, logout } = useAuth();
+  const { logout } = useAuth();
+
   const {
     orders,
     loadOrders,
@@ -59,42 +60,45 @@ export default function AdminOrders() {
 
   const getOrderNumber = (order) => {
     return (
-      order.orderNumber ||
-      order.order_number ||
-      order.id ||
-      "N/A"
+      String(
+        order?.orderNumber ||
+          order?.order_number ||
+          order?.id ||
+          "N/A"
+      )
     );
   };
 
   const getCustomerName = (order) => {
     return (
-      order.customer?.name ||
-      order.shipping_name ||
-      order.name ||
+      order?.customer?.name ||
+      order?.shipping_name ||
+      order?.name ||
       "Customer"
     );
   };
 
   const getMobile = (order) => {
     return (
-      order.customer?.mobile ||
-      order.mobile ||
+      order?.customer?.mobile ||
+      order?.mobile ||
+      order?.phone ||
       "N/A"
     );
   };
 
   const getTotal = (order) => {
     return Number(
-      order.total ||
-      order.total_amount ||
-      0
+      order?.total ??
+        order?.total_amount ??
+        0
     );
   };
 
   const getPaymentMethod = (order) => {
     const method =
-      order.paymentMethod ||
-      order.payment_method ||
+      order?.paymentMethod ||
+      order?.payment_method ||
       "cod";
 
     if (method === "cod") {
@@ -106,18 +110,32 @@ export default function AdminOrders() {
 
   const getPaymentStatus = (order) => {
     return (
-      order.paymentStatus ||
-      order.payment_status ||
+      order?.paymentStatus ||
+      order?.payment_status ||
       "pending"
     );
   };
 
   const getOrderStatus = (order) => {
     return (
-      order.orderStatus ||
-      order.order_status ||
+      order?.orderStatus ||
+      order?.order_status ||
       "new"
     );
+  };
+
+  const getStatusLabel = (status) => {
+    const labels = {
+      new: "Order Placed",
+      confirmed: "Confirmed",
+      processing: "Processing",
+      shipped: "Shipped",
+      out_for_delivery: "Out for Delivery",
+      delivered: "Delivered",
+      cancelled: "Cancelled",
+    };
+
+    return labels[status] || status;
   };
 
   const filteredOrders = orders.filter((order) => {
@@ -154,8 +172,14 @@ export default function AdminOrders() {
   ) => {
     try {
       const id =
-        order.supabaseId ||
-        order.id;
+        order?.supabaseId ||
+        order?.id;
+
+      if (!id) {
+        throw new Error(
+          "Order ID is missing."
+        );
+      }
 
       await updateOrderStatus(
         id,
@@ -167,11 +191,20 @@ export default function AdminOrders() {
           ? {
               ...current,
               orderStatus: newStatus,
+              order_status: newStatus,
             }
           : current
       );
+
+      /*
+       * Refresh the order list so the
+       * table immediately shows the
+       * latest status.
+       */
+      await loadOrders();
     } catch (error) {
       console.error(error);
+
       alert(
         error.message ||
           "Unable to update order status."
@@ -185,8 +218,14 @@ export default function AdminOrders() {
   ) => {
     try {
       const id =
-        order.supabaseId ||
-        order.id;
+        order?.supabaseId ||
+        order?.id;
+
+      if (!id) {
+        throw new Error(
+          "Order ID is missing."
+        );
+      }
 
       await updatePaymentStatus(
         id,
@@ -198,11 +237,15 @@ export default function AdminOrders() {
           ? {
               ...current,
               paymentStatus: newStatus,
+              payment_status: newStatus,
             }
           : current
       );
+
+      await loadOrders();
     } catch (error) {
       console.error(error);
+
       alert(
         error.message ||
           "Unable to update payment status."
@@ -221,10 +264,14 @@ export default function AdminOrders() {
       <main className="admin-orders-page">
         <div className="admin-orders-loading">
           <div className="admin-loader" />
-          <h2>Loading Orders</h2>
+
+          <h2>
+            Loading Orders
+          </h2>
+
           <p>
-            Please wait while we load Viraj Jewellery
-            orders.
+            Please wait while we load
+            Viraj Jewellery orders.
           </p>
         </div>
       </main>
@@ -234,7 +281,9 @@ export default function AdminOrders() {
   return (
     <main className="admin-orders-page">
 
-      {/* HEADER */}
+      {/* =====================================================
+          HEADER
+      ===================================================== */}
 
       <section className="admin-orders-header">
 
@@ -248,8 +297,8 @@ export default function AdminOrders() {
           </h1>
 
           <p className="admin-subtitle">
-            Manage customer orders, payments and
-            delivery status.
+            Manage customer orders, payments
+            and delivery status.
           </p>
         </div>
 
@@ -262,19 +311,23 @@ export default function AdminOrders() {
           >
             ↻ Refresh Orders
           </button>
+
           <button
-          type="button"
-          onClick={async () => {
-         try {
-          await logout();
-          } catch (error) {
-         console.error("Logout failed:", error);
-      }
-    }}
-    className="admin-logout-button"
-  >
-    Logout
-  </button>
+            type="button"
+            onClick={async () => {
+              try {
+                await logout();
+              } catch (error) {
+                console.error(
+                  "Logout failed:",
+                  error
+                );
+              }
+            }}
+            className="admin-logout-button"
+          >
+            Logout
+          </button>
 
           <Link
             to="/"
@@ -288,19 +341,27 @@ export default function AdminOrders() {
       </section>
 
 
-      {/* SUMMARY */}
+      {/* =====================================================
+          SUMMARY
+      ===================================================== */}
 
       <section className="admin-summary-grid">
 
         <div className="admin-summary-card">
-          <span>Total Orders</span>
+          <span>
+            Total Orders
+          </span>
+
           <strong>
             {orders.length}
           </strong>
         </div>
 
         <div className="admin-summary-card">
-          <span>New Orders</span>
+          <span>
+            New Orders
+          </span>
+
           <strong>
             {
               orders.filter(
@@ -313,26 +374,34 @@ export default function AdminOrders() {
         </div>
 
         <div className="admin-summary-card">
-          <span>Pending Payments</span>
+          <span>
+            Pending Payments
+          </span>
+
           <strong>
             {
               orders.filter(
                 (order) =>
                   getPaymentStatus(order)
-                    .toLowerCase() === "pending"
+                    .toLowerCase() ===
+                  "pending"
               ).length
             }
           </strong>
         </div>
 
         <div className="admin-summary-card">
-          <span>Total Value</span>
+          <span>
+            Total Value
+          </span>
+
           <strong>
             ₹
             {formatPrice(
               orders.reduce(
                 (total, order) =>
-                  total + getTotal(order),
+                  total +
+                  getTotal(order),
                 0
               )
             )}
@@ -342,13 +411,17 @@ export default function AdminOrders() {
       </section>
 
 
-      {/* CONTROLS */}
+      {/* =====================================================
+          CONTROLS
+      ===================================================== */}
 
       <section className="admin-orders-controls">
 
         <div className="admin-search">
 
-          <span>⌕</span>
+          <span>
+            ⌕
+          </span>
 
           <input
             type="text"
@@ -361,10 +434,14 @@ export default function AdminOrders() {
 
         </div>
 
+        {/* STATUS FILTER DROPDOWN */}
+
         <select
           value={statusFilter}
           onChange={(event) =>
-            setStatusFilter(event.target.value)
+            setStatusFilter(
+              event.target.value
+            )
           }
         >
           <option value="all">
@@ -372,7 +449,7 @@ export default function AdminOrders() {
           </option>
 
           <option value="new">
-            New
+            Order Placed
           </option>
 
           <option value="confirmed">
@@ -387,6 +464,10 @@ export default function AdminOrders() {
             Shipped
           </option>
 
+          <option value="out_for_delivery">
+            Out for Delivery
+          </option>
+
           <option value="delivered">
             Delivered
           </option>
@@ -399,7 +480,9 @@ export default function AdminOrders() {
       </section>
 
 
-      {/* ORDERS */}
+      {/* =====================================================
+          ORDERS TABLE
+      ===================================================== */}
 
       <section className="admin-orders-card">
 
@@ -435,8 +518,8 @@ export default function AdminOrders() {
             </h3>
 
             <p>
-              There are no orders matching your
-              current search.
+              There are no orders matching
+              your current search.
             </p>
 
           </div>
@@ -449,6 +532,7 @@ export default function AdminOrders() {
 
               <thead>
                 <tr>
+
                   <th>
                     Order
                   </th>
@@ -476,6 +560,7 @@ export default function AdminOrders() {
                   <th>
                     Action
                   </th>
+
                 </tr>
               </thead>
 
@@ -485,19 +570,27 @@ export default function AdminOrders() {
                   (order) => {
 
                     const orderStatus =
-                      getOrderStatus(order);
+                      getOrderStatus(
+                        order
+                      );
 
                     const paymentStatus =
-                      getPaymentStatus(order);
+                      getPaymentStatus(
+                        order
+                      );
 
                     return (
                       <tr
                         key={
                           order.supabaseId ||
                           order.id ||
-                          getOrderNumber(order)
+                          getOrderNumber(
+                            order
+                          )
                         }
                       >
+
+                        {/* ORDER */}
 
                         <td>
 
@@ -518,6 +611,8 @@ export default function AdminOrders() {
                         </td>
 
 
+                        {/* CUSTOMER */}
+
                         <td>
 
                           <div className="admin-customer">
@@ -529,7 +624,9 @@ export default function AdminOrders() {
                             </strong>
 
                             <span>
-                              {getMobile(order)}
+                              {getMobile(
+                                order
+                              )}
                             </span>
 
                           </div>
@@ -537,15 +634,21 @@ export default function AdminOrders() {
                         </td>
 
 
+                        {/* DATE */}
+
                         <td>
+
                           <span className="admin-date">
                             {formatDate(
                               order.createdAt ||
-                              order.created_at
+                                order.created_at
                             )}
                           </span>
+
                         </td>
 
+
+                        {/* PAYMENT */}
 
                         <td>
 
@@ -570,17 +673,23 @@ export default function AdminOrders() {
                         </td>
 
 
+                        {/* AMOUNT */}
+
                         <td>
 
                           <strong className="admin-amount">
                             ₹
                             {formatPrice(
-                              getTotal(order)
+                              getTotal(
+                                order
+                              )
                             )}
                           </strong>
 
                         </td>
 
+
+                        {/* STATUS DROPDOWN */}
 
                         <td>
 
@@ -598,7 +707,7 @@ export default function AdminOrders() {
                           >
 
                             <option value="new">
-                              New
+                              Order Placed
                             </option>
 
                             <option value="confirmed">
@@ -613,6 +722,10 @@ export default function AdminOrders() {
                               Shipped
                             </option>
 
+                            <option value="out_for_delivery">
+                              Out for Delivery
+                            </option>
+
                             <option value="delivered">
                               Delivered
                             </option>
@@ -625,6 +738,8 @@ export default function AdminOrders() {
 
                         </td>
 
+
+                        {/* VIEW */}
 
                         <td>
 
@@ -658,7 +773,9 @@ export default function AdminOrders() {
       </section>
 
 
-      {/* ORDER DETAILS MODAL */}
+      {/* =====================================================
+          ORDER DETAILS MODAL
+      ===================================================== */}
 
       {selectedOrder && (
 
@@ -675,6 +792,8 @@ export default function AdminOrders() {
               event.stopPropagation()
             }
           >
+
+            {/* MODAL HEADER */}
 
             <div className="admin-modal-header">
 
@@ -707,7 +826,9 @@ export default function AdminOrders() {
 
             <div className="admin-modal-content">
 
-              {/* CUSTOMER */}
+              {/* =================================================
+                  CUSTOMER INFORMATION
+              ================================================= */}
 
               <div className="admin-info-section">
 
@@ -718,6 +839,7 @@ export default function AdminOrders() {
                 <div className="admin-info-grid">
 
                   <div>
+
                     <span>
                       Name
                     </span>
@@ -727,9 +849,11 @@ export default function AdminOrders() {
                         selectedOrder
                       )}
                     </strong>
+
                   </div>
 
                   <div>
+
                     <span>
                       Mobile
                     </span>
@@ -739,6 +863,7 @@ export default function AdminOrders() {
                         selectedOrder
                       )}
                     </strong>
+
                   </div>
 
                 </div>
@@ -746,7 +871,9 @@ export default function AdminOrders() {
               </div>
 
 
-              {/* ADDRESS */}
+              {/* =================================================
+                  ADDRESS
+              ================================================= */}
 
               <div className="admin-info-section">
 
@@ -781,7 +908,9 @@ export default function AdminOrders() {
               </div>
 
 
-              {/* PAYMENT */}
+              {/* =================================================
+                  PAYMENT
+              ================================================= */}
 
               <div className="admin-info-section">
 
@@ -792,6 +921,7 @@ export default function AdminOrders() {
                 <div className="admin-info-grid">
 
                   <div>
+
                     <span>
                       Method
                     </span>
@@ -801,9 +931,11 @@ export default function AdminOrders() {
                         selectedOrder
                       )}
                     </strong>
+
                   </div>
 
                   <div>
+
                     <span>
                       Status
                     </span>
@@ -819,6 +951,7 @@ export default function AdminOrders() {
                         )
                       }
                     >
+
                       <option value="pending">
                         Pending
                       </option>
@@ -834,6 +967,7 @@ export default function AdminOrders() {
                       <option value="refunded">
                         Refunded
                       </option>
+
                     </select>
 
                   </div>
@@ -843,7 +977,9 @@ export default function AdminOrders() {
               </div>
 
 
-              {/* ORDER */}
+              {/* =================================================
+                  ORDER INFORMATION
+              ================================================= */}
 
               <div className="admin-info-section">
 
@@ -854,9 +990,12 @@ export default function AdminOrders() {
                 <div className="admin-info-grid">
 
                   <div>
+
                     <span>
                       Order Status
                     </span>
+
+                    {/* MAIN ORDER STATUS DROPDOWN */}
 
                     <select
                       value={getOrderStatus(
@@ -869,8 +1008,9 @@ export default function AdminOrders() {
                         )
                       }
                     >
+
                       <option value="new">
-                        New
+                        Order Placed
                       </option>
 
                       <option value="confirmed">
@@ -885,6 +1025,10 @@ export default function AdminOrders() {
                         Shipped
                       </option>
 
+                      <option value="out_for_delivery">
+                        Out for Delivery
+                      </option>
+
                       <option value="delivered">
                         Delivered
                       </option>
@@ -897,7 +1041,9 @@ export default function AdminOrders() {
 
                   </div>
 
+
                   <div>
+
                     <span>
                       Total Amount
                     </span>
@@ -910,6 +1056,7 @@ export default function AdminOrders() {
                         )
                       )}
                     </strong>
+
                   </div>
 
                 </div>
@@ -917,7 +1064,9 @@ export default function AdminOrders() {
               </div>
 
 
-              {/* ITEMS */}
+              {/* =================================================
+                  JEWELLERY ITEMS
+              ================================================= */}
 
               {selectedOrder.items &&
                 selectedOrder.items.length > 0 && (
@@ -964,6 +1113,7 @@ export default function AdminOrders() {
 
                             </div>
 
+
                             <div>
 
                               <strong>
@@ -974,17 +1124,20 @@ export default function AdminOrders() {
                               <span>
                                 Quantity:{" "}
                                 {Number(
-                                  item.quantity || 1
+                                  item.quantity ||
+                                    1
                                 )}
                               </span>
 
                             </div>
 
+
                             <strong>
                               ₹
                               {formatPrice(
                                 Number(
-                                  item.price || 0
+                                  item.price ||
+                                    0
                                 ) *
                                   Number(
                                     item.quantity ||

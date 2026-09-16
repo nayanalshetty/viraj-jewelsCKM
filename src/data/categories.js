@@ -42,6 +42,7 @@ const categories = [
     slug: "chains",
     metal: "gold",
     icon: "⌁",
+    image: "/images/categories/chains.jpg",
   },
   {
     id: "pendants",
@@ -59,6 +60,7 @@ const categories = [
     slug: "mangalsutra",
     metal: "gold",
     icon: "✦",
+    image: "/images/categories/mangalsutra.jpg",
   },
   {
     id: "bracelets",
@@ -67,6 +69,7 @@ const categories = [
     slug: "bracelets",
     metal: "gold",
     icon: "∞",
+    image: "/images/categories/bracelets.jpg",
   },
   {
     id: "nose-pins",
@@ -75,6 +78,7 @@ const categories = [
     slug: "nose-pins",
     metal: "gold",
     icon: "•",
+    image: "/images/categories/nose-pins.jpg",
   },
   {
     id: "anklets",
@@ -83,6 +87,7 @@ const categories = [
     slug: "anklets",
     metal: "gold",
     icon: "⌁",
+    image: "/images/categories/anklets.jpg",
   },
   {
     id: "silver-jewellery",
@@ -91,6 +96,7 @@ const categories = [
     slug: "silver-jewellery",
     metal: "silver",
     icon: "◇",
+    image: "/images/categories/silver-jewellery.jpg",
   },
   {
     id: "silver-articles",
@@ -99,6 +105,7 @@ const categories = [
     slug: "silver-articles",
     metal: "silver",
     icon: "✧",
+    image: "/images/categories/silver-articles.jpg",
   },
 ];
 
