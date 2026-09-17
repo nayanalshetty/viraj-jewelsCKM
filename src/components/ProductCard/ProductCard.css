@@ -1,0 +1,382 @@
+
+/* =========================================================
+   VIRAJ JEWELS CKM
+   LUXURY MINIMAL PRODUCT CARD
+   ========================================================= */
+
+.product-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  height: 100%;
+  background: transparent;
+  color: #29231e;
+  cursor: pointer;
+  transition: transform 0.35s ease;
+}
+
+/* =========================================================
+   IMAGE
+   ========================================================= */
+
+.product-image-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #f1e8dc;
+}
+
+.product-card-image-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.product-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 12px;
+  box-sizing: border-box;
+  transition: transform 0.65s
+    cubic-bezier(0.2, 0.65, 0.3, 1);
+}
+
+
+.product-image-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #f5ecdf;
+}
+
+.product-card-image-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.product-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 5px;
+  box-sizing: border-box;
+  transition: transform 0.65s
+    cubic-bezier(0.2, 0.65, 0.3, 1);
+}
+
+.product-card:hover .product-image {
+  transform: scale(1.035);
+}
+
+
+/* =========================================================
+   WISHLIST
+   ========================================================= */
+
+.wishlist-button {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 2;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 35px;
+  height: 35px;
+
+  border: 1px solid rgba(80, 60, 40, 0.15);
+  border-radius: 50%;
+
+  background: rgba(255, 253, 249, 0.92);
+  color: #493c30;
+
+  font-family: Arial, sans-serif;
+  font-size: 21px;
+  font-weight: 400;
+  line-height: 1;
+
+  cursor: pointer;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.wishlist-button:hover {
+  background: #29231e;
+  color: #fffaf3;
+  transform: scale(1.06);
+}
+
+/* =========================================================
+   SOLD OUT
+   ========================================================= */
+
+.sold-out-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 2;
+
+  padding: 7px 10px;
+
+  background: #29231e;
+  color: #fffaf3;
+
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+/* =========================================================
+   PRODUCT INFORMATION
+   ========================================================= */
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+  padding-top: 15px;
+}
+
+.product-name-link,
+.product-price-link,
+.product-description-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.product-name {
+  margin: 0;
+
+  color: #29231e;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+
+  transition: color 0.25s ease;
+}
+
+.product-name-link:hover .product-name {
+  color: #9a753e;
+}
+
+.product-price {
+  margin: 7px 0 0;
+
+  color: #66594d;
+
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.product-description {
+  display: -webkit-box;
+  overflow: hidden;
+  margin: 8px 0 0;
+
+  color: #8b7e71;
+
+  font-size: 11px;
+  line-height: 1.6;
+
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+/* =========================================================
+   VIEW PRODUCT
+   ========================================================= */
+
+.view-product-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 34px;
+  margin-top: 12px;
+  padding: 0;
+
+  border: 0;
+  border-bottom: 1px solid #bba17d;
+
+  background: transparent;
+  color: #45372b;
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+
+  cursor: pointer;
+  transition:
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.view-product-button:hover {
+  border-color: #29231e;
+  color: #9a753e;
+}
+
+/* =========================================================
+   ADD TO CART
+   ========================================================= */
+
+.add-to-cart-button {
+  width: 100%;
+  min-height: 40px;
+  margin-top: 14px;
+
+  border: 1px solid #29231e;
+  background: #29231e;
+  color: #fffaf3;
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+
+  cursor: pointer;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease;
+}
+
+.add-to-cart-button:hover {
+  background: transparent;
+  color: #29231e;
+}
+
+.add-to-cart-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+/* =========================================================
+   QUANTITY CONTROLS
+   ========================================================= */
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 14px;
+}
+
+.quantity-controls button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 28px;
+  height: 28px;
+
+  border: 1px solid #ded2c3;
+  background: #fffdf9;
+  color: #45372b;
+
+  font-size: 17px;
+  cursor: pointer;
+}
+
+.quantity-controls button:hover {
+  border-color: #29231e;
+}
+
+.quantity-controls span {
+  min-width: 12px;
+  color: #45372b;
+  font-size: 12px;
+  text-align: center;
+}
+
+/* =========================================================
+   SOLD OUT CARD
+   ========================================================= */
+
+.product-card-sold-out .product-image {
+  opacity: 0.65;
+}
+
+.product-card-sold-out .product-name {
+  color: #85786c;
+}
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+.product-card:focus-visible {
+  outline: 2px solid #9a753e;
+  outline-offset: 5px;
+}
+
+.wishlist-button:focus-visible,
+.view-product-button:focus-visible,
+.add-to-cart-button:focus-visible {
+  outline: 2px solid #9a753e;
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 680px) {
+  .product-info {
+    padding-top: 11px;
+  }
+
+  .product-name {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .product-price {
+    margin-top: 5px;
+    font-size: 12px;
+  }
+
+  .wishlist-button {
+    top: 9px;
+    right: 9px;
+    width: 31px;
+    height: 31px;
+    font-size: 18px;
+  }
+
+  .sold-out-badge {
+    top: 9px;
+    left: 9px;
+    padding: 5px 7px;
+    font-size: 8px;
+  }
+
+  .view-product-button {
+    min-height: 30px;
+    margin-top: 9px;
+    font-size: 9px;
+  }
+
+  .add-to-cart-button {
+    min-height: 36px;
+    margin-top: 10px;
+    font-size: 9px;
+  }
+}

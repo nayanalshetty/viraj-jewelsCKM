@@ -1,0 +1,554 @@
+
+/* =========================================================
+   VIRAJ JEWELS CKM — LUXURY MINIMAL CATEGORY PAGE
+   Premium cream / gold / editorial layout
+   ========================================================= */
+
+.category-page {
+  --cream: #fbf7f0;
+  --surface: #fffdf9;
+  --ink: #29231e;
+  --muted: #85786c;
+  --line: #e8ded1;
+  --gold: #a7834b;
+
+  min-height: 100vh;
+  background: var(--cream);
+  color: var(--ink);
+  padding-bottom: 90px;
+}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.category-hero {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 74px 48px 52px;
+  text-align: center;
+}
+
+.category-eyebrow {
+  margin: 0 0 18px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+
+.category-hero h1 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(38px, 4vw, 62px);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.045em;
+}
+
+.category-description {
+  max-width: 430px;
+  margin: 22px auto 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.category-content {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+
+/* =========================================================
+   TOOLBAR
+   ========================================================= */
+
+.category-toolbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 20px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.category-result-info {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.category-result-label {
+  color: var(--gold);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+.category-result-info strong {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.category-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.clear-filters {
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 11px;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.category-sort {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.category-sort select {
+  min-width: 145px;
+  padding: 10px 28px 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  cursor: pointer;
+}
+
+/* =========================================================
+   QUICK FILTERS
+   ========================================================= */
+
+.category-quick-filters {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 9px;
+  padding: 26px 0 34px;
+}
+
+.category-quick-filters button {
+  min-height: 38px;
+  padding: 0 20px;
+  border: 1px solid #ded2c3;
+  border-radius: 0;
+  background: transparent;
+  color: #63574d;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.category-quick-filters button:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.category-quick-filters button.active {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: #fffaf3;
+}
+
+/* =========================================================
+   ACTIVE FILTERS
+   ========================================================= */
+
+.active-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px;
+  padding: 18px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.active-filters button {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  padding: 7px 12px;
+  cursor: pointer;
+}
+
+/* =========================================================
+   PRODUCT GRID
+   ========================================================= */
+
+.category-product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 48px 22px;
+  align-items: start;
+}
+
+/* =========================================================
+   EMPTY / LOADING
+   ========================================================= */
+
+.category-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 360px;
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.category-empty p {
+  margin: 0 0 14px;
+  color: var(--gold);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+}
+
+.category-empty h2 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 30px;
+  font-weight: 400;
+}
+
+.category-empty span {
+  max-width: 360px;
+  margin-top: 16px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.category-empty button {
+  margin-top: 26px;
+  padding: 13px 24px;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: #fffaf3;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+/* =========================================================
+   RESPONSIVE — TABLET
+   ========================================================= */
+
+@media (max-width: 1100px) {
+  .category-hero {
+    padding: 60px 30px 42px;
+  }
+
+  .category-content {
+    padding: 0 30px;
+  }
+
+  .category-product-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 36px 18px;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+   ========================================================= */
+
+@media (max-width: 680px) {
+  .category-page {
+    padding-bottom: 55px;
+  }
+
+  .category-hero {
+    padding: 42px 20px 30px;
+  }
+
+  .category-hero h1 {
+    font-size: 38px;
+  }
+
+  .category-description {
+    font-size: 12px;
+    line-height: 1.8;
+  }
+
+  .category-content {
+    padding: 0 16px;
+  }
+
+  .category-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .category-toolbar-right {
+    width: 100%;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .category-sort {
+    flex: 1;
+    justify-content: flex-end;
+  }
+
+  .category-sort select {
+    min-width: 0;
+    max-width: 150px;
+  }
+
+  .category-quick-filters {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 20px 0 28px;
+    scrollbar-width: none;
+  }
+
+  .category-quick-filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .category-quick-filters button {
+    flex: 0 0 auto;
+    padding: 0 16px;
+  }
+
+  .category-product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 30px 12px;
+  }
+
+  .category-empty h2 {
+    font-size: 25px;
+  }
+}
+
+/* =========================================================
+   VIRAJ JEWELS CKM — FINAL LUXURY OVERRIDES
+   ========================================================= */
+
+.category-page {
+  background: #fbf8f2;
+  color: #2c251f;
+}
+
+/* Refined content width */
+.category-content {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 52px;
+}
+
+/* Editorial hero */
+.category-hero {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 76px 30px 54px;
+  text-align: center;
+}
+
+.category-eyebrow {
+  color: #a7834b;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+
+.category-hero h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(40px, 4.2vw, 64px);
+  font-weight: 400;
+  letter-spacing: -0.045em;
+  line-height: 1.08;
+}
+
+/* Toolbar */
+.category-toolbar {
+  padding: 22px 0;
+  border-top: 1px solid #e5dbce;
+  border-bottom: 1px solid #e5dbce;
+}
+
+.category-result-info strong {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 19px;
+  font-weight: 400;
+}
+
+.category-sort select {
+  border: 1px solid #dfd3c4;
+  border-radius: 0;
+  background: #fffdf9;
+  color: #43372d;
+  padding: 11px 32px 11px 13px;
+}
+
+/* Filter bar */
+.category-quick-filters {
+  gap: 8px;
+  padding: 28px 0 36px;
+}
+
+.category-quick-filters button {
+  min-height: 38px;
+  padding: 0 20px;
+  border: 1px solid #dfd3c4;
+  border-radius: 0;
+  background: transparent;
+  color: #65584d;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.category-quick-filters button.active {
+  background: #2c251f;
+  border-color: #2c251f;
+  color: #fffaf3;
+}
+
+/* Consistent product grid */
+.category-product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: start;
+  column-gap: 24px;
+  row-gap: 56px;
+}
+
+/* Prevent unwanted image stretching */
+.product-card {
+  min-width: 0;
+  height: auto;
+  background: transparent;
+}
+
+.product-image-wrapper {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #f0e7db;
+}
+
+.product-card-image-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.product-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Refined product information */
+.product-info {
+  padding-top: 16px;
+  align-items: flex-start;
+}
+
+.product-name {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: -0.015em;
+}
+
+.product-price {
+  margin-top: 7px;
+  color: #76685b;
+  font-size: 13px;
+}
+
+/* Minimal view link */
+.view-product-button {
+  min-height: 30px;
+  margin-top: 12px;
+  border-bottom: 1px solid #bba17d;
+  color: #4a3c2f;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  background: transparent;
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .category-content {
+    padding: 0 30px;
+  }
+
+  .category-product-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 42px 18px;
+  }
+}
+
+@media (max-width: 680px) {
+  .category-content {
+    padding: 0 16px;
+  }
+
+  .category-hero {
+    padding: 45px 20px 35px;
+  }
+
+  .category-product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 34px 12px;
+  }
+
+  .product-name {
+    font-size: 14px;
+  }
+
+  .product-info {
+    padding-top: 11px;
+  }
+
+  .category-quick-filters {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .category-quick-filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .category-quick-filters button {
+    flex: 0 0 auto;
+    padding: 0 16px;
+  }
+}

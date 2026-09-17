@@ -1,0 +1,193 @@
+.newsletter {
+  width: 100%;
+  padding: 100px 9%;
+
+  background:
+    radial-gradient(
+      circle at 80% 50%,
+      rgba(0, 174, 239, 0.08),
+      transparent 35%
+    ),
+    #080a0b;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+  box-sizing: border-box;
+}
+
+.newsletter-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  gap: 100px;
+  align-items: center;
+}
+
+.newsletter-label {
+  display: inline-block;
+  margin-bottom: 22px;
+
+  color: #00aeef;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  letter-spacing: 4px;
+}
+
+.newsletter-copy h2 {
+  margin: 0;
+
+  color: #f4f4f4;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: clamp(48px, 5vw, 76px);
+  font-weight: 400;
+
+  line-height: 0.95;
+  letter-spacing: -3px;
+}
+
+.newsletter-copy p {
+  max-width: 540px;
+  margin: 30px 0 0;
+
+  color: #8b9da6;
+
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.newsletter-form-area {
+  width: 100%;
+}
+
+.newsletter-form {
+  display: flex;
+  width: 100%;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.newsletter-form input {
+  flex: 1;
+  min-width: 0;
+
+  padding: 18px 5px;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  color: #ffffff;
+
+  font-size: 15px;
+}
+
+.newsletter-form input::placeholder {
+  color: #6f7d84;
+}
+
+.newsletter-form button {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  padding: 18px 5px;
+
+  border: none;
+
+  background: transparent;
+
+  color: #ffffff;
+
+  cursor: pointer;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  letter-spacing: 1px;
+
+  white-space: nowrap;
+
+  transition: color 0.25s ease;
+}
+
+.newsletter-form button span {
+  font-size: 19px;
+}
+
+.newsletter-form button:hover {
+  color: #00aeef;
+}
+
+.newsletter-form-area small {
+  display: block;
+
+  margin-top: 18px;
+
+  color: #5f6c72;
+
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+@media (max-width: 800px) {
+  .newsletter {
+    padding: 75px 25px;
+  }
+
+  .newsletter-inner {
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+
+  .newsletter-copy h2 {
+    font-size: 55px;
+  }
+}
+
+@media (max-width: 500px) {
+  .newsletter-form {
+    flex-direction: column;
+    border-bottom: none;
+  }
+
+  .newsletter-form input {
+    padding: 15px 0;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .newsletter-form button {
+    justify-content: space-between;
+
+    padding: 18px 0;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* LUXURY CREAM/GOLD OVERRIDES */
+.newsletter {
+  background:
+    radial-gradient(circle at 80% 50%, rgba(183,131,53,.10), transparent 35%),
+    #eee2d2;
+  border-top-color: #dfcfb9;
+  border-bottom-color: #dfcfb9;
+}
+.newsletter-label { color: #9d6d29; }
+.newsletter-copy h2 { color: #2d2117; }
+.newsletter-copy p { color: #75685b; }
+.newsletter-form { border-bottom-color: rgba(74,52,27,.28); }
+.newsletter-form input { color: #2d2117; }
+.newsletter-form input::placeholder { color: #988a7a; }
+.newsletter-form button { color: #6c512f; }
+.newsletter-form button:hover { color: #a4742b; }
+.newsletter-form-area small { color: #8a7a69; }

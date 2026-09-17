@@ -1,0 +1,1751 @@
+/* =========================================================
+   VIRAJ JEWELS CKM — HEADER
+   Premium Cream / Gold
+   Desktop + Mobile
+   ========================================================= */
+
+.site-header {
+  width: 100%;
+  position: relative;
+  z-index: 1000;
+  background: #fffdf9;
+}
+
+/* =========================================================
+   ANNOUNCEMENT BAR
+   ========================================================= */
+
+.announcement-bar {
+  width: 100%;
+  height: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #fffaf3;
+  color: #7a5a2b;
+
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+
+  border-bottom: 1px solid #eee5d8;
+
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   MAIN HEADER
+   ========================================================= */
+
+.header-main {
+  width: 100%;
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+
+  padding: 0 20px;
+
+  background: #fffdf9;
+
+  border-bottom: 1px solid #eee7dc;
+
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   LOGO
+   ========================================================= */
+
+.header-logo {
+  width: 100px;
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  flex-shrink: 0;
+
+  text-decoration: none;
+}
+
+.header-logo img {
+  display: block;
+
+  width: 92px;
+  height: auto;
+  max-height: 44px;
+
+  object-fit: contain;
+}
+
+/* =========================================================
+   DESKTOP NAVIGATION
+   ========================================================= */
+
+.main-navigation {
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+
+  margin-left: 18px;
+
+  gap: 3px;
+
+  flex: 1;
+  min-width: 0;
+}
+
+/* All normal navigation items */
+
+.main-navigation > .nav-link,
+.main-navigation > .nav-dropdown {
+  flex-shrink: 0;
+}
+
+/* Navigation links */
+
+.nav-link,
+.dropdown-toggle {
+  height: 32px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 10px;
+
+  color: #493923;
+
+  background: transparent;
+
+  border: none;
+  border-radius: 5px;
+
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+
+  letter-spacing: 0.1px;
+
+  text-decoration: none;
+  white-space: nowrap;
+
+  cursor: pointer;
+
+  box-sizing: border-box;
+
+  transition:
+    color 0.2s ease,
+    background 0.2s ease;
+}
+
+.nav-link:hover,
+.dropdown-toggle:hover {
+  color: #9b722e;
+  background: #faf4e9;
+}
+
+/* =========================================================
+   GOLD / SILVER / COLLECTIONS DROPDOWN
+   ========================================================= */
+
+.nav-dropdown {
+  position: relative;
+
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+
+  flex-shrink: 0;
+}
+
+.dropdown-toggle {
+  min-width: 112px;
+}
+
+/* Make each dropdown balanced */
+
+.nav-dropdown:nth-child(2) .dropdown-toggle {
+  min-width: 120px;
+}
+
+.nav-dropdown:nth-child(3) .dropdown-toggle {
+  min-width: 125px;
+}
+
+/* Arrow */
+
+.dropdown-arrow {
+  display: inline-flex;
+  align-items: center;
+
+  margin-left: 6px;
+
+  font-size: 8px;
+  line-height: 1;
+
+  transition: transform 0.2s ease;
+}
+
+.nav-dropdown:hover .dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+/* =========================================================
+   DROPDOWN MENU
+   ========================================================= */
+
+.dropdown-menu {
+  position: absolute;
+
+  top: calc(100% + 1px);
+  left: 0;
+
+  min-width: 175px;
+
+  padding: 7px;
+
+  background: #fffdf9;
+
+  border: 1px solid #e8dfd2;
+
+  border-radius: 6px;
+
+  box-shadow: 0 12px 30px rgba(80, 60, 30, 0.12);
+
+  opacity: 0;
+  visibility: hidden;
+
+  transform: translateY(-5px);
+
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease,
+    transform 0.2s ease;
+
+  box-sizing: border-box;
+}
+
+.nav-dropdown:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+
+  transform: translateY(0);
+}
+
+.dropdown-menu a {
+  display: block;
+
+  padding: 8px 10px;
+
+  color: #51412f;
+
+  border-radius: 4px;
+
+  font-size: 12px;
+  font-weight: 500;
+
+  text-decoration: none;
+
+  white-space: nowrap;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.dropdown-menu a:hover {
+  color: #9b722e;
+
+  background: #faf4e9;
+}
+
+/* =========================================================
+   HEADER ACTIONS
+   ========================================================= */
+
+.header-actions {
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 4px;
+
+  margin-left: 12px;
+
+  flex-shrink: 0;
+}
+
+/* =========================================================
+   HEADER ICONS
+   ========================================================= */
+
+.header-icon {
+  position: relative;
+
+  width: 31px;
+  height: 31px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  color: #493923;
+
+  background: transparent;
+
+  border: none;
+  border-radius: 50%;
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  box-sizing: border-box;
+
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.header-icon:hover {
+  color: #9b722e;
+
+  background: #faf4e9;
+
+  transform: translateY(-1px);
+}
+
+.header-icon svg {
+  width: 18px;
+  height: 18px;
+
+  fill: none;
+
+  stroke: currentColor;
+
+  stroke-width: 1.7;
+
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* =========================================================
+   BADGES
+   ========================================================= */
+
+.icon-badge {
+  position: absolute;
+
+  top: -1px;
+  right: -2px;
+
+  min-width: 14px;
+  height: 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 3px;
+
+  background: #a47b35;
+  color: #ffffff;
+
+  border-radius: 20px;
+
+  font-size: 8px;
+  font-weight: 700;
+
+  line-height: 1;
+
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   MY ORDERS
+   ========================================================= */
+
+.my-orders-icon {
+  position: relative;
+}
+
+.my-orders-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* =========================================================
+   MOBILE MENU BUTTON
+   ========================================================= */
+
+.mobile-menu-button {
+  display: none;
+
+  border: none;
+  background: transparent;
+
+  padding: 0;
+  margin: 0;
+
+  cursor: pointer;
+}
+
+/* =========================================================
+   MOBILE MENU
+   ========================================================= */
+
+.mobile-menu {
+  display: none;
+}
+
+/* =========================================================
+   TABLET DESKTOP
+   ========================================================= */
+
+@media (max-width: 1100px) and (min-width: 769px) {
+
+  .header-main {
+    padding: 0 14px;
+  }
+
+  .header-logo {
+    width: 88px;
+  }
+
+  .header-logo img {
+    width: 84px;
+  }
+
+  .main-navigation {
+    margin-left: 12px;
+    gap: 1px;
+  }
+
+  .nav-link,
+  .dropdown-toggle {
+    padding: 0 7px;
+    font-size: 11px;
+  }
+
+  .dropdown-toggle {
+    min-width: auto;
+  }
+
+  .nav-dropdown:nth-child(2) .dropdown-toggle,
+  .nav-dropdown:nth-child(3) .dropdown-toggle {
+    min-width: auto;
+  }
+
+  .header-actions {
+    margin-left: 7px;
+    gap: 1px;
+  }
+
+  .header-icon {
+    width: 29px;
+    height: 29px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  /* -------------------------------------------------------
+     ANNOUNCEMENT
+     ------------------------------------------------------- */
+
+  .announcement-bar {
+    height: 19px;
+
+    padding: 0 8px;
+
+    font-size: 9px;
+    letter-spacing: 0.6px;
+
+    text-align: center;
+  }
+
+  /* -------------------------------------------------------
+     HEADER
+     ------------------------------------------------------- */
+
+  .header-main {
+    position: relative;
+
+    width: 100%;
+    height: 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    padding: 0 9px;
+
+    box-sizing: border-box;
+  }
+
+  /* -------------------------------------------------------
+     HAMBURGER
+     ------------------------------------------------------- */
+
+  .mobile-menu-button {
+    position: relative;
+
+    width: 32px;
+    height: 32px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 4px;
+
+    margin: 0 7px 0 0;
+
+    padding: 0;
+
+    background: transparent;
+
+    border: none;
+
+    z-index: 5;
+  }
+
+  .mobile-menu-button span {
+    display: block;
+
+    width: 19px;
+    height: 2px;
+
+    margin: 0;
+    padding: 0;
+
+    background: #493923;
+
+    border-radius: 2px;
+
+    transition:
+      transform 0.25s ease,
+      opacity 0.25s ease;
+  }
+
+  /* -------------------------------------------------------
+     HAMBURGER → X
+     ------------------------------------------------------- */
+
+  .mobile-menu-button.active {
+    transform: none;
+  }
+
+  .mobile-menu-button.active span:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+
+  .mobile-menu-button.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .mobile-menu-button.active span:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  /* -------------------------------------------------------
+     LOGO BESIDE HAMBURGER
+     ------------------------------------------------------- */
+
+  .header-logo {
+    position: relative;
+
+    left: auto;
+    top: auto;
+
+    transform: none;
+
+    width: auto;
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    flex-shrink: 0;
+
+    margin: 0;
+    padding: 0;
+  }
+
+  .header-logo img {
+    display: block;
+
+    width: 88px;
+    height: auto;
+
+    max-height: 42px;
+
+    object-fit: contain;
+  }
+
+  /* -------------------------------------------------------
+     HIDE DESKTOP NAV
+     ------------------------------------------------------- */
+
+  .main-navigation {
+    display: none;
+  }
+
+  /* -------------------------------------------------------
+     RIGHT ACTIONS
+     ------------------------------------------------------- */
+
+  .header-actions {
+    position: absolute;
+
+    right: 7px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    height: 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 3px;
+
+    margin: 0;
+  }
+
+  .header-icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .header-icon svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .icon-badge {
+    top: 0;
+    right: -1px;
+
+    min-width: 13px;
+    height: 13px;
+
+    font-size: 7px;
+  }
+
+  /* -------------------------------------------------------
+     MOBILE MENU
+     ------------------------------------------------------- */
+
+  .mobile-menu {
+    display: block;
+
+    position: absolute;
+
+    top: 71px;
+    left: 0;
+
+    width: 100%;
+
+    max-height: calc(100vh - 71px);
+
+    overflow-y: auto;
+
+    padding: 8px 12px 18px;
+
+    background: #fffdf9;
+
+    border-top: 1px solid #eee5d8;
+    border-bottom: 1px solid #e8dfd2;
+
+    box-shadow: 0 15px 35px rgba(70, 50, 25, 0.12);
+
+    box-sizing: border-box;
+
+    z-index: 999;
+  }
+
+  /* -------------------------------------------------------
+     MOBILE LINKS
+     ------------------------------------------------------- */
+
+  .mobile-menu > .nav-link,
+  .mobile-menu > a {
+    width: 100%;
+
+    min-height: 42px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 10px;
+
+    box-sizing: border-box;
+
+    color: #493923;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    border-bottom: 1px solid #f0e9df;
+  }
+
+  .mobile-menu > a:hover {
+    color: #9b722e;
+    background: #faf5ec;
+  }
+
+  /* -------------------------------------------------------
+     MOBILE ACCORDION
+     ------------------------------------------------------- */
+
+  .mobile-accordion {
+    width: 100%;
+
+    border-bottom: 1px solid #f0e9df;
+  }
+
+  .mobile-accordion-button {
+    width: 100%;
+
+    min-height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 10px;
+
+    color: #493923;
+
+    background: transparent;
+
+    border: none;
+
+    font-family: inherit;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    text-align: left;
+
+    cursor: pointer;
+  }
+
+  .mobile-accordion-button:hover {
+    background: #faf5ec;
+    color: #9b722e;
+  }
+
+  .mobile-accordion-arrow {
+    font-size: 12px;
+
+    transition: transform 0.2s ease;
+  }
+
+  .mobile-accordion-button.active
+    .mobile-accordion-arrow {
+    transform: rotate(180deg);
+  }
+
+  .mobile-submenu {
+    display: flex;
+    flex-direction: column;
+
+    padding: 2px 0 7px 12px;
+  }
+
+  .mobile-submenu a {
+    min-height: 34px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 10px;
+
+    color: #665541;
+
+    font-size: 12px;
+    font-weight: 500;
+
+    text-decoration: none;
+
+    border-radius: 4px;
+  }
+
+  .mobile-submenu a:hover {
+    color: #9b722e;
+    background: #faf5ec;
+  }
+
+  /* -------------------------------------------------------
+     DIVIDER
+     ------------------------------------------------------- */
+
+  .mobile-menu-divider {
+    height: 1px;
+
+    margin: 8px 0;
+
+    background: #e8dfd2;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+  .announcement-bar {
+    height: 18px;
+
+    font-size: 8px;
+  }
+
+  .header-main {
+    height: 50px;
+    padding: 0 7px;
+  }
+
+  .mobile-menu-button {
+    width: 30px;
+    height: 30px;
+
+    margin-right: 5px;
+
+    gap: 4px;
+  }
+
+  .mobile-menu-button span {
+    width: 18px;
+    height: 2px;
+  }
+
+  .header-logo {
+    height: 42px;
+  }
+
+  .header-logo img {
+    width: 84px;
+    max-height: 40px;
+  }
+
+  .header-actions {
+    right: 5px;
+
+    height: 50px;
+
+    gap: 1px;
+  }
+
+  .header-icon {
+    width: 29px;
+    height: 29px;
+  }
+
+  .header-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .icon-badge {
+    min-width: 12px;
+    height: 12px;
+
+    font-size: 7px;
+  }
+
+  .mobile-menu {
+    top: 68px;
+
+    max-height: calc(100vh - 68px);
+
+    padding-left: 9px;
+    padding-right: 9px;
+  }
+}
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+  .header-main {
+    padding: 0 5px;
+  }
+
+  .mobile-menu-button {
+    width: 28px;
+
+    margin-right: 4px;
+  }
+
+  .mobile-menu-button span {
+    width: 17px;
+  }
+
+  .header-logo img {
+    width: 78px;
+  }
+
+  .header-actions {
+    right: 3px;
+    gap: 0;
+  }
+
+  .header-icon {
+    width: 27px;
+    height: 27px;
+  }
+
+  .header-icon svg {
+    width: 15px;
+    height: 15px;
+  }
+}
+/* =========================================================
+   VIRAJ JEWELLERS
+   PREMIUM HEADER
+   Cream / Ivory / Champagne Gold
+   ========================================================= */
+
+.site-header {
+  position: relative;
+  z-index: 1000;
+  width: 100%;
+  background: #fffdf9;
+  color: #2d2117;
+  border-bottom: 1px solid #eee5d8;
+}
+
+/* =========================================================
+   ANNOUNCEMENT BAR
+   ========================================================= */
+
+.announcement-bar {
+  width: 100%;
+  min-height: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  padding: 4px 16px;
+
+  background: #faf1e5;
+  border-bottom: 1px solid #eadfce;
+
+  color: #76501f;
+
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1.1px;
+  line-height: 1.3;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.announcement-divider {
+  color: #b4874a;
+  font-size: 9px;
+}
+
+/* =========================================================
+   MAIN HEADER
+   ========================================================= */
+
+.header-main {
+  position: relative;
+
+  width: 100%;
+  min-height: 62px;
+
+  display: flex;
+  align-items: center;
+
+  padding: 0 32px;
+
+  background: #fffdf9;
+  border-bottom: 1px solid #eee6da;
+}
+
+/* =========================================================
+   LOGO
+   ========================================================= */
+
+.header-logo {
+  flex: 0 0 auto;
+
+  width: 72px;
+  height: 62px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  text-decoration: none;
+}
+
+.viraj-logo {
+  display: block;
+
+  width: 54px;
+  height: 54px;
+
+  object-fit: contain;
+
+  border-radius: 50%;
+}
+
+/* =========================================================
+   DESKTOP NAVIGATION
+   ========================================================= */
+
+.main-navigation {
+  display: flex;
+  align-items: center;
+
+  margin-left: 36px;
+
+  height: 62px;
+
+  gap: 28px;
+}
+
+/* NORMAL NAV LINKS */
+
+.nav-link {
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+
+  height: 62px;
+
+  padding: 0;
+
+  border: 0;
+  background: transparent;
+
+  color: #2d2117;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  letter-spacing: 0.1px;
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition:
+    color 0.25s ease;
+}
+
+.nav-link::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: 13px;
+
+  height: 1px;
+
+  background: #a8792e;
+
+  transform: scaleX(0);
+  transform-origin: center;
+
+  transition:
+    transform 0.25s ease;
+}
+
+.nav-link:hover {
+  color: #a8792e;
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+/* =========================================================
+   DROPDOWN WRAPPER
+   ========================================================= */
+
+.nav-dropdown {
+  position: relative;
+
+  height: 62px;
+
+  display: flex;
+  align-items: center;
+}
+
+/* =========================================================
+   DROPDOWN BUTTON
+   IMPORTANT:
+   Remove browser default button appearance
+   ========================================================= */
+
+.nav-dropdown-button {
+  appearance: none;
+  -webkit-appearance: none;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 62px;
+
+  margin: 0;
+  padding: 0;
+
+  border: 0;
+  outline: none;
+
+  background: transparent !important;
+
+  color: #2d2117;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  letter-spacing: 0;
+
+  cursor: pointer;
+
+  box-shadow: none;
+
+  transition:
+    color 0.25s ease;
+}
+
+.nav-dropdown-button span {
+  display: inline-flex;
+
+  margin-left: 5px;
+
+  color: #8f6a35;
+
+  font-size: 13px;
+  line-height: 1;
+
+  transform: translateY(-1px);
+
+  transition:
+    transform 0.25s ease;
+}
+
+.nav-dropdown:hover
+.nav-dropdown-button {
+  color: #a8792e;
+}
+
+.nav-dropdown:hover
+.nav-dropdown-button span {
+  transform: rotate(180deg) translateY(1px);
+}
+
+/* =========================================================
+   DROPDOWN MENU
+   ========================================================= */
+
+.dropdown-menu {
+  position: absolute;
+
+  top: calc(100% - 1px);
+  left: 50%;
+
+  min-width: 205px;
+
+  padding: 9px 0;
+
+  background: #fffdf9;
+
+  border: 1px solid #e7ddcf;
+
+  box-shadow:
+    0 14px 35px rgba(70, 49, 27, 0.12);
+
+  opacity: 0;
+  visibility: hidden;
+
+  transform:
+    translate(-50%, 8px);
+
+  transition:
+    opacity 0.22s ease,
+    visibility 0.22s ease,
+    transform 0.22s ease;
+}
+
+.nav-dropdown:hover .dropdown-menu,
+.nav-dropdown:focus-within .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+
+  transform:
+    translate(-50%, 0);
+}
+
+.dropdown-menu a {
+  display: flex;
+  align-items: center;
+
+  min-height: 38px;
+
+  padding: 0 18px;
+
+  color: #40352a;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 11px;
+  font-weight: 500;
+
+  letter-spacing: 0.2px;
+
+  text-decoration: none;
+
+  white-space: nowrap;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    padding-left 0.2s ease;
+}
+
+.dropdown-menu a:hover {
+  padding-left: 22px;
+
+  background: #faf3e8;
+
+  color: #a8792e;
+}
+
+/* =========================================================
+   HEADER ACTIONS
+   ========================================================= */
+
+.header-actions {
+  display: flex;
+  align-items: center;
+
+  gap: 20px;
+
+  margin-left: auto;
+}
+
+/* =========================================================
+   HEADER ICON
+   ========================================================= */
+
+.header-icon {
+  position: relative;
+
+  width: 24px;
+  height: 30px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #4b3927;
+
+  text-decoration: none;
+
+  transition:
+    color 0.25s ease,
+    transform 0.2s ease;
+}
+
+.header-icon:hover {
+  color: #a8792e;
+
+  transform: translateY(-1px);
+}
+
+.header-icon svg {
+  width: 20px;
+  height: 20px;
+
+  display: block;
+
+  fill: none;
+
+  stroke: currentColor;
+  stroke-width: 1.55;
+
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* =========================================================
+   COUNTS
+   ========================================================= */
+
+.wishlist-count,
+.cart-count {
+  position: absolute;
+
+  top: -2px;
+  right: -7px;
+
+  min-width: 15px;
+  height: 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 4px;
+
+  border-radius: 50%;
+
+  background: #a8792e;
+
+  color: #ffffff;
+
+  font-size: 8px;
+  font-weight: 700;
+
+  line-height: 1;
+}
+
+/* =========================================================
+   MOBILE MENU BUTTON
+   ========================================================= */
+
+.mobile-menu-button {
+  display: none;
+
+  appearance: none;
+  -webkit-appearance: none;
+
+  width: 38px;
+  height: 38px;
+
+  margin: 0;
+  padding: 7px;
+
+  border: 0;
+
+  background: transparent !important;
+
+  cursor: pointer;
+
+  box-shadow: none;
+}
+
+.mobile-menu-button span {
+  display: block;
+
+  width: 20px;
+  height: 1px;
+
+  margin: 4px auto;
+
+  background: #3c2c1e;
+
+  transition:
+    transform 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.mobile-menu-button.active span:nth-child(1) {
+  transform:
+    translateY(5px)
+    rotate(45deg);
+}
+
+.mobile-menu-button.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.mobile-menu-button.active span:nth-child(3) {
+  transform:
+    translateY(-5px)
+    rotate(-45deg);
+}
+
+/* =========================================================
+   MOBILE MENU
+   ========================================================= */
+
+.mobile-menu {
+  display: none;
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+  .header-main {
+    padding: 0 22px;
+  }
+
+  .main-navigation {
+    margin-left: 25px;
+    gap: 20px;
+  }
+
+  .header-actions {
+    gap: 15px;
+  }
+
+  .nav-link,
+  .nav-dropdown-button {
+    font-size: 12px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 760px) {
+
+  .announcement-bar {
+    min-height: 22px;
+
+    padding: 4px 10px;
+
+    gap: 5px;
+
+    font-size: 7px;
+    letter-spacing: 0.75px;
+  }
+
+  .announcement-divider {
+    font-size: 7px;
+  }
+
+  .header-main {
+    min-height: 58px;
+
+    padding: 0 15px;
+  }
+
+  /* MOBILE HAMBURGER */
+
+  .mobile-menu-button {
+    display: block;
+
+    flex: 0 0 38px;
+  }
+
+  /* LOGO */
+
+  .header-logo {
+    width: 58px;
+    height: 58px;
+
+    margin-left: 2px;
+  }
+
+  .viraj-logo {
+    width: 48px;
+    height: 48px;
+  }
+
+  /* HIDE DESKTOP NAV */
+
+  .main-navigation {
+    display: none;
+  }
+
+  /* MOBILE ACTIONS */
+
+  .header-actions {
+    margin-left: auto;
+
+    gap: 13px;
+  }
+
+  .header-icon {
+    width: 23px;
+    height: 30px;
+  }
+
+  .header-icon svg {
+    width: 19px;
+    height: 19px;
+  }
+
+  .my-orders-icon {
+    display: none;
+  }
+
+  /* MOBILE MENU */
+
+  .mobile-menu {
+    display: block;
+
+    width: 100%;
+
+    padding: 8px 18px 22px;
+
+    background: #fffdf9;
+
+    border-top: 1px solid #eee5d8;
+
+    box-shadow:
+      0 15px 35px rgba(61, 43, 25, 0.08);
+
+    animation:
+      mobileMenuOpen 0.22s ease both;
+  }
+
+  .mobile-menu > a {
+    display: flex;
+    align-items: center;
+
+    min-height: 46px;
+
+    padding: 0 2px;
+
+    border-bottom: 1px solid #eee6da;
+
+    color: #33271c;
+
+    font-family:
+      Arial,
+      Helvetica,
+      sans-serif;
+
+    font-size: 13px;
+    font-weight: 500;
+
+    text-decoration: none;
+  }
+
+  .mobile-menu > a:hover {
+    color: #a8792e;
+  }
+
+  /* MOBILE SECTION BUTTON */
+
+  .mobile-menu-section-button {
+    appearance: none;
+    -webkit-appearance: none;
+
+    width: 100%;
+    min-height: 46px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin: 0;
+    padding: 0 2px;
+
+    border: 0;
+    border-bottom: 1px solid #eee6da;
+
+    background: transparent !important;
+
+    color: #33271c;
+
+    font-family:
+      Arial,
+      Helvetica,
+      sans-serif;
+
+    font-size: 13px;
+    font-weight: 500;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    box-shadow: none;
+  }
+
+  .mobile-menu-section-button span:last-child {
+    color: #9b7238;
+
+    font-size: 14px;
+
+    transition:
+      transform 0.25s ease;
+  }
+
+  .mobile-menu-section-button.open span:last-child {
+    transform: rotate(180deg);
+  }
+
+  /* MOBILE SUBMENU */
+
+  .mobile-menu-submenu {
+    padding: 3px 0 7px 15px;
+
+    background: #fcf7f0;
+  }
+
+  .mobile-menu-submenu a {
+    display: flex;
+    align-items: center;
+
+    min-height: 38px;
+
+    padding: 0 10px;
+
+    border-bottom: 1px solid #eee6da;
+
+    color: #6d5a45;
+
+    font-size: 11px;
+
+    text-decoration: none;
+
+    transition:
+      color 0.2s ease,
+      padding-left 0.2s ease;
+  }
+
+  .mobile-menu-submenu a:hover {
+    padding-left: 14px;
+
+    color: #a8792e;
+  }
+
+  .mobile-menu-divider {
+    height: 10px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 420px) {
+
+  .announcement-bar {
+    font-size: 6.5px;
+    letter-spacing: 0.55px;
+  }
+
+  .header-main {
+    padding: 0 11px;
+  }
+
+  .header-actions {
+    gap: 9px;
+  }
+
+  .header-logo {
+    margin-left: 0;
+  }
+
+  .viraj-logo {
+    width: 46px;
+    height: 46px;
+  }
+
+  .wishlist-count,
+  .cart-count {
+    right: -5px;
+
+    min-width: 14px;
+    height: 14px;
+
+    font-size: 7px;
+  }
+}
+
+/* =========================================================
+   ANIMATION
+   ========================================================= */
+
+@keyframes mobileMenuOpen {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+.nav-link:focus-visible,
+.nav-dropdown-button:focus-visible,
+.header-icon:focus-visible,
+.mobile-menu-button:focus-visible,
+.mobile-menu-section-button:focus-visible,
+.mobile-menu a:focus-visible {
+  outline: 1px solid #a8792e;
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   REDUCE MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .nav-link,
+  .nav-dropdown-button,
+  .dropdown-menu,
+  .dropdown-menu a,
+  .header-icon,
+  .mobile-menu-button span,
+  .mobile-menu-section-button span:last-child,
+  .mobile-menu-submenu a {
+    transition: none;
+  }
+
+  .mobile-menu {
+    animation: none;
+  }
+}
