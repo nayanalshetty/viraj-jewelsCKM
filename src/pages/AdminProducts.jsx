@@ -1,3 +1,4 @@
+
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { supabase } from "../lib/supabase.js";
@@ -14,7 +15,6 @@ const emptyForm = {
   purity: "22K",
   weight: "",
   making_charge: "",
-  gst: "",
   stock: "1",
   short_description: "",
   description: "",
@@ -47,7 +47,9 @@ function getStoragePath(imageUrl) {
 }
 
 function isVideoUrl(url) {
-  return /\.(mp4|webm|ogg|mov|m4v)(\?.*)?$/i.test(String(url || ""));
+  return /\.(mp4|webm|ogg|mov|m4v)(\?.*)?$/i.test(
+    String(url || "")
+  );
 }
 
 export default function AdminProducts() {
@@ -102,10 +104,14 @@ export default function AdminProducts() {
       setProducts(productsResponse.data || []);
       setCategories(categoriesResponse.data || []);
     } catch (error) {
-      console.error("Admin product loading error:", error);
+      console.error(
+        "Admin product loading error:",
+        error
+      );
 
       setMessage(
-        error?.message || "Unable to load products."
+        error?.message ||
+          "Unable to load products."
       );
     } finally {
       setLoading(false);
@@ -122,7 +128,11 @@ export default function AdminProducts() {
 
       const matchesSearch =
         !q ||
-        [product.name, product.sku, product.slug].some((value) =>
+        [
+          product.name,
+          product.sku,
+          product.slug,
+        ].some((value) =>
           String(value || "")
             .toLowerCase()
             .includes(q)
@@ -130,8 +140,9 @@ export default function AdminProducts() {
 
       const matchesMetal =
         filterMetal === "all" ||
-        String(product.metal_type || "").toLowerCase() ===
-          filterMetal;
+        String(
+          product.metal_type || ""
+        ).toLowerCase() === filterMetal;
 
       return matchesSearch && matchesMetal;
     });
@@ -170,10 +181,11 @@ export default function AdminProducts() {
         gender: product.gender || "Women",
         purity: product.purity || "22K",
         weight: product.weight ?? "",
-        making_charge: product.making_charge ?? "",
-        gst: product.gst ?? "",
+        making_charge:
+          product.making_charge ?? "",
         stock: product.stock ?? "1",
-        short_description: product.short_description || "",
+        short_description:
+          product.short_description || "",
         description: product.description || "",
         is_featured: !!product.is_featured,
         is_active: product.is_active !== false,
@@ -191,10 +203,14 @@ export default function AdminProducts() {
         behavior: "smooth",
       });
     } catch (error) {
-      console.error("Edit product error:", error);
+      console.error(
+        "Edit product error:",
+        error
+      );
 
       setMessage(
-        error?.message || "Unable to load product images."
+        error?.message ||
+          "Unable to load product images."
       );
     }
   }
@@ -211,10 +227,14 @@ export default function AdminProducts() {
     setMessage("");
 
     try {
-      const storagePath = getStoragePath(image.image_url);
+      const storagePath = getStoragePath(
+        image.image_url
+      );
 
       if (storagePath) {
-        const { error: storageError } = await supabase.storage
+        const {
+          error: storageError,
+        } = await supabase.storage
           .from("product-images")
           .remove([storagePath]);
 
@@ -226,7 +246,9 @@ export default function AdminProducts() {
         }
       }
 
-      const { error: imageDbError } = await supabase
+      const {
+        error: imageDbError,
+      } = await supabase
         .from("product_images")
         .delete()
         .eq("id", image.id);
@@ -242,7 +264,9 @@ export default function AdminProducts() {
         ),
       }));
 
-      setMessage("Product media deleted successfully.");
+      setMessage(
+        "Product media deleted successfully."
+      );
     } catch (error) {
       console.error(
         "Delete product image error:",
@@ -256,7 +280,10 @@ export default function AdminProducts() {
     }
   }
 
-  async function uploadMedia(productId, selectedFiles) {
+  async function uploadMedia(
+    productId,
+    selectedFiles
+  ) {
     if (!selectedFiles.length) return [];
 
     const uploaded = [];
@@ -268,7 +295,9 @@ export default function AdminProducts() {
 
       const path = `${productId}/${crypto.randomUUID()}-${safeName}`;
 
-      const { error: uploadError } = await supabase.storage
+      const {
+        error: uploadError,
+      } = await supabase.storage
         .from("product-images")
         .upload(path, file, {
           upsert: false,
@@ -279,11 +308,15 @@ export default function AdminProducts() {
         throw uploadError;
       }
 
-      const { data: publicUrlData } = supabase.storage
+      const {
+        data: publicUrlData,
+      } = supabase.storage
         .from("product-images")
         .getPublicUrl(path);
 
-      uploaded.push(publicUrlData.publicUrl);
+      uploaded.push(
+        publicUrlData.publicUrl
+      );
     }
 
     return uploaded;
@@ -295,17 +328,23 @@ export default function AdminProducts() {
     setMessage("");
 
     if (!form.name.trim()) {
-      setMessage("Please enter a product name.");
+      setMessage(
+        "Please enter a product name."
+      );
       return;
     }
 
     if (!form.category_id) {
-      setMessage("Please select a category.");
+      setMessage(
+        "Please select a category."
+      );
       return;
     }
 
     if (!form.weight) {
-      setMessage("Please enter the product weight.");
+      setMessage(
+        "Please enter the product weight."
+      );
       return;
     }
 
@@ -331,25 +370,27 @@ export default function AdminProducts() {
             : form.purity,
 
         sku: form.sku.trim() || null,
+
         weight: Number(form.weight),
 
+        // Combined making charge + GST value
         making_charge:
           form.making_charge === ""
             ? 0
             : Number(form.making_charge),
 
-        gst:
-          form.gst === ""
-            ? 0
-            : Number(form.gst),
+        // GST is included in the combined value
+        gst: 0,
 
         stock: Number(form.stock || 0),
 
         short_description:
-          form.short_description.trim() || null,
+          form.short_description.trim() ||
+          null,
 
         description:
-          form.description.trim() || null,
+          form.description.trim() ||
+          null,
 
         is_featured: !!form.is_featured,
         is_active: !!form.is_active,
@@ -367,7 +408,10 @@ export default function AdminProducts() {
 
         if (error) throw error;
       } else {
-        const { data, error } = await supabase
+        const {
+          data,
+          error,
+        } = await supabase
           .from("products")
           .insert(payload)
           .select("id")
@@ -384,13 +428,15 @@ export default function AdminProducts() {
       );
 
       if (mediaUrls.length) {
-        const existingImageCount = form.images.length;
+        const existingImageCount =
+          form.images.length;
 
         const rows = mediaUrls.map(
           (image_url, index) => ({
             product_id: productId,
             image_url,
-            order: existingImageCount + index,
+            order:
+              existingImageCount + index,
           })
         );
 
@@ -421,10 +467,14 @@ export default function AdminProducts() {
         behavior: "smooth",
       });
     } catch (error) {
-      console.error("Save product error:", error);
+      console.error(
+        "Save product error:",
+        error
+      );
 
       setMessage(
-        error?.message || "Unable to save product."
+        error?.message ||
+          "Unable to save product."
       );
     } finally {
       setSaving(false);
@@ -441,28 +491,38 @@ export default function AdminProducts() {
     setMessage("");
 
     try {
-      const { error: imageError } = await supabase
+      const {
+        error: imageError,
+      } = await supabase
         .from("product_images")
         .delete()
         .eq("product_id", id);
 
       if (imageError) throw imageError;
 
-      const { error: productError } = await supabase
+      const {
+        error: productError,
+      } = await supabase
         .from("products")
         .delete()
         .eq("id", id);
 
       if (productError) throw productError;
 
-      setMessage("Product deleted successfully.");
+      setMessage(
+        "Product deleted successfully."
+      );
 
       await load();
     } catch (error) {
-      console.error("Delete product error:", error);
+      console.error(
+        "Delete product error:",
+        error
+      );
 
       setMessage(
-        error?.message || "Unable to delete product."
+        error?.message ||
+          "Unable to delete product."
       );
     }
   }
@@ -489,7 +549,8 @@ export default function AdminProducts() {
           <h1>Product Management</h1>
 
           <p>
-            Add products the easy way — like publishing a post.
+            Add products the easy way — like
+            publishing a post.
           </p>
         </div>
 
@@ -513,7 +574,9 @@ export default function AdminProducts() {
         <div className="admin-editor-heading">
           <div>
             <p className="admin-eyebrow">
-              {form.id ? "EDIT PRODUCT" : "NEW PRODUCT"}
+              {form.id
+                ? "EDIT PRODUCT"
+                : "NEW PRODUCT"}
             </p>
 
             <h2>
@@ -535,68 +598,89 @@ export default function AdminProducts() {
         </div>
 
         <form onSubmit={saveProduct}>
-          {form.id && form.images.length > 0 && (
-            <div className="admin-existing-images">
-              <div className="admin-existing-images-heading">
-                <div>
-                  <p className="admin-eyebrow">
-                    CURRENT MEDIA
-                  </p>
+          {form.id &&
+            form.images.length > 0 && (
+              <div className="admin-existing-images">
+                <div className="admin-existing-images-heading">
+                  <div>
+                    <p className="admin-eyebrow">
+                      CURRENT MEDIA
+                    </p>
 
-                  <h3>Product media</h3>
+                    <h3>Product media</h3>
+                  </div>
+
+                  <span>
+                    {form.images.length} media
+                    item
+                    {form.images.length !== 1
+                      ? "s"
+                      : ""}
+                  </span>
                 </div>
 
-                <span>
-                  {form.images.length} media item
-                  {form.images.length !== 1 ? "s" : ""}
-                </span>
-              </div>
+                <div className="admin-existing-images-grid">
+                  {form.images.map(
+                    (image, index) => (
+                      <div
+                        className="admin-existing-image-card"
+                        key={image.id}
+                      >
+                        <div className="admin-existing-image-number">
+                          {index + 1}
+                        </div>
 
-              <div className="admin-existing-images-grid">
-                {form.images.map((image, index) => (
-                  <div
-                    className="admin-existing-image-card"
-                    key={image.id}
-                  >
-                    <div className="admin-existing-image-number">
-                      {index + 1}
-                    </div>
+                        {isVideoUrl(
+                          image.image_url
+                        ) ? (
+                          <div className="admin-existing-media-preview">
+                            <video
+                              src={
+                                image.image_url
+                              }
+                              muted
+                              playsInline
+                              preload="metadata"
+                            />
 
-                    {isVideoUrl(image.image_url) ? (
-                      <div className="admin-existing-media-preview">
-                        <video
-                          src={image.image_url}
-                          muted
-                          playsInline
-                          preload="metadata"
-                        />
-                        <span>▶ VIDEO</span>
+                            <span>
+                              ▶ VIDEO
+                            </span>
+                          </div>
+                        ) : (
+                          <img
+                            src={
+                              image.image_url
+                            }
+                            alt={`Product media ${
+                              index + 1
+                            }`}
+                          />
+                        )}
+
+                        <button
+                          type="button"
+                          className="admin-delete-image-button"
+                          onClick={() =>
+                            deleteProductImage(
+                              image
+                            )
+                          }
+                        >
+                          🗑 Delete
+                        </button>
                       </div>
-                    ) : (
-                      <img
-                        src={image.image_url}
-                        alt={`Product media ${index + 1}`}
-                      />
-                    )}
-
-                    <button
-                      type="button"
-                      className="admin-delete-image-button"
-                      onClick={() =>
-                        deleteProductImage(image)
-                      }
-                    >
-                      🗑 Delete
-                    </button>
-                  </div>
-                ))}
+                    )
+                  )}
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
           <div
             className="admin-upload-zone"
-            onClick={() => fileRef.current?.click()}
+            onClick={() =>
+              fileRef.current?.click()
+            }
           >
             <input
               ref={fileRef}
@@ -613,29 +697,36 @@ export default function AdminProducts() {
               }
             />
 
-            <div className="upload-icon">＋</div>
+            <div className="upload-icon">
+              ＋
+            </div>
 
             <strong>
               {files.length
                 ? `${files.length} media file${
-                    files.length > 1 ? "s" : ""
+                    files.length > 1
+                      ? "s"
+                      : ""
                   } selected`
                 : "Add product photos or videos"}
             </strong>
 
             <span>
-              Click to select multiple edited jewellery images and short videos
+              Click to select multiple edited
+              jewellery images and short videos
             </span>
 
             {files.length > 0 && (
               <div className="upload-file-list">
-                {files.map((file, index) => (
-                  <span
-                    key={`${file.name}-${index}`}
-                  >
-                    {file.name}
-                  </span>
-                ))}
+                {files.map(
+                  (file, index) => (
+                    <span
+                      key={`${file.name}-${index}`}
+                    >
+                      {file.name}
+                    </span>
+                  )
+                )}
               </div>
             )}
           </div>
@@ -683,8 +774,13 @@ export default function AdminProducts() {
                   )
                 }
               >
-                <option value="gold">Gold</option>
-                <option value="silver">Silver</option>
+                <option value="gold">
+                  Gold
+                </option>
+
+                <option value="silver">
+                  Silver
+                </option>
               </select>
             </label>
 
@@ -704,14 +800,16 @@ export default function AdminProducts() {
                   Select category
                 </option>
 
-                {categories.map((category) => (
-                  <option
-                    key={category.id}
-                    value={category.id}
-                  >
-                    {category.name}
-                  </option>
-                ))}
+                {categories.map(
+                  (category) => (
+                    <option
+                      key={category.id}
+                      value={category.id}
+                    >
+                      {category.name}
+                    </option>
+                  )
+                )}
               </select>
             </label>
 
@@ -738,10 +836,12 @@ export default function AdminProducts() {
 
               <select
                 disabled={
-                  form.metal_type === "silver"
+                  form.metal_type ===
+                  "silver"
                 }
                 value={
-                  form.metal_type === "silver"
+                  form.metal_type ===
+                  "silver"
                     ? "Silver"
                     : form.purity
                 }
@@ -794,8 +894,9 @@ export default function AdminProducts() {
               />
             </label>
 
+            {/* COMBINED MAKING CHARGE + GST */}
             <label>
-              Making charge
+              Making Charge + GST
 
               <input
                 type="number"
@@ -808,25 +909,7 @@ export default function AdminProducts() {
                     event.target.value
                   )
                 }
-                placeholder="Optional"
-              />
-            </label>
-
-            <label>
-              GST %
-
-              <input
-                type="number"
-                step="0.01"
-                min="0"
-                value={form.gst}
-                onChange={(event) =>
-                  setField(
-                    "gst",
-                    event.target.value
-                  )
-                }
-                placeholder="Optional"
+                placeholder="Enter combined charge"
               />
             </label>
 
@@ -874,6 +957,7 @@ export default function AdminProducts() {
                   )
                 }
               />
+
               Published / active
             </label>
 
@@ -888,6 +972,7 @@ export default function AdminProducts() {
                   )
                 }
               />
+
               Featured product
             </label>
           </div>
@@ -922,9 +1007,17 @@ export default function AdminProducts() {
               setFilterMetal(event.target.value)
             }
           >
-            <option value="all">All metals</option>
-            <option value="gold">Gold</option>
-            <option value="silver">Silver</option>
+            <option value="all">
+              All metals
+            </option>
+
+            <option value="gold">
+              Gold
+            </option>
+
+            <option value="silver">
+              Silver
+            </option>
           </select>
 
           <button
@@ -942,8 +1035,8 @@ export default function AdminProducts() {
           </div>
         ) : visibleProducts.length === 0 ? (
           <div className="admin-empty-state">
-            No products yet. Publish your first jewellery
-            product above.
+            No products yet. Publish your first
+            jewellery product above.
           </div>
         ) : (
           <div className="admin-product-table">
@@ -955,52 +1048,60 @@ export default function AdminProducts() {
               <span>Actions</span>
             </div>
 
-            {visibleProducts.map((product) => (
-              <div
-                className="admin-table-row"
-                key={product.id}
-              >
-                <span>
-                  <strong>{product.name}</strong>
-                  <small>
-                    {product.sku || "No SKU"}
-                  </small>
-                </span>
+            {visibleProducts.map(
+              (product) => (
+                <div
+                  className="admin-table-row"
+                  key={product.id}
+                >
+                  <span>
+                    <strong>
+                      {product.name}
+                    </strong>
 
-                <span>
-                  {product.metal_type}
-                </span>
+                    <small>
+                      {product.sku ||
+                        "No SKU"}
+                    </small>
+                  </span>
 
-                <span>
-                  {product.weight} g
-                </span>
+                  <span>
+                    {product.metal_type}
+                  </span>
 
-                <span>
-                  {product.stock ?? 0}
-                </span>
+                  <span>
+                    {product.weight} g
+                  </span>
 
-                <span className="admin-row-actions">
-                  <button
-                    type="button"
-                    onClick={() =>
-                      startEdit(product)
-                    }
-                  >
-                    Edit
-                  </button>
+                  <span>
+                    {product.stock ?? 0}
+                  </span>
 
-                  <button
-                    type="button"
-                    className="danger"
-                    onClick={() =>
-                      deleteProduct(product.id)
-                    }
-                  >
-                    Delete
-                  </button>
-                </span>
-              </div>
-            ))}
+                  <span className="admin-row-actions">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        startEdit(product)
+                      }
+                    >
+                      Edit
+                    </button>
+
+                    <button
+                      type="button"
+                      className="danger"
+                      onClick={() =>
+                        deleteProduct(
+                          product.id
+                        )
+                      }
+                    >
+                      Delete
+                    </button>
+                  </span>
+                </div>
+              )
+            )}
           </div>
         )}
       </section>

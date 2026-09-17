@@ -10,6 +10,13 @@ import "./Product.css";
 export default function Product() {
   const { id } = useParams();
   const navigate = useNavigate();
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "auto",
+    });
+  }, [id]);
 
   const { toggleWishlist, isInWishlist } = useWishlist();
   const { addToCart } = useCart();
