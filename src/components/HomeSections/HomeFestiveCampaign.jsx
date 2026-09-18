@@ -18,16 +18,15 @@ export default function HomeFestiveCampaign() {
         .eq("is_published", true)
         .order("display_order", { ascending: true })
         .order("created_at", { ascending: false })
-        .limit(1)
-        .maybeSingle();
+        .limit(1);
 
       if (error) {
         console.error("Failed to load festive campaign:", error);
         return;
       }
 
-      if (isMounted && data) {
-        setCampaign(data);
+      if (isMounted && data && data.length > 0) {
+        setCampaign(data[0]);
       }
     }
 
