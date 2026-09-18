@@ -35,7 +35,9 @@ const editorialCatalog = [
   { key: "bridal-edit", label: "Bridal Edit" },
   { key: "daily-luxury", label: "Daily Luxury" },
   { key: "silver-stories", label: "Silver Stories" },
-  { key: "gifting", label: "Gifting" },
+   { key: "gifting", label: "Gifting" },
+  { key: "wedding", label: "Wedding" },
+  { key: "daily-wear", label: "Daily Wear" },
 ];
 
 const emptyForm = {
