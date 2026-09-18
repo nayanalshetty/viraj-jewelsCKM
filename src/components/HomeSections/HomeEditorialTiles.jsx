@@ -8,12 +8,48 @@ import hero4 from "../../assets/hero-4.jpg";
 import "./HomeSections.css";
 
 const defaults = [
-  { key: "new-arrivals", title: "New Arrivals", eyebrow: "JUST IN", image: hero1, link: "/category" },
-  { key: "best-sellers", title: "Best Sellers", eyebrow: "MOST LOVED", image: hero2, link: "/category" },
-  { key: "festival-edit", title: "Festival Edit", eyebrow: "CELEBRATE", image: hero3, link: "/category" },
-  { key: "bridal-edit", title: "Bridal Edit", eyebrow: "WEDDING", image: hero4, link: "/category" },
-  { key: "daily-luxury", title: "Daily Luxury", eyebrow: "EVERYDAY", image: "/images/collection-girl.jpg", link: "/category" },
-  { key: "silver-stories", title: "Silver Stories", eyebrow: "SILVER", image: hero2, link: "/category?metal=silver" },
+  {
+    key: "new-arrivals",
+    title: "New Arrivals",
+    eyebrow: "JUST IN",
+    image: hero1,
+    link: "/category?type=new",
+  },
+  {
+    key: "best-sellers",
+    title: "Best Sellers",
+    eyebrow: "MOST LOVED",
+    image: hero2,
+    link: "/category?type=bestseller",
+  },
+  {
+    key: "festival-edit",
+    title: "Festival Edit",
+    eyebrow: "CELEBRATE",
+    image: hero3,
+    link: "/category?collection=festival",
+  },
+  {
+    key: "bridal-edit",
+    title: "Bridal Edit",
+    eyebrow: "WEDDING",
+    image: hero4,
+    link: "/category?collection=bridal",
+  },
+  {
+    key: "daily-luxury",
+    title: "Daily Luxury",
+    eyebrow: "EVERYDAY",
+    image: "/images/collection-girl.jpg",
+    link: "/category?collection=daily",
+  },
+  {
+    key: "silver-stories",
+    title: "Silver Stories",
+    eyebrow: "SILVER",
+    image: hero2,
+    link: "/category?type=silver",
+  },
 ];
 
 export default function HomeEditorialTiles() {

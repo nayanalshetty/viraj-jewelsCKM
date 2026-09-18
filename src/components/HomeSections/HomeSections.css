@@ -1418,3 +1418,872 @@
     animation: none;
   }
 }
+
+/* =========================================================
+   VIRAJ JEWELS — PREMIUM CAMPAIGN SECTION
+   ========================================================= */
+
+.home-mini-campaign {
+  display: grid;
+  grid-template-columns: 1.08fr 0.92fr;
+  min-height: 390px;
+  margin-top: 22px;
+  margin-bottom: 45px;
+  overflow: hidden;
+  border-radius: 22px;
+  background: #e8d7b9;
+}
+
+/* Campaign image */
+
+.home-mini-campaign-media {
+  min-height: 390px;
+  overflow: hidden;
+  background: #d5bd96;
+}
+
+.home-mini-campaign-media img,
+.home-mini-campaign-media video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 390px;
+  object-fit: cover;
+  transition: transform 0.9s ease;
+}
+
+.home-mini-campaign:hover
+.home-mini-campaign-media img,
+.home-mini-campaign:hover
+.home-mini-campaign-media video {
+  transform: scale(1.04);
+}
+
+/* Campaign copy */
+
+.home-mini-campaign-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 50px clamp(25px, 5vw, 75px);
+  background:
+    radial-gradient(
+      circle at 90% 10%,
+      rgba(255, 255, 255, 0.38),
+      transparent 40%
+    ),
+    #e8d7b9;
+}
+
+.home-mini-campaign-copy > span {
+  margin-bottom: 13px;
+  color: #9b7138;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2.8px;
+  text-transform: uppercase;
+}
+
+.home-mini-campaign-copy h2 {
+  max-width: 390px;
+  margin: 0 0 17px;
+  color: #2b1e13;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(31px, 3.2vw, 50px);
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: -0.8px;
+}
+
+.home-mini-campaign-copy p {
+  max-width: 350px;
+  margin: 0 0 25px;
+  color: #76604a;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.home-mini-campaign-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 13px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(91, 67, 40, 0.55);
+  color: #503820;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: gap 0.25s ease;
+}
+
+.home-mini-campaign-link b {
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.home-mini-campaign-link:hover {
+  gap: 19px;
+}
+
+/* =========================================================
+   CAMPAIGN TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .home-mini-campaign {
+    grid-template-columns: 1fr 1fr;
+    min-height: 330px;
+  }
+
+  .home-mini-campaign-media,
+  .home-mini-campaign-media img,
+  .home-mini-campaign-media video {
+    min-height: 330px;
+  }
+
+  .home-mini-campaign-copy {
+    padding: 30px;
+  }
+
+  .home-mini-campaign-copy h2 {
+    font-size: 34px;
+  }
+}
+
+/* =========================================================
+   CAMPAIGN MOBILE
+   ========================================================= */
+
+@media (max-width: 560px) {
+  .home-mini-campaign {
+    grid-template-columns: 1fr;
+    margin-top: 14px;
+    margin-bottom: 32px;
+    border-radius: 16px;
+  }
+
+  .home-mini-campaign-media,
+  .home-mini-campaign-media img,
+  .home-mini-campaign-media video {
+    min-height: 245px;
+    height: 245px;
+  }
+
+  .home-mini-campaign-copy {
+    min-height: 250px;
+    padding: 30px 24px 34px;
+  }
+
+  .home-mini-campaign-copy > span {
+    margin-bottom: 10px;
+    font-size: 8px;
+    letter-spacing: 2px;
+  }
+
+  .home-mini-campaign-copy h2 {
+    max-width: 310px;
+    margin-bottom: 13px;
+    font-size: 34px;
+  }
+
+  .home-mini-campaign-copy p {
+    margin-bottom: 20px;
+    font-size: 11px;
+    line-height: 1.65;
+  }
+
+  .home-mini-campaign-link {
+    font-size: 8px;
+  }
+}
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .home-mini-campaign-media img,
+  .home-mini-campaign-media video,
+  .home-mini-campaign-link {
+    transition: none;
+  }
+}
+
+/* =========================================
+   HOMEPAGE GIFTING SECTION
+========================================= */
+
+.home-gifting {
+  padding: 80px 0;
+}
+
+.home-gifting-heading {
+  max-width: 650px;
+  margin: 0 auto 38px;
+  text-align: center;
+}
+
+.home-gifting-heading span {
+  display: block;
+  margin-bottom: 12px;
+  color: #a17b42;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+}
+
+.home-gifting-heading h2 {
+  margin: 0;
+  color: #35271d;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(30px, 4vw, 48px);
+  font-weight: 400;
+}
+
+.home-gifting-heading p {
+  max-width: 470px;
+  margin: 16px auto 0;
+  color: #766656;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.home-gifting-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.home-gifting-card {
+  display: block;
+  overflow: hidden;
+  color: inherit;
+  text-decoration: none;
+  background: #fffaf3;
+  border: 1px solid rgba(161, 123, 66, 0.18);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.home-gifting-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 35px rgba(71, 48, 25, 0.12);
+}
+
+.home-gifting-image {
+  aspect-ratio: 0.82;
+  overflow: hidden;
+  background: #eadcc8;
+}
+
+.home-gifting-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.home-gifting-card:hover .home-gifting-image img {
+  transform: scale(1.06);
+}
+
+.home-gifting-content {
+  padding: 20px 16px 22px;
+  text-align: center;
+}
+
+.home-gifting-content h3 {
+  margin: 0;
+  color: #38291e;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 19px;
+  font-weight: 400;
+}
+
+.home-gifting-content p {
+  min-height: 42px;
+  margin: 10px 0 18px;
+  color: #817363;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.home-gifting-content span {
+  color: #9a7138;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+}
+
+/* Tablet */
+@media (max-width: 1100px) {
+  .home-gifting-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .home-gifting {
+    padding: 55px 0;
+  }
+
+  .home-gifting-heading {
+    padding: 0 18px;
+    margin-bottom: 26px;
+  }
+
+  .home-gifting-heading h2 {
+    font-size: 32px;
+  }
+
+  .home-gifting-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    padding: 0 12px;
+  }
+
+  .home-gifting-image {
+    aspect-ratio: 0.78;
+  }
+
+  .home-gifting-content {
+    padding: 15px 9px 18px;
+  }
+
+  .home-gifting-content h3 {
+    font-size: 16px;
+  }
+
+  .home-gifting-content p {
+    min-height: auto;
+    font-size: 11px;
+  }
+
+  .home-gifting-content span {
+    font-size: 8px;
+    letter-spacing: 0.8px;
+  }
+}
+
+/* =========================================
+   LUXURY EDITORIAL GIFTING SECTION
+========================================= */
+
+.home-gifting {
+  padding: 95px 0;
+  background: #f8efdf;
+}
+
+.home-gifting-intro {
+  max-width: 620px;
+  margin: 0 auto 45px;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.home-gifting-label {
+  display: block;
+  margin-bottom: 15px;
+  color: #a27b43;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+}
+
+.home-gifting-intro h2 {
+  margin: 0;
+  color: #38291e;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(34px, 4.5vw, 56px);
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.home-gifting-intro p {
+  max-width: 470px;
+  margin: 20px auto 0;
+  color: #776858;
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+/* Main editorial layout */
+
+.home-gifting-editorial {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 18px;
+  padding: 0 28px;
+}
+
+/* Featured card */
+
+.home-gifting-featured {
+  position: relative;
+  display: block;
+  min-height: 620px;
+  overflow: hidden;
+  color: #fff;
+  text-decoration: none;
+  background: #d8c4a6;
+}
+
+.home-gifting-featured img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s ease;
+}
+
+.home-gifting-featured:hover img {
+  transform: scale(1.05);
+}
+
+.home-gifting-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(38, 25, 15, 0.75),
+    rgba(38, 25, 15, 0.05) 65%
+  );
+}
+
+.home-gifting-featured-content {
+  position: absolute;
+  right: 35px;
+  bottom: 35px;
+  left: 35px;
+}
+
+.home-gifting-featured-content > span {
+  display: block;
+  margin-bottom: 14px;
+  color: #e8c995;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.home-gifting-featured-content h3 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.home-gifting-featured-content p {
+  max-width: 330px;
+  margin: 15px 0 25px;
+  color: #f4e9d9;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.home-gifting-featured-content b {
+  color: #f0ce91;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+}
+
+/* Smaller editorial cards */
+
+.home-gifting-side {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.home-gifting-small-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  color: inherit;
+  text-decoration: none;
+  background: #fffaf3;
+}
+
+.home-gifting-small-image {
+  aspect-ratio: 1 / 1.08;
+  overflow: hidden;
+  background: #e6d5bc;
+}
+
+.home-gifting-small-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.home-gifting-small-card:hover img {
+  transform: scale(1.06);
+}
+
+.home-gifting-small-content {
+  flex: 1;
+  padding: 20px 18px 22px;
+}
+
+.home-gifting-small-content > span {
+  display: block;
+  margin-bottom: 9px;
+  color: #a27b43;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+}
+
+.home-gifting-small-content h3 {
+  margin: 0 0 20px;
+  color: #38291e;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 21px;
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+.home-gifting-small-content b {
+  display: inline-block;
+  color: #9b7138;
+  font-size: 9px;
+  letter-spacing: 1.3px;
+}
+
+/* Tablet */
+
+@media (max-width: 1000px) {
+  .home-gifting-editorial {
+    grid-template-columns: 1fr;
+  }
+
+  .home-gifting-featured {
+    min-height: 520px;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+  .home-gifting {
+    padding: 65px 0;
+  }
+
+  .home-gifting-intro {
+    margin-bottom: 30px;
+  }
+
+  .home-gifting-intro h2 {
+    font-size: 34px;
+  }
+
+  .home-gifting-intro p {
+    font-size: 13px;
+  }
+
+  .home-gifting-editorial {
+    gap: 12px;
+    padding: 0 12px;
+  }
+
+  .home-gifting-featured {
+    min-height: 440px;
+  }
+
+  .home-gifting-featured-content {
+    right: 22px;
+    bottom: 25px;
+    left: 22px;
+  }
+
+  .home-gifting-featured-content h3 {
+    font-size: 34px;
+  }
+
+  .home-gifting-side {
+    gap: 12px;
+  }
+
+  .home-gifting-small-content {
+    padding: 14px 12px 17px;
+  }
+
+  .home-gifting-small-content h3 {
+    font-size: 17px;
+  }
+
+  .home-gifting-small-content b {
+    font-size: 8px;
+  }
+}
+
+/* Accessibility */
+
+@media (prefers-reduced-motion: reduce) {
+  .home-gifting-featured img,
+  .home-gifting-small-image img {
+    transition: none;
+  }
+}
+
+/* =========================================================
+   VIRAJ JEWELS — REFERENCE GIFTING LAYOUT
+   ========================================================= */
+
+.home-gifting {
+  width: calc(100% - 48px);
+  max-width: 1400px;
+  margin: 70px auto 55px;
+  padding: 0;
+  background: transparent;
+}
+
+/* Heading */
+
+.home-gifting-heading {
+  margin-bottom: 38px;
+  text-align: center;
+}
+
+.home-gifting-eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  margin-bottom: 16px;
+  color: #a1783e;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+}
+
+.home-gifting-eyebrow span {
+  width: 54px;
+  height: 1px;
+  background: #c69a59;
+}
+
+.home-gifting-heading h2 {
+  margin: 0;
+  color: #241b14;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(32px, 3.5vw, 52px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -1px;
+}
+
+/* Five cards in one row */
+
+.home-gifting-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.home-gifting-card {
+  display: block;
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.home-gifting-image {
+  width: 100%;
+  aspect-ratio: 1 / 0.82;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #eadcc6;
+}
+
+.home-gifting-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s ease;
+}
+
+.home-gifting-card:hover .home-gifting-image img {
+  transform: scale(1.04);
+}
+
+.home-gifting-card h3 {
+  margin: 16px 0 0;
+  color: #302319;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(14px, 1.35vw, 20px);
+  font-weight: 400;
+  line-height: 1.2;
+  text-align: center;
+}
+
+/* Tablet */
+
+@media (max-width: 900px) {
+  .home-gifting {
+    width: calc(100% - 32px);
+    margin: 45px auto;
+  }
+
+  .home-gifting-heading {
+    margin-bottom: 25px;
+  }
+
+  .home-gifting-grid {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+
+  .home-gifting-card {
+    flex: 0 0 165px;
+  }
+
+  .home-gifting-image {
+    aspect-ratio: 1 / 0.82;
+  }
+
+  .home-gifting-card h3 {
+    margin-top: 10px;
+    font-size: 15px;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+  .home-gifting-grid {
+    gap: 10px;
+  }
+
+  .home-gifting-card {
+    flex: 0 0 135px;
+  }
+
+  .home-gifting-image {
+    height: 110px;
+    aspect-ratio: auto;
+  }
+}
+  .home-gifting-heading {
+    margin-bottom: 20px;
+  }
+
+  .home-gifting-eyebrow {
+    gap: 10px;
+    font-size: 7px;
+    letter-spacing: 1.8px;
+  }
+
+  .home-gifting-eyebrow span {
+    width: 25px;
+  }
+
+  .home-gifting-heading h2 {
+    font-size: 28px;
+  }
+
+  .home-gifting-grid {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.home-gifting-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.home-gifting-card {
+  flex: 0 0 220px;
+  min-width: 0;
+}
+  .home-gifting-card {
+    flex: 0 0 135px;
+  }
+
+  .home-gifting-image {
+    border-radius: 6px;
+  }
+
+  .home-gifting-card h3 {
+    margin-top: 8px;
+    font-size: 13px;
+  }
+}
+
+/* Reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .home-gifting-image img {
+    transition: none;
+  }
+}
+/* Compact campaign and occasion sections */
+.home-occasion {
+  margin-top: 12px;
+  margin-bottom: 24px;
+}
+.compact-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 11px;
+}
+.compact-section-heading h2 {
+  margin: 0;
+  color: #241a13;
+  font: 400 clamp(22px, 2.6vw, 34px)/1.05 Georgia, serif;
+  letter-spacing: -.5px;
+}
+.compact-view-all {
+  color: #795b36;
+  font-size: 9px;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(121,91,54,.45);
+  padding-bottom: 3px;
+}
+.compact-view-all span { font-size: 13px; margin-left: 4px; }
+.home-occasion-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.home-occasion-card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgba(113,79,38,.10);
+  border-radius: 10px;
+  background: #fffaf2;
+  color: inherit;
+  text-decoration: none;
+  box-shadow: 0 3px 12px rgba(77,48,19,.05);
+}
+.home-occasion-image { aspect-ratio: 1.35 / 1; overflow: hidden; background: #ead8b9; }
+.home-occasion-image img { width: 100%; height: 100%; display: block; object-fit: cover; transition: transform .6s ease; }
+.home-occasion-card:hover img { transform: scale(1.05); }
+.home-occasion-card h3 {
+  margin: 0;
+  padding: 8px 9px 10px;
+  color: #3b2a1e;
+  font: 400 12px/1.1 Georgia, serif;
+}
+@media (max-width: 600px) {
+  .home-occasion { width: calc(100% - 24px); }
+  .home-occasion-grid { gap: 8px; }
+  .home-occasion-card h3 { font-size: 11px; padding: 7px 8px 9px; }
+}

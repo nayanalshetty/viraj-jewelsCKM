@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { supabase } from "../../lib/supabase.js";
 import Reveal from "./Reveal.jsx";
+import virajHero from "../../assets/viraj-hero.jpg";
 import "./HomeSections.css";
 
 function isVideo(item) {
@@ -46,7 +47,7 @@ export default function HomeMediaSpotlight() {
     media_type: "image",
     title: "Crafted to become your story.",
     subtitle: "A little luxury, beautifully made.",
-    media_url: "/images/viraj-hero.jpg",
+    media_url: virajHero,
     link_url: "/category",
   };
   const activeItem = item || fallbackItem;

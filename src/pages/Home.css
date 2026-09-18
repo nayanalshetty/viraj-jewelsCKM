@@ -111,3 +111,70 @@
 
 /* The admin-driven spotlight is the single main hero/animation on the homepage. */
 .home-media-spotlight { margin-top: 0; }
+
+/* =========================================================
+   COMPACT LUXURY HOMEPAGE - REFERENCE LAYOUT
+   ========================================================= */
+.home {
+  background: #f8efdf;
+}
+
+.home-campaign-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+  margin-bottom: 22px;
+}
+
+.home-campaign-card {
+  position: relative;
+  min-width: 0;
+  aspect-ratio: 1.62 / 1;
+  overflow: hidden;
+  border-radius: 12px;
+  color: #fff;
+  text-decoration: none;
+  background: #6b4a2b;
+  isolation: isolate;
+}
+
+.home-campaign-card img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform .6s ease;
+}
+
+.home-campaign-card:hover img { transform: scale(1.05); }
+.home-campaign-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(30,16,7,.03) 25%, rgba(25,14,7,.76) 100%);
+}
+.home-campaign-copy {
+  position: absolute;
+  z-index: 2;
+  left: 13px;
+  right: 13px;
+  bottom: 11px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.home-campaign-copy strong {
+  font: 400 clamp(15px, 2.2vw, 25px)/1.05 Georgia, serif;
+}
+.home-campaign-copy small {
+  font-size: 8px;
+  letter-spacing: .3px;
+  text-transform: uppercase;
+}
+.home-campaign-copy small b { font-size: 12px; margin-left: 4px; }
+
+@media (min-width: 760px) {
+  .home-campaign-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+  .home-campaign-card { aspect-ratio: 1.55 / 1; border-radius: 15px; }
+}

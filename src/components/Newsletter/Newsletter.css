@@ -191,3 +191,53 @@
 .newsletter-form button { color: #6c512f; }
 .newsletter-form button:hover { color: #a4742b; }
 .newsletter-form-area small { color: #8a7a69; }
+
+/* Compact newsletter strip */
+.newsletter {
+  width: min(1400px, 100% - 40px);
+  margin: 12px auto 0;
+  padding: 22px 24px;
+  border: 1px solid #e1ceb0;
+  border-radius: 14px;
+  background: #f1e2c9;
+  box-sizing: border-box;
+}
+.newsletter-inner {
+  max-width: none;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 24px;
+  align-items: center;
+}
+.newsletter-label { margin-bottom: 7px; font-size: 8px; letter-spacing: 2px; }
+.newsletter-copy h2 { font-size: clamp(25px, 3vw, 38px); line-height: 1; letter-spacing: -1px; }
+.newsletter-copy p { max-width: 420px; margin: 9px 0 0; font-size: 10px; line-height: 1.45; }
+.newsletter-form { border: 0; gap: 8px; }
+.newsletter-form input {
+  min-width: 0;
+  padding: 11px 13px;
+  border: 1px solid #dec9a8;
+  border-radius: 7px;
+  background: #fffaf2;
+  font-size: 11px;
+}
+.newsletter-form button {
+  padding: 11px 15px;
+  border-radius: 7px;
+  background: #2d2117;
+  color: #f8eedc;
+  font-size: 10px;
+}
+.newsletter-form button span { font-size: 13px; }
+.newsletter-form-area small { margin-top: 7px; font-size: 8px; }
+@media (max-width: 700px) {
+  .newsletter { width: calc(100% - 24px); padding: 18px; }
+  .newsletter-inner { grid-template-columns: 1fr; gap: 14px; }
+  .newsletter-copy h2 { font-size: 29px; }
+  .newsletter-copy p { font-size: 10px; }
+}
+@media (max-width: 420px) {
+  .newsletter-form { flex-direction: row; }
+  .newsletter-form input { width: 100%; }
+  .newsletter-form button { flex: 0 0 auto; }
+}
