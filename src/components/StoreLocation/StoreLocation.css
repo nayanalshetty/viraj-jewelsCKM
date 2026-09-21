@@ -1,0 +1,254 @@
+
+.store-location {
+  width: 100%;
+  padding: 90px 20px;
+  background: #f7ead1;
+  color: #201914;
+}
+
+.store-location-inner {
+  width: min(1400px, 100%);
+  margin: 0 auto;
+}
+
+.store-location-heading {
+  max-width: 680px;
+  margin-bottom: 42px;
+}
+
+.store-location-eyebrow {
+  display: block;
+  margin-bottom: 16px;
+  color: #9b7540;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+}
+
+.store-location-heading h2 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(32px, 4vw, 58px);
+  font-weight: 400;
+  line-height: 1.12;
+}
+
+.store-location-heading h2 em {
+  color: #a17b43;
+  font-style: italic;
+}
+
+.store-location-heading p {
+  max-width: 480px;
+  margin: 22px 0 0;
+  color: #75665a;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.store-location-grid {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.85fr) minmax(0, 1.4fr);
+  gap: 24px;
+  align-items: stretch;
+}
+
+.store-location-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: clamp(28px, 4vw, 56px);
+  background: #eee0c4;
+  border: 1px solid rgba(133, 99, 52, 0.18);
+}
+
+.store-location-icon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 32px;
+  place-items: center;
+  color: #a17b43;
+  border: 1px solid rgba(161, 123, 67, 0.4);
+  border-radius: 50%;
+}
+
+.store-location-label {
+  color: #a17b43;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+
+.store-location-details h3 {
+  margin: 14px 0 16px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(26px, 3vw, 38px);
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.store-location-address {
+  max-width: 310px;
+  margin: 0;
+  color: #65574b;
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+.store-location-info {
+  width: 100%;
+  margin-top: 34px;
+  padding-top: 26px;
+  border-top: 1px solid rgba(133, 99, 52, 0.2);
+}
+
+.store-location-info-row {
+  display: flex;
+  gap: 13px;
+  align-items: flex-start;
+  color: #9b7540;
+}
+
+.store-location-info-row div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.store-location-info-row strong {
+  color: #201914;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.store-location-info-row span {
+  color: #75665a;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.store-location-directions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  margin-top: 40px;
+  padding: 16px 20px;
+  color: #fff9ed;
+  background: #201914;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  transition: background 0.25s ease;
+}
+
+.store-location-directions span {
+  margin-left: auto;
+  font-size: 17px;
+}
+
+.store-location-directions:hover {
+  background: #a17b43;
+}
+
+.store-location-map {
+  position: relative;
+  min-height: 460px;
+  overflow: hidden;
+  background: #e7dcc8;
+  border: 1px solid rgba(133, 99, 52, 0.18);
+}
+
+.store-location-map iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 460px;
+  border: 0;
+  filter: sepia(10%);
+}
+
+.store-location-map-button {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 13px 17px;
+  color: #201914;
+  background: #fffaf0;
+  box-shadow: 0 6px 22px rgba(32, 25, 20, 0.12);
+  font-size: 11px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.25s ease;
+}
+
+.store-location-map-button:hover {
+  background: #e8d1a6;
+}
+
+@media (max-width: 800px) {
+  .store-location {
+    padding: 58px 16px;
+  }
+
+  .store-location-heading {
+    margin-bottom: 28px;
+  }
+
+  .store-location-heading h2 {
+    font-size: 36px;
+  }
+
+  .store-location-heading p {
+    margin-top: 16px;
+    font-size: 13px;
+  }
+
+  .store-location-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .store-location-details {
+    padding: 30px 24px;
+  }
+
+  .store-location-icon {
+    width: 42px;
+    height: 42px;
+    margin-bottom: 22px;
+  }
+
+  .store-location-details h3 {
+    font-size: 30px;
+  }
+
+  .store-location-info {
+    margin-top: 26px;
+    padding-top: 20px;
+  }
+
+  .store-location-directions {
+    margin-top: 28px;
+  }
+
+  .store-location-map {
+    min-height: 320px;
+  }
+
+  .store-location-map iframe {
+    min-height: 320px;
+  }
+
+  .store-location-map-button {
+    right: 12px;
+    bottom: 12px;
+    padding: 12px;
+    font-size: 10px;
+  }
+}
