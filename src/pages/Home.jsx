@@ -8,6 +8,7 @@ import HomeCampaign from "../components/HomeSections/HomeCampaign.jsx";
 import HomeGifting from "../components/HomeSections/HomeGifting.jsx";
 import HomeFestiveCampaign from "../components/HomeSections/HomeFestiveCampaign.jsx";
 import HomeSearch from "../components/HomeSections/HomeSearch.jsx";
+import StoreLocation from "../components/StoreLocation/StoreLocation.jsx";
 import "./Home.css";
 
 function Home() {
@@ -40,6 +41,11 @@ function Home() {
       <Reveal>
         <HomeGifting />
       </Reveal>
+      <Newsletter />
+
+      <StoreLocation />
+
+      <Footer />
 
       <Newsletter />
       <Footer />
