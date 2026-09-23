@@ -1,7 +1,3 @@
-/* =========================================================
-   VIRAJ JEWELS — STORE LOCATION
-   ========================================================= */
-
 import {
   MapPin,
   Navigation,
@@ -14,37 +10,21 @@ import "./StoreLocation.css";
 const STORE_ADDRESS =
   "Opposite Anjaneya Temple, M G Road, Viraj Jewels Shop, 577101";
 
-const MAP_SEARCH_TEXT =
-  "Viraj Jewels, Opposite Anjaneya Temple, M G Road, 577101";
+// Exact Viraj Jewellers location
+const LATITUDE = 13.3191418;
+const LONGITUDE = 75.7741248;
 
-const MAP_QUERY = encodeURIComponent(
-  MAP_SEARCH_TEXT
-);
-
-/*
- * Google Maps search page.
- * This is used by the buttons.
- */
 const GOOGLE_MAPS_URL =
-  `https://www.google.com/maps/search/?api=1&query=${MAP_QUERY}`;
+  `https://www.google.com/maps/search/?api=1&query=${LATITUDE},${LONGITUDE}`;
 
-/*
- * Google Maps embed.
- *
- * The /maps?q= format is intentionally kept simple
- * because it works without requiring a Google Maps API key.
- */
 const MAP_EMBED_URL =
-  `https://www.google.com/maps?q=${MAP_QUERY}&output=embed`;
+  `https://www.google.com/maps?q=${LATITUDE},${LONGITUDE}&z=17&output=embed`;
 
 export default function StoreLocation() {
   return (
     <section className="store-location">
       <div className="store-location-inner">
 
-        {/* =================================================
-            HEADING
-            ================================================= */}
         <div className="store-location-heading">
           <span className="store-location-eyebrow">
             VISIT VIRAJ JEWELS
@@ -62,30 +42,19 @@ export default function StoreLocation() {
           </p>
         </div>
 
-        {/* =================================================
-            LOCATION GRID
-            ================================================= */}
         <div className="store-location-grid">
 
-          {/* =================================================
-              STORE DETAILS
-              ================================================= */}
           <div className="store-location-details">
 
             <div className="store-location-icon">
-              <MapPin
-                size={22}
-                strokeWidth={1.5}
-              />
+              <MapPin size={22} strokeWidth={1.5} />
             </div>
 
             <span className="store-location-label">
               OUR STORE
             </span>
 
-            <h3>
-              Viraj Jewels CKM
-            </h3>
+            <h3>Viraj Jewels CKM</h3>
 
             <p className="store-location-address">
               {STORE_ADDRESS}
@@ -94,15 +63,10 @@ export default function StoreLocation() {
             <div className="store-location-info">
               <div className="store-location-info-row">
 
-                <Clock3
-                  size={18}
-                  strokeWidth={1.5}
-                />
+                <Clock3 size={18} strokeWidth={1.5} />
 
                 <div>
-                  <strong>
-                    Store Hours
-                  </strong>
+                  <strong>Store Hours</strong>
 
                   <span>
                     Contact us for opening hours
@@ -120,24 +84,17 @@ export default function StoreLocation() {
             >
               <Navigation size={17} />
 
-              <span>
-                Get Directions
-              </span>
+              <span>Get Directions</span>
 
-              <span>
-                ↗
-              </span>
+              <span>↗</span>
             </a>
 
           </div>
 
-          {/* =================================================
-              MAP
-              ================================================= */}
           <div className="store-location-map">
 
             <iframe
-              title="Viraj Jewels CKM Store Location"
+              title="Viraj Jewellers CKM Store Location"
               src={MAP_EMBED_URL}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
@@ -151,7 +108,6 @@ export default function StoreLocation() {
               }}
             />
 
-            {/* Map fallback / button */}
             <a
               href={GOOGLE_MAPS_URL}
               target="_blank"
@@ -160,9 +116,7 @@ export default function StoreLocation() {
             >
               <Navigation size={16} />
 
-              <span>
-                Open in Google Maps
-              </span>
+              <span>Open in Google Maps</span>
 
               <ExternalLink size={14} />
             </a>
@@ -170,7 +124,6 @@ export default function StoreLocation() {
           </div>
 
         </div>
-
       </div>
     </section>
   );
