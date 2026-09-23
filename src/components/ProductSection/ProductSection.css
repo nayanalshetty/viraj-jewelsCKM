@@ -606,3 +606,7 @@
     transition: none !important;
   }
 }
+/* Hide product filters on homepage */
+.product-section-filters {
+  display: none !important;
+}
