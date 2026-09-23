@@ -27,7 +27,11 @@ function Home() {
       </Reveal>
 
       <Reveal>
-        <ProductSection title="Trending Jewels" type="bestseller" limit={6} />
+        <ProductSection
+          title="Trending Jewels"
+          type="bestseller"
+          limit={6}
+        />
       </Reveal>
 
       <Reveal>
@@ -35,19 +39,21 @@ function Home() {
       </Reveal>
 
       <Reveal>
-        <ProductSection title="New Collection" type="new" limit={6} />
+        <ProductSection
+          title="New Collection"
+          type="new"
+          limit={6}
+        />
       </Reveal>
 
       <Reveal>
         <HomeGifting />
       </Reveal>
+
       <Newsletter />
 
       <StoreLocation />
 
-      <Footer />
-
-      <Newsletter />
       <Footer />
     </main>
   );

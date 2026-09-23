@@ -1,11 +1,10 @@
-
 /* =========================================================
-   VIRAJ JEWELS — COMPACT STORE LOCATION
+   VIRAJ JEWELS — PREMIUM COMPACT STORE LOCATION
    ========================================================= */
 
 .store-location {
   width: 100%;
-  padding: 42px 20px;
+  padding: 46px 20px;
   background: #f7ead1;
   color: #201914;
 }
@@ -15,26 +14,31 @@
   margin: 0 auto;
 }
 
+/* =========================================================
+   HEADING
+   ========================================================= */
+
 .store-location-heading {
-  max-width: 580px;
-  margin-bottom: 24px;
+  max-width: 620px;
+  margin-bottom: 22px;
 }
 
 .store-location-eyebrow {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 7px;
   color: #9b7540;
-  font-size: 9px;
+  font-size: 8px;
   font-weight: 700;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.22em;
 }
 
 .store-location-heading h2 {
   margin: 0;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(25px, 3vw, 38px);
+  font-size: clamp(26px, 3vw, 36px);
   font-weight: 400;
-  line-height: 1.15;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
 }
 
 .store-location-heading h2 em {
@@ -43,230 +47,365 @@
 }
 
 .store-location-heading p {
-  max-width: 430px;
-  margin: 10px 0 0;
+  max-width: 470px;
+  margin: 8px 0 0;
   color: #75665a;
-  font-size: 12px;
-  line-height: 1.6;
+  font-size: 11px;
+  line-height: 1.5;
 }
 
-/* Main layout */
+/* =========================================================
+   MAIN GRID
+   ========================================================= */
 
 .store-location-grid {
   display: grid;
-  grid-template-columns: minmax(240px, 0.8fr) minmax(0, 1.4fr);
-  gap: 14px;
+  grid-template-columns: 330px minmax(0, 1fr);
+  gap: 12px;
   align-items: stretch;
 }
 
-/* Store details */
+/* =========================================================
+   STORE DETAILS
+   ========================================================= */
 
 .store-location-details {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 25px;
+  min-height: 285px;
+  padding: 22px;
   background: #eee0c4;
-  border: 1px solid rgba(133, 99, 52, 0.18);
+  border: 1px solid rgba(133, 99, 52, 0.16);
 }
 
 .store-location-icon {
   display: grid;
-  width: 36px;
-  height: 36px;
-  margin-bottom: 18px;
+  width: 32px;
+  height: 32px;
+  margin-bottom: 13px;
   place-items: center;
   color: #a17b43;
-  border: 1px solid rgba(161, 123, 67, 0.4);
+  border: 1px solid rgba(161, 123, 67, 0.38);
   border-radius: 50%;
+}
+
+.store-location-icon svg {
+  width: 16px;
+  height: 16px;
 }
 
 .store-location-label {
   color: #a17b43;
-  font-size: 9px;
+  font-size: 8px;
   font-weight: 700;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.18em;
 }
 
 .store-location-details h3 {
-  margin: 9px 0 10px;
+  margin: 7px 0 7px;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(22px, 2.5vw, 30px);
+  font-size: 25px;
   font-weight: 400;
-  line-height: 1.2;
+  line-height: 1.15;
 }
 
 .store-location-address {
-  max-width: 280px;
+  max-width: 270px;
   margin: 0;
   color: #65574b;
-  font-size: 12px;
-  line-height: 1.65;
+  font-size: 11px;
+  line-height: 1.55;
 }
 
-/* Store information */
+/* =========================================================
+   STORE HOURS
+   ========================================================= */
 
 .store-location-info {
   width: 100%;
-  margin-top: 22px;
-  padding-top: 17px;
-  border-top: 1px solid rgba(133, 99, 52, 0.2);
+  margin-top: 16px;
+  padding-top: 13px;
+  border-top: 1px solid rgba(133, 99, 52, 0.18);
 }
 
 .store-location-info-row {
   display: flex;
-  gap: 10px;
+  gap: 9px;
   align-items: flex-start;
   color: #9b7540;
+}
+
+.store-location-info-row svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  margin-top: 1px;
 }
 
 .store-location-info-row div {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 2px;
 }
 
 .store-location-info-row strong {
   color: #201914;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 600;
 }
 
 .store-location-info-row span {
   color: #75665a;
-  font-size: 11px;
-  line-height: 1.4;
+  font-size: 10px;
+  line-height: 1.35;
 }
 
-/* Directions button */
+/* =========================================================
+   DIRECTIONS BUTTON
+   ========================================================= */
 
 .store-location-directions {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   width: 100%;
-  margin-top: 24px;
-  padding: 12px 14px;
+  margin-top: auto;
+  padding: 11px 13px;
   color: #fff9ed;
   background: #201914;
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 600;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
   text-decoration: none;
-  transition: background 0.25s ease;
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+.store-location-directions svg {
+  width: 14px;
+  height: 14px;
 }
 
 .store-location-directions span {
   margin-left: auto;
-  font-size: 15px;
+  font-size: 14px;
 }
 
 .store-location-directions:hover {
   background: #a17b43;
+  transform: translateY(-1px);
 }
 
-/* Map */
+/* =========================================================
+   MAP
+   ========================================================= */
 
 .store-location-map {
   position: relative;
-  min-height: 315px;
+  min-height: 285px;
   overflow: hidden;
   background: #e7dcc8;
-  border: 1px solid rgba(133, 99, 52, 0.18);
+  border: 1px solid rgba(133, 99, 52, 0.16);
 }
 
 .store-location-map iframe {
   display: block;
   width: 100%;
   height: 100%;
-  min-height: 315px;
+  min-height: 285px;
   border: 0;
-  filter: sepia(10%);
+  filter: sepia(8%);
 }
 
-/* Map button */
+/* =========================================================
+   MAP BUTTON
+   ========================================================= */
 
 .store-location-map-button {
   position: absolute;
-  right: 12px;
-  bottom: 12px;
+  right: 10px;
+  bottom: 10px;
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 10px 13px;
+  gap: 6px;
+  padding: 9px 11px;
   color: #201914;
-  background: #fffaf0;
-  box-shadow: 0 5px 16px rgba(32, 25, 20, 0.12);
-  font-size: 10px;
+  background: rgba(255, 250, 240, 0.96);
+  box-shadow: 0 4px 14px rgba(32, 25, 20, 0.12);
+  font-size: 9px;
   font-weight: 600;
   text-decoration: none;
-  transition: background 0.25s ease;
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+.store-location-map-button svg {
+  width: 14px;
+  height: 14px;
 }
 
 .store-location-map-button:hover {
   background: #e8d1a6;
+  transform: translateY(-1px);
 }
 
-/* Mobile */
+/* =========================================================
+   TABLET
+   ========================================================= */
 
-@media (max-width: 800px) {
+@media (max-width: 900px) {
+  .store-location-grid {
+    grid-template-columns: 300px minmax(0, 1fr);
+  }
+
+  .store-location-details {
+    padding: 20px;
+  }
+
+  .store-location-details h3 {
+    font-size: 23px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
   .store-location {
-    padding: 32px 14px;
+    padding: 34px 14px;
   }
 
   .store-location-heading {
-    margin-bottom: 20px;
+    margin-bottom: 18px;
+  }
+
+  .store-location-eyebrow {
+    font-size: 7px;
+    margin-bottom: 6px;
   }
 
   .store-location-heading h2 {
-    font-size: 28px;
+    font-size: 27px;
+    line-height: 1.1;
   }
 
   .store-location-heading p {
-    margin-top: 8px;
-    font-size: 11px;
+    max-width: 390px;
+    margin-top: 7px;
+    font-size: 10px;
+    line-height: 1.45;
   }
 
   .store-location-grid {
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 10px;
   }
 
   .store-location-details {
-    padding: 22px 20px;
+    min-height: 0;
+    padding: 19px;
   }
 
   .store-location-icon {
-    width: 32px;
-    height: 32px;
-    margin-bottom: 15px;
+    width: 30px;
+    height: 30px;
+    margin-bottom: 11px;
+  }
+
+  .store-location-icon svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .store-location-label {
+    font-size: 7px;
   }
 
   .store-location-details h3 {
-    font-size: 25px;
+    margin: 6px 0;
+    font-size: 23px;
+  }
+
+  .store-location-address {
+    max-width: 330px;
+    font-size: 10px;
+    line-height: 1.5;
   }
 
   .store-location-info {
-    margin-top: 18px;
-    padding-top: 15px;
+    margin-top: 14px;
+    padding-top: 12px;
+  }
+
+  .store-location-info-row {
+    gap: 8px;
+  }
+
+  .store-location-info-row strong {
+    font-size: 9px;
+  }
+
+  .store-location-info-row span {
+    font-size: 9px;
   }
 
   .store-location-directions {
-    margin-top: 20px;
+    margin-top: 17px;
+    padding: 10px 12px;
+    font-size: 9px;
   }
 
   .store-location-map {
-    min-height: 230px;
+    min-height: 210px;
   }
 
   .store-location-map iframe {
-    min-height: 230px;
+    min-height: 210px;
   }
 
   .store-location-map-button {
-    right: 10px;
-    bottom: 10px;
-    padding: 9px 11px;
-    font-size: 9px;
+    right: 8px;
+    bottom: 8px;
+    padding: 8px 10px;
+    font-size: 8px;
+  }
+
+  .store-location-map-button svg {
+    width: 13px;
+    height: 13px;
+  }
+}
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 400px) {
+  .store-location {
+    padding: 30px 12px;
+  }
+
+  .store-location-heading h2 {
+    font-size: 25px;
+  }
+
+  .store-location-details {
+    padding: 17px;
+  }
+
+  .store-location-details h3 {
+    font-size: 21px;
+  }
+
+  .store-location-map {
+    min-height: 190px;
+  }
+
+  .store-location-map iframe {
+    min-height: 190px;
   }
 }
