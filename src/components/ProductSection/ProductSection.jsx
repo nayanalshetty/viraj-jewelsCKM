@@ -501,7 +501,7 @@ export default function ProductSection({
    * RENDER
    */
   return (
-    <section className="product-section">
+    <section className={`product-section product-section-${type}`}>
       <div className="product-section-header">
         <div className="product-section-heading">
           <p className="product-section-eyebrow">
