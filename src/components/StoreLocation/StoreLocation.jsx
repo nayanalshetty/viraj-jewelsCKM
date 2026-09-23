@@ -8,7 +8,7 @@ import {
 import "./StoreLocation.css";
 
 const STORE_ADDRESS =
-  "Opposite Anjaneya Temple, M G Road, Viraj Jewels Shop, 577101";
+  " M G Road, Viraj Jewellers, Opposite to Anjaneya Temple, 577101";
 
 // Exact Viraj Jewellers location
 const LATITUDE = 13.3191418;
