@@ -1,4 +1,3 @@
-
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { supabase } from "../lib/supabase.js";
@@ -7,19 +6,37 @@ import "./AdminProducts.css";
 
 const emptyForm = {
   id: null,
+
   name: "",
   sku: "",
   category_id: "",
+
   metal_type: "gold",
   gender: "Women",
+
+  // Gold: 24K / 22K / 18K
+  // Silver: 999 / 925 / 990
   purity: "22K",
+
   weight: "",
+
+  // Combined making charge + GST
   making_charge: "",
+
+  // automatic OR manual
+  pricing_type: "automatic",
+
+  // Used only when pricing_type = manual
+  manual_price: "",
+
   stock: "1",
+
   short_description: "",
   description: "",
+
   is_featured: false,
   is_active: true,
+
   images: [],
 };
 
@@ -70,6 +87,12 @@ export default function AdminProducts() {
   const [saving, setSaving] = useState(false);
 
   const [message, setMessage] = useState("");
+
+  /*
+   * =========================================================
+   * LOAD PRODUCTS + CATEGORIES
+   * =========================================================
+   */
 
   async function load() {
     setLoading(true);
@@ -122,6 +145,12 @@ export default function AdminProducts() {
     load();
   }, []);
 
+  /*
+   * =========================================================
+   * FILTER PRODUCTS
+   * =========================================================
+   */
+
   const visibleProducts = useMemo(() => {
     return products.filter((product) => {
       const q = search.trim().toLowerCase();
@@ -144,9 +173,22 @@ export default function AdminProducts() {
           product.metal_type || ""
         ).toLowerCase() === filterMetal;
 
-      return matchesSearch && matchesMetal;
+      return (
+        matchesSearch &&
+        matchesMetal
+      );
     });
-  }, [products, search, filterMetal]);
+  }, [
+    products,
+    search,
+    filterMetal,
+  ]);
+
+  /*
+   * =========================================================
+   * FORM HELPERS
+   * =========================================================
+   */
 
   function setField(name, value) {
     setForm((current) => ({
@@ -154,6 +196,54 @@ export default function AdminProducts() {
       [name]: value,
     }));
   }
+
+  /*
+   * =========================================================
+   * METAL CHANGE
+   *
+   * Gold -> 22K
+   * Silver -> 925
+   * =========================================================
+   */
+
+  function handleMetalChange(value) {
+    setForm((current) => ({
+      ...current,
+
+      metal_type: value,
+
+      purity:
+        value === "silver"
+          ? "925"
+          : "22K",
+    }));
+  }
+
+  /*
+   * =========================================================
+   * PRICING TYPE CHANGE
+   * =========================================================
+   */
+
+  function handlePricingTypeChange(value) {
+    setForm((current) => ({
+      ...current,
+      pricing_type: value,
+
+      // Clear manual price when switching
+      // back to automatic pricing.
+      manual_price:
+        value === "manual"
+          ? current.manual_price
+          : "",
+    }));
+  }
+
+  /*
+   * =========================================================
+   * START EDIT
+   * =========================================================
+   */
 
   async function startEdit(product) {
     setMessage("");
@@ -172,23 +262,90 @@ export default function AdminProducts() {
 
       if (error) throw error;
 
+      const metalType =
+        String(
+          product.metal_type ||
+            "gold"
+        ).toLowerCase();
+
+      /*
+       * Existing silver products from the
+       * old system may have purity = "Silver".
+       *
+       * We convert those to 925 for editing.
+       */
+      let purity =
+        product.purity || "";
+
+      if (metalType === "silver") {
+        if (
+          !["999", "925", "990"].includes(
+            String(purity)
+          )
+        ) {
+          purity = "925";
+        }
+      } else {
+        if (
+          !["24K", "22K", "18K"].includes(
+            String(purity)
+          )
+        ) {
+          purity = "22K";
+        }
+      }
+
+      const pricingType =
+        product.pricing_type ===
+        "manual"
+          ? "manual"
+          : "automatic";
+
       setForm({
         id: product.id,
+
         name: product.name || "",
+
         sku: product.sku || "",
-        category_id: product.category_id || "",
-        metal_type: product.metal_type || "gold",
-        gender: product.gender || "Women",
-        purity: product.purity || "22K",
-        weight: product.weight ?? "",
+
+        category_id:
+          product.category_id || "",
+
+        metal_type: metalType,
+
+        gender:
+          product.gender || "Women",
+
+        purity,
+
+        weight:
+          product.weight ?? "",
+
         making_charge:
           product.making_charge ?? "",
-        stock: product.stock ?? "1",
+
+        pricing_type: pricingType,
+
+        manual_price:
+          product.manual_price ??
+          "",
+
+        stock:
+          product.stock ?? "1",
+
         short_description:
-          product.short_description || "",
-        description: product.description || "",
-        is_featured: !!product.is_featured,
-        is_active: product.is_active !== false,
+          product.short_description ||
+          "",
+
+        description:
+          product.description || "",
+
+        is_featured:
+          !!product.is_featured,
+
+        is_active:
+          product.is_active !== false,
+
         images: images || [],
       });
 
@@ -215,6 +372,12 @@ export default function AdminProducts() {
     }
   }
 
+  /*
+   * =========================================================
+   * DELETE PRODUCT IMAGE
+   * =========================================================
+   */
+
   async function deleteProductImage(image) {
     if (!image?.id) return;
 
@@ -227,9 +390,10 @@ export default function AdminProducts() {
     setMessage("");
 
     try {
-      const storagePath = getStoragePath(
-        image.image_url
-      );
+      const storagePath =
+        getStoragePath(
+          image.image_url
+        );
 
       if (storagePath) {
         const {
@@ -259,9 +423,12 @@ export default function AdminProducts() {
 
       setForm((current) => ({
         ...current,
-        images: current.images.filter(
-          (item) => item.id !== image.id
-        ),
+
+        images:
+          current.images.filter(
+            (item) =>
+              item.id !== image.id
+          ),
       }));
 
       setMessage(
@@ -280,20 +447,33 @@ export default function AdminProducts() {
     }
   }
 
+  /*
+   * =========================================================
+   * UPLOAD MEDIA
+   * =========================================================
+   */
+
   async function uploadMedia(
     productId,
     selectedFiles
   ) {
-    if (!selectedFiles.length) return [];
+    if (!selectedFiles.length) {
+      return [];
+    }
 
     const uploaded = [];
 
     for (const file of selectedFiles) {
-      const safeName = file.name
-        .toLowerCase()
-        .replace(/[^a-z0-9._-]/g, "-");
+      const safeName =
+        file.name
+          .toLowerCase()
+          .replace(
+            /[^a-z0-9._-]/g,
+            "-"
+          );
 
-      const path = `${productId}/${crypto.randomUUID()}-${safeName}`;
+      const path =
+        `${productId}/${crypto.randomUUID()}-${safeName}`;
 
       const {
         error: uploadError,
@@ -322,10 +502,20 @@ export default function AdminProducts() {
     return uploaded;
   }
 
+  /*
+   * =========================================================
+   * SAVE PRODUCT
+   * =========================================================
+   */
+
   async function saveProduct(event) {
     event.preventDefault();
 
     setMessage("");
+
+    /*
+     * BASIC VALIDATION
+     */
 
     if (!form.name.trim()) {
       setMessage(
@@ -348,41 +538,148 @@ export default function AdminProducts() {
       return;
     }
 
+    /*
+     * MANUAL PRICE VALIDATION
+     */
+
+    if (
+      form.pricing_type ===
+        "manual" &&
+      (!form.manual_price ||
+        Number(form.manual_price) <= 0)
+    ) {
+      setMessage(
+        "Please enter a valid manual product price."
+      );
+      return;
+    }
+
     setSaving(true);
 
     try {
+      /*
+       * =====================================================
+       * NORMALIZE PURITY
+       * =====================================================
+       */
+
+      const finalPurity =
+        form.metal_type === "silver"
+          ? String(
+              form.purity || "925"
+            )
+          : String(
+              form.purity || "22K"
+            );
+
+      /*
+       * =====================================================
+       * PRICE
+       *
+       * AUTOMATIC:
+       * price = 0
+       * ProductSection calculates it from rates.
+       *
+       * MANUAL:
+       * price = manual_price
+       * manual_price = manual_price
+       * =====================================================
+       */
+
+      const isManual =
+        form.pricing_type ===
+        "manual";
+
+      const manualPrice =
+        isManual
+          ? Number(
+              form.manual_price || 0
+            )
+          : 0;
+
+      /*
+       * =====================================================
+       * PRODUCT PAYLOAD
+       * =====================================================
+       */
+
       const payload = {
         name: form.name.trim(),
 
         slug:
           slugify(form.name) +
           (form.sku
-            ? `-${slugify(form.sku)}`
+            ? `-${slugify(
+                form.sku
+              )}`
             : ""),
 
-        category_id: form.category_id,
-        metal_type: form.metal_type,
-        gender: form.gender,
+        category_id:
+          form.category_id,
 
-        purity:
-          form.metal_type === "silver"
-            ? "Silver"
-            : form.purity,
+        metal_type:
+          form.metal_type,
 
-        sku: form.sku.trim() || null,
+        gender:
+          form.gender,
 
-        weight: Number(form.weight),
+        /*
+         * IMPORTANT:
+         * Silver now stores its actual purity:
+         * 925 / 999 / 990
+         *
+         * Gold stores:
+         * 24K / 22K / 18K
+         */
+        purity: finalPurity,
 
-        // Combined making charge + GST value
+        sku:
+          form.sku.trim() || null,
+
+        weight:
+          Number(form.weight),
+
+        /*
+         * Combined Making Charge + GST
+         */
         making_charge:
-          form.making_charge === ""
+          form.making_charge ===
+          ""
             ? 0
-            : Number(form.making_charge),
+            : Number(
+                form.making_charge
+              ),
 
-        // GST is included in the combined value
+        /*
+         * GST is already included
+         * inside making_charge.
+         */
         gst: 0,
 
-        stock: Number(form.stock || 0),
+        /*
+         * PRICE MODE
+         */
+        pricing_type:
+          form.pricing_type,
+
+        /*
+         * Manual price is stored
+         * only for manual products.
+         */
+        manual_price:
+          manualPrice,
+
+        /*
+         * Keep price populated for
+         * compatibility with existing
+         * product components.
+         */
+        price: manualPrice,
+
+        stock:
+          Number(
+            form.stock || 0
+          ),
 
         short_description:
           form.short_description.trim() ||
@@ -392,22 +689,41 @@ export default function AdminProducts() {
           form.description.trim() ||
           null,
 
-        is_featured: !!form.is_featured,
-        is_active: !!form.is_active,
+        is_featured:
+          !!form.is_featured,
 
-        price: 0,
+        is_active:
+          !!form.is_active,
       };
+
+      /*
+       * =====================================================
+       * UPDATE EXISTING PRODUCT
+       * =====================================================
+       */
 
       let productId = form.id;
 
       if (form.id) {
-        const { error } = await supabase
+        const {
+          error,
+        } = await supabase
           .from("products")
           .update(payload)
           .eq("id", form.id);
 
-        if (error) throw error;
-      } else {
+        if (error) {
+          throw error;
+        }
+      }
+
+      /*
+       * =====================================================
+       * CREATE NEW PRODUCT
+       * =====================================================
+       */
+
+      else {
         const {
           data,
           error,
@@ -417,35 +733,62 @@ export default function AdminProducts() {
           .select("id")
           .single();
 
-        if (error) throw error;
+        if (error) {
+          throw error;
+        }
 
         productId = data.id;
       }
 
-      const mediaUrls = await uploadMedia(
-        productId,
-        files
-      );
+      /*
+       * =====================================================
+       * UPLOAD NEW MEDIA
+       * =====================================================
+       */
+
+      const mediaUrls =
+        await uploadMedia(
+          productId,
+          files
+        );
 
       if (mediaUrls.length) {
         const existingImageCount =
           form.images.length;
 
-        const rows = mediaUrls.map(
-          (image_url, index) => ({
-            product_id: productId,
-            image_url,
-            order:
-              existingImageCount + index,
-          })
-        );
+        const rows =
+          mediaUrls.map(
+            (
+              image_url,
+              index
+            ) => ({
+              product_id:
+                productId,
 
-        const { error } = await supabase
+              image_url,
+
+              order:
+                existingImageCount +
+                index,
+            })
+          );
+
+        const {
+          error,
+        } = await supabase
           .from("product_images")
           .insert(rows);
 
-        if (error) throw error;
+        if (error) {
+          throw error;
+        }
       }
+
+      /*
+       * =====================================================
+       * SUCCESS
+       * =====================================================
+       */
 
       setMessage(
         form.id
@@ -453,7 +796,10 @@ export default function AdminProducts() {
           : "Product published successfully."
       );
 
-      setForm(emptyForm);
+      setForm({
+        ...emptyForm,
+      });
+
       setFiles([]);
 
       if (fileRef.current) {
@@ -481,10 +827,17 @@ export default function AdminProducts() {
     }
   }
 
+  /*
+   * =========================================================
+   * DELETE PRODUCT
+   * =========================================================
+   */
+
   async function deleteProduct(id) {
-    const confirmed = window.confirm(
-      "Delete this product and its image records?"
-    );
+    const confirmed =
+      window.confirm(
+        "Delete this product and its image records?"
+      );
 
     if (!confirmed) return;
 
@@ -498,7 +851,9 @@ export default function AdminProducts() {
         .delete()
         .eq("product_id", id);
 
-      if (imageError) throw imageError;
+      if (imageError) {
+        throw imageError;
+      }
 
       const {
         error: productError,
@@ -507,7 +862,9 @@ export default function AdminProducts() {
         .delete()
         .eq("id", id);
 
-      if (productError) throw productError;
+      if (productError) {
+        throw productError;
+      }
 
       setMessage(
         "Product deleted successfully."
@@ -527,8 +884,17 @@ export default function AdminProducts() {
     }
   }
 
+  /*
+   * =========================================================
+   * CANCEL EDIT
+   * =========================================================
+   */
+
   function cancelEdit() {
-    setForm(emptyForm);
+    setForm({
+      ...emptyForm,
+    });
+
     setFiles([]);
 
     if (fileRef.current) {
@@ -538,15 +904,28 @@ export default function AdminProducts() {
     setMessage("");
   }
 
+  /*
+   * =========================================================
+   * RENDER
+   * =========================================================
+   */
+
   return (
     <main className="admin-products-page">
+
+      {/* =====================================================
+          HEADER
+          ===================================================== */}
+
       <header className="admin-page-header">
         <div>
           <p className="admin-eyebrow">
             VIRAJ JEWELLERY · CATALOGUE
           </p>
 
-          <h1>Product Management</h1>
+          <h1>
+            Product Management
+          </h1>
 
           <p>
             Add products the easy way — like
@@ -564,13 +943,22 @@ export default function AdminProducts() {
         </div>
       </header>
 
+      {/* =====================================================
+          MESSAGE
+          ===================================================== */}
+
       {message && (
         <div className="admin-message">
           {message}
         </div>
       )}
 
+      {/* =====================================================
+          PRODUCT EDITOR
+          ===================================================== */}
+
       <section className="admin-product-editor">
+
         <div className="admin-editor-heading">
           <div>
             <p className="admin-eyebrow">
@@ -598,34 +986,48 @@ export default function AdminProducts() {
         </div>
 
         <form onSubmit={saveProduct}>
+
+          {/* =================================================
+              EXISTING MEDIA
+              ================================================= */}
+
           {form.id &&
             form.images.length > 0 && (
               <div className="admin-existing-images">
+
                 <div className="admin-existing-images-heading">
                   <div>
                     <p className="admin-eyebrow">
                       CURRENT MEDIA
                     </p>
 
-                    <h3>Product media</h3>
+                    <h3>
+                      Product media
+                    </h3>
                   </div>
 
                   <span>
                     {form.images.length} media
                     item
-                    {form.images.length !== 1
+                    {form.images.length !==
+                    1
                       ? "s"
                       : ""}
                   </span>
                 </div>
 
                 <div className="admin-existing-images-grid">
+
                   {form.images.map(
-                    (image, index) => (
+                    (
+                      image,
+                      index
+                    ) => (
                       <div
                         className="admin-existing-image-card"
                         key={image.id}
                       >
+
                         <div className="admin-existing-image-number">
                           {index + 1}
                         </div>
@@ -634,6 +1036,7 @@ export default function AdminProducts() {
                           image.image_url
                         ) ? (
                           <div className="admin-existing-media-preview">
+
                             <video
                               src={
                                 image.image_url
@@ -646,6 +1049,7 @@ export default function AdminProducts() {
                             <span>
                               ▶ VIDEO
                             </span>
+
                           </div>
                         ) : (
                           <img
@@ -669,12 +1073,18 @@ export default function AdminProducts() {
                         >
                           🗑 Delete
                         </button>
+
                       </div>
                     )
                   )}
+
                 </div>
               </div>
             )}
+
+          {/* =================================================
+              UPLOAD MEDIA
+              ================================================= */}
 
           <div
             className="admin-upload-zone"
@@ -682,6 +1092,7 @@ export default function AdminProducts() {
               fileRef.current?.click()
             }
           >
+
             <input
               ref={fileRef}
               type="file"
@@ -691,7 +1102,8 @@ export default function AdminProducts() {
               onChange={(event) =>
                 setFiles(
                   Array.from(
-                    event.target.files || []
+                    event.target.files ||
+                      []
                   )
                 )
               }
@@ -704,7 +1116,8 @@ export default function AdminProducts() {
             <strong>
               {files.length
                 ? `${files.length} media file${
-                    files.length > 1
+                    files.length >
+                    1
                       ? "s"
                       : ""
                   } selected`
@@ -718,8 +1131,12 @@ export default function AdminProducts() {
 
             {files.length > 0 && (
               <div className="upload-file-list">
+
                 {files.map(
-                  (file, index) => (
+                  (
+                    file,
+                    index
+                  ) => (
                     <span
                       key={`${file.name}-${index}`}
                     >
@@ -727,11 +1144,20 @@ export default function AdminProducts() {
                     </span>
                   )
                 )}
+
               </div>
             )}
+
           </div>
 
+          {/* =================================================
+              PRODUCT FORM
+              ================================================= */}
+
           <div className="admin-form-grid">
+
+            {/* PRODUCT NAME */}
+
             <label>
               Product name
 
@@ -746,6 +1172,8 @@ export default function AdminProducts() {
                 placeholder="e.g. Lakshmi Gold Necklace"
               />
             </label>
+
+            {/* SKU */}
 
             <label>
               Product code / SKU
@@ -762,15 +1190,19 @@ export default function AdminProducts() {
               />
             </label>
 
+            {/* METAL */}
+
             <label>
               Metal
 
               <select
-                value={form.metal_type}
+                value={
+                  form.metal_type
+                }
                 onChange={(event) =>
-                  setField(
-                    "metal_type",
-                    event.target.value
+                  handleMetalChange(
+                    event.target
+                      .value
                   )
                 }
               >
@@ -784,15 +1216,20 @@ export default function AdminProducts() {
               </select>
             </label>
 
+            {/* CATEGORY */}
+
             <label>
               Category
 
               <select
-                value={form.category_id}
+                value={
+                  form.category_id
+                }
                 onChange={(event) =>
                   setField(
                     "category_id",
-                    event.target.value
+                    event.target
+                      .value
                   )
                 }
               >
@@ -801,17 +1238,27 @@ export default function AdminProducts() {
                 </option>
 
                 {categories.map(
-                  (category) => (
+                  (
+                    category
+                  ) => (
                     <option
-                      key={category.id}
-                      value={category.id}
+                      key={
+                        category.id
+                      }
+                      value={
+                        category.id
+                      }
                     >
-                      {category.name}
+                      {
+                        category.name
+                      }
                     </option>
                   )
                 )}
               </select>
             </label>
+
+            {/* WEIGHT */}
 
             <label>
               Weight (grams)
@@ -820,62 +1267,113 @@ export default function AdminProducts() {
                 type="number"
                 step="0.001"
                 min="0"
-                value={form.weight}
+                value={
+                  form.weight
+                }
                 onChange={(event) =>
                   setField(
                     "weight",
-                    event.target.value
+                    event.target
+                      .value
                   )
                 }
                 placeholder="4.250"
               />
             </label>
 
+            {/* =================================================
+                PURITY
+                ================================================= */}
+
             <label>
-              Purity
+              {form.metal_type ===
+              "silver"
+                ? "Silver Purity"
+                : "Gold Purity"}
 
               <select
-                disabled={
-                  form.metal_type ===
-                  "silver"
-                }
                 value={
-                  form.metal_type ===
-                  "silver"
-                    ? "Silver"
-                    : form.purity
+                  form.purity
                 }
                 onChange={(event) =>
                   setField(
                     "purity",
-                    event.target.value
+                    event.target
+                      .value
                   )
                 }
               >
-                <option>24K</option>
-                <option>22K</option>
-                <option>18K</option>
+
+                {form.metal_type ===
+                "silver" ? (
+                  <>
+                    <option value="999">
+                      999 Silver
+                    </option>
+
+                    <option value="925">
+                      925 Sterling Silver
+                    </option>
+
+                    <option value="990">
+                      990 Silver
+                    </option>
+                  </>
+                ) : (
+                  <>
+                    <option value="24K">
+                      24K Gold
+                    </option>
+
+                    <option value="22K">
+                      22K Gold
+                    </option>
+
+                    <option value="18K">
+                      18K Gold
+                    </option>
+                  </>
+                )}
+
               </select>
             </label>
+
+            {/* GENDER */}
 
             <label>
               Gender
 
               <select
-                value={form.gender}
+                value={
+                  form.gender
+                }
                 onChange={(event) =>
                   setField(
                     "gender",
-                    event.target.value
+                    event.target
+                      .value
                   )
                 }
               >
-                <option>Women</option>
-                <option>Men</option>
-                <option>Kids</option>
-                <option>Unisex</option>
+                <option>
+                  Women
+                </option>
+
+                <option>
+                  Men
+                </option>
+
+                <option>
+                  Kids
+                </option>
+
+                <option>
+                  Unisex
+                </option>
               </select>
             </label>
+
+            {/* STOCK */}
 
             <label>
               Stock
@@ -884,17 +1382,95 @@ export default function AdminProducts() {
                 type="number"
                 min="0"
                 step="1"
-                value={form.stock}
+                value={
+                  form.stock
+                }
                 onChange={(event) =>
                   setField(
                     "stock",
-                    event.target.value
+                    event.target
+                      .value
                   )
                 }
               />
             </label>
 
-            {/* COMBINED MAKING CHARGE + GST */}
+            {/* =================================================
+                PRICING TYPE
+                ================================================= */}
+
+            <label>
+              Pricing
+
+              <select
+                value={
+                  form.pricing_type
+                }
+                onChange={(event) =>
+                  handlePricingTypeChange(
+                    event.target
+                      .value
+                  )
+                }
+              >
+                <option value="automatic">
+                  Automatic — Metal Rate
+                </option>
+
+                <option value="manual">
+                  Manual — Fixed Price
+                </option>
+              </select>
+            </label>
+
+            {/* =================================================
+                MANUAL PRICE
+                ================================================= */}
+
+            {form.pricing_type ===
+              "manual" && (
+              <label>
+                Manual Product Price (₹)
+
+                <input
+                  type="number"
+                  min="0"
+                  step="1"
+                  value={
+                    form.manual_price
+                  }
+                  onChange={(
+                    event
+                  ) =>
+                    setField(
+                      "manual_price",
+                      event.target
+                        .value
+                    )
+                  }
+                  placeholder="e.g. 45000"
+                />
+
+                <small
+                  style={{
+                    display:
+                      "block",
+                    marginTop:
+                      "8px",
+                    opacity:
+                      0.65,
+                  }}
+                >
+                  This exact price will
+                  be shown to customers.
+                </small>
+              </label>
+            )}
+
+            {/* =================================================
+                MAKING CHARGE + GST
+                ================================================= */}
+
             <label>
               Making Charge + GST
 
@@ -902,58 +1478,94 @@ export default function AdminProducts() {
                 type="number"
                 step="0.01"
                 min="0"
-                value={form.making_charge}
+                value={
+                  form.making_charge
+                }
                 onChange={(event) =>
                   setField(
                     "making_charge",
-                    event.target.value
+                    event.target
+                      .value
                   )
                 }
                 placeholder="Enter combined charge"
               />
+
+              <small
+                style={{
+                  display:
+                    "block",
+                  marginTop:
+                    "8px",
+                  opacity:
+                    0.65,
+                }}
+              >
+                Used with automatic metal-rate
+                pricing.
+              </small>
             </label>
+
+            {/* SHORT DESCRIPTION */}
 
             <label className="wide">
               Short description
 
               <input
-                value={form.short_description}
+                value={
+                  form.short_description
+                }
                 onChange={(event) =>
                   setField(
                     "short_description",
-                    event.target.value
+                    event.target
+                      .value
                   )
                 }
                 placeholder="Short description of the jewellery"
               />
             </label>
 
+            {/* DESCRIPTION */}
+
             <label className="wide">
               Description
 
               <textarea
                 rows="4"
-                value={form.description}
+                value={
+                  form.description
+                }
                 onChange={(event) =>
                   setField(
                     "description",
-                    event.target.value
+                    event.target
+                      .value
                   )
                 }
                 placeholder="Detailed product description"
               />
             </label>
+
           </div>
 
+          {/* =================================================
+              CHECKBOXES
+              ================================================= */}
+
           <div className="admin-checks">
+
             <label>
               <input
                 type="checkbox"
-                checked={form.is_active}
+                checked={
+                  form.is_active
+                }
                 onChange={(event) =>
                   setField(
                     "is_active",
-                    event.target.checked
+                    event.target
+                      .checked
                   )
                 }
               />
@@ -964,18 +1576,26 @@ export default function AdminProducts() {
             <label>
               <input
                 type="checkbox"
-                checked={form.is_featured}
+                checked={
+                  form.is_featured
+                }
                 onChange={(event) =>
                   setField(
                     "is_featured",
-                    event.target.checked
+                    event.target
+                      .checked
                   )
                 }
               />
 
               Featured product
             </label>
+
           </div>
+
+          {/* =================================================
+              SAVE BUTTON
+              ================================================= */}
 
           <button
             type="submit"
@@ -988,23 +1608,37 @@ export default function AdminProducts() {
               ? "SAVE PRODUCT"
               : "PUBLISH PRODUCT"}
           </button>
+
         </form>
       </section>
 
+      {/* =====================================================
+          PRODUCT LIST
+          ===================================================== */}
+
       <section className="admin-product-list">
+
         <div className="admin-list-toolbar">
+
           <input
             value={search}
             onChange={(event) =>
-              setSearch(event.target.value)
+              setSearch(
+                event.target.value
+              )
             }
             placeholder="Search product or SKU…"
           />
 
           <select
-            value={filterMetal}
+            value={
+              filterMetal
+            }
             onChange={(event) =>
-              setFilterMetal(event.target.value)
+              setFilterMetal(
+                event.target
+                  .value
+              )
             }
           >
             <option value="all">
@@ -1027,36 +1661,68 @@ export default function AdminProducts() {
           >
             ↻ Refresh
           </button>
+
         </div>
 
         {loading ? (
           <div className="admin-empty-state">
             Loading products…
           </div>
-        ) : visibleProducts.length === 0 ? (
+        ) : visibleProducts.length ===
+          0 ? (
           <div className="admin-empty-state">
-            No products yet. Publish your first
-            jewellery product above.
+            No products yet. Publish your
+            first jewellery product above.
           </div>
         ) : (
           <div className="admin-product-table">
+
             <div className="admin-table-row admin-table-head">
-              <span>Product</span>
-              <span>Metal</span>
-              <span>Weight</span>
-              <span>Stock</span>
-              <span>Actions</span>
+
+              <span>
+                Product
+              </span>
+
+              <span>
+                Metal
+              </span>
+
+              <span>
+                Purity
+              </span>
+
+              <span>
+                Weight
+              </span>
+
+              <span>
+                Pricing
+              </span>
+
+              <span>
+                Stock
+              </span>
+
+              <span>
+                Actions
+              </span>
+
             </div>
 
             {visibleProducts.map(
               (product) => (
                 <div
                   className="admin-table-row"
-                  key={product.id}
+                  key={
+                    product.id
+                  }
                 >
+
                   <span>
                     <strong>
-                      {product.name}
+                      {
+                        product.name
+                      }
                     </strong>
 
                     <small>
@@ -1066,22 +1732,50 @@ export default function AdminProducts() {
                   </span>
 
                   <span>
-                    {product.metal_type}
+                    {String(
+                      product.metal_type ||
+                        ""
+                    ).toUpperCase()}
                   </span>
 
                   <span>
-                    {product.weight} g
+                    {product.purity ||
+                      "—"}
                   </span>
 
                   <span>
-                    {product.stock ?? 0}
+                    {
+                      product.weight
+                    }{" "}
+                    g
+                  </span>
+
+                  <span>
+                    {product.pricing_type ===
+                    "manual"
+                      ? `Manual ₹${Number(
+                          product.manual_price ||
+                            product.price ||
+                            0
+                        ).toLocaleString(
+                          "en-IN"
+                        )}`
+                      : "Automatic"}
+                  </span>
+
+                  <span>
+                    {product.stock ??
+                      0}
                   </span>
 
                   <span className="admin-row-actions">
+
                     <button
                       type="button"
                       onClick={() =>
-                        startEdit(product)
+                        startEdit(
+                          product
+                        )
                       }
                     >
                       Edit
@@ -1098,12 +1792,16 @@ export default function AdminProducts() {
                     >
                       Delete
                     </button>
+
                   </span>
+
                 </div>
               )
             )}
+
           </div>
         )}
+
       </section>
     </main>
   );
