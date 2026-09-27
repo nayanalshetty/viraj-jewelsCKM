@@ -82,7 +82,7 @@ export default function ProductSection({
   }
 
   /*
-   * LOAD GOLD AND SILVER RATES
+   * LOAD GOLD + SILVER RATES
    */
   const loadRates = useCallback(async () => {
     try {
@@ -166,11 +166,6 @@ export default function ProductSection({
         return;
       }
 
-      console.log(
-        "VIRAJ HOMEPAGE PRODUCTS:",
-        data
-      );
-
       const productIds = (data || []).map(
         (product) => product.id
       );
@@ -249,8 +244,6 @@ export default function ProductSection({
 
       /*
        * SORT PRODUCTS
-       *
-       * NEW COLLECTION
        */
       let finalProducts = [
         ...formattedProducts,
@@ -334,8 +327,61 @@ export default function ProductSection({
 
   /*
    * PRICE CALCULATION
+   *
+   * AUTOMATIC:
+   * Gold   -> gold rate
+   * Silver -> silver rate
+   *
+   * MANUAL:
+   * Uses manual_price directly.
    */
   function calculatePrice(product) {
+    const pricingType =
+      String(
+        product?.pricing_type ||
+          "automatic"
+      )
+        .toLowerCase()
+        .trim();
+
+    /*
+     * MANUAL PRICE
+     *
+     * Works for:
+     * Gold
+     * Silver
+     * Pearl
+     * Other jewellery
+     */
+    if (pricingType === "manual") {
+      const manualPrice = toNumber(
+        product?.manual_price
+      );
+
+      if (manualPrice > 0) {
+        return Math.round(manualPrice);
+      }
+
+      /*
+       * Backward compatibility:
+       * If an old product has price stored
+       * in products.price, use it.
+       */
+      const oldPrice = toNumber(
+        product?.price
+      );
+
+      return oldPrice > 0
+        ? Math.round(oldPrice)
+        : 0;
+    }
+
+    /*
+     * AUTOMATIC PRICE
+     *
+     * Rate is required only for
+     * automatic products.
+     */
     if (!rates) {
       return 0;
     }
@@ -367,19 +413,31 @@ export default function ProductSection({
 
     let metalRate = 0;
 
+    /*
+     * SILVER AUTOMATIC
+     */
     if (metal.includes("silver")) {
       metalRate = toNumber(
         rates.silver_rate
       );
-    } else if (purity.includes("24")) {
+    }
+
+    /*
+     * GOLD AUTOMATIC
+     */
+    else if (purity.includes("24")) {
       metalRate = toNumber(
         rates.rate_24k
       );
-    } else if (purity.includes("18")) {
+    }
+
+    else if (purity.includes("18")) {
       metalRate = toNumber(
         rates.rate_18k
       );
-    } else {
+    }
+
+    else {
       metalRate = toNumber(
         rates.rate_22k
       );
@@ -389,9 +447,18 @@ export default function ProductSection({
       return 0;
     }
 
+    /*
+     * METAL VALUE
+     */
     const metalValue =
       weight * metalRate;
 
+    /*
+     * MAKING CHARGE
+     *
+     * Existing system:
+     * making_charge is per gram.
+     */
     const makingCharge = toNumber(
       product.making_charge
     );
@@ -399,9 +466,19 @@ export default function ProductSection({
     const makingTotal =
       weight * makingCharge;
 
+    /*
+     * SUBTOTAL
+     */
     const subtotal =
       metalValue + makingTotal;
 
+    /*
+     * GST
+     *
+     * Your current admin saves GST as 0
+     * because the combined amount is
+     * already included in making_charge.
+     */
     const gst = toNumber(
       product.gst
     );
@@ -526,9 +603,6 @@ export default function ProductSection({
 
   /*
    * VISIBLE PRODUCTS
-   *
-   * Filters were intentionally removed
-   * from the homepage UI.
    */
   const visibleProducts = products;
 
@@ -615,6 +689,18 @@ export default function ProductSection({
                 toNumber(
                   product.weight
                 );
+
+              const pricingType =
+                String(
+                  product.pricing_type ||
+                    "automatic"
+                )
+                  .toLowerCase()
+                  .trim();
+
+              const isManualPricing =
+                pricingType ===
+                "manual";
 
               return (
                 <div
@@ -749,8 +835,16 @@ export default function ProductSection({
 
                       <div className="homepage-product-bottom">
                         <strong>
-                          {ratesLoading &&
-                          !product.price
+                          {isManualPricing
+                            ? calculatedPrice >
+                              0
+                              ? `₹${calculatedPrice.toLocaleString(
+                                  "en-IN"
+                                )}`
+                              : "₹ —"
+                            : ratesLoading &&
+                              calculatedPrice <=
+                                0
                             ? "Calculating..."
                             : calculatedPrice >
                               0
